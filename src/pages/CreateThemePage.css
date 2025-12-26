@@ -916,12 +916,17 @@
   accent-color: #facc6b;
 }
 
-.edit-card-button {
+.card-actions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.edit-card-button,
+.delete-card-button {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 2px solid rgba(250, 204, 107, 0.85);
-  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
   color: #fff;
   font-size: 0.9rem;
   cursor: pointer;
@@ -933,12 +938,24 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.edit-card-button:hover {
+.edit-card-button {
+  border: 2px solid rgba(250, 204, 107, 0.85);
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+}
+
+.delete-card-button {
+  border: 2px solid rgba(248, 113, 113, 0.85);
+  background: radial-gradient(circle at 30% 0, #f87171 0, #dc2626 55%, #7f1d1d 100%);
+}
+
+.edit-card-button:hover,
+.delete-card-button:hover {
   filter: brightness(1.2);
   transform: scale(1.1);
 }
 
-.edit-card-button:active {
+.edit-card-button:active,
+.delete-card-button:active {
   transform: scale(0.95);
 }
 

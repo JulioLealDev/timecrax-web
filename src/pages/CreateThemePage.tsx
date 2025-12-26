@@ -65,6 +65,7 @@ export function CreateThemePage() {
   const [savedCards, setSavedCards] = useState<SavedCard[]>([]);
   const [editingCardId, setEditingCardId] = useState<string | null>(null);
   const [card, setCard] = useState<CardDraft>(() => createEmptyCardDraft(0));
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<
@@ -919,30 +920,50 @@ export function CreateThemePage() {
               {Array.from({ length: MAX_SAVED_CARDS }).map((_, i) => {
                 const c = savedCards[i];
                 const isFilled = Boolean(c);
+                const isSelected = c?.id === selectedCardId;
 
                 return (
-                  <button
-                    key={i}
-                    type="button"
-                    className={["added-card-thumb", isFilled ? "filled" : "empty"].join(" ")}
-                    onClick={() => c && loadCardForEdit(c)}
-                    disabled={!c}
-                    aria-label={c ? `Editar carta ${c.caption} (${c.year})` : `Slot vazio ${i + 1}`}
-                  >
-                    <img
-                      className={["added-card-frame", c?.id === editingCardId ? "selected" : ""].join(" ")}
-                      src={cardTemplate}
-                      alt=""
-                    />
+                  <div key={i} className="added-card-wrapper">
+                    <button
+                      type="button"
+                      className={["added-card-thumb", isFilled ? "filled" : "empty"].join(" ")}
+                      onClick={() => {
+                        if (c) {
+                          setSelectedCardId(isSelected ? null : c.id);
+                        }
+                      }}
+                      disabled={!c}
+                      aria-label={c ? `Selecionar carta ${c.caption} (${c.year})` : `Slot vazio ${i + 1}`}
+                    >
+                      <img
+                        className={["added-card-frame", c?.id === editingCardId ? "selected" : ""].join(" ")}
+                        src={cardTemplate}
+                        alt=""
+                      />
 
-                    {c?.imageUrl && (
-                    <img
-                      className="added-card-image"
-                      src={withBaseUrl(c.imageUrl) ?? undefined}
-                      alt=""
-                    />
+                      {c?.imageUrl && (
+                        <img
+                          className="added-card-image"
+                          src={withBaseUrl(c.imageUrl) ?? undefined}
+                          alt=""
+                        />
+                      )}
+                    </button>
+
+                    {isSelected && c && (
+                      <button
+                        type="button"
+                        className="edit-card-button"
+                        onClick={() => {
+                          loadCardForEdit(c);
+                          setSelectedCardId(null);
+                        }}
+                        aria-label="Editar carta"
+                      >
+                        ✏️
+                      </button>
                     )}
-                  </button>
+                  </div>
                 );
               })}
             </div>

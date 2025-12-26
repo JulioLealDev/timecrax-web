@@ -235,6 +235,22 @@ export function ProfilePage() {
               </div>
             )}
 
+            {/* Completed Themes */}
+            <div className="completed-themes-section">
+              <h2 className="completed-themes-title">Completed Themes</h2>
+              <div className="completed-themes-grid">
+                {Array.from({ length: 16 }).map((_, index) => (
+                  <div key={index} className="completed-theme-item">
+                    <img
+                      src="/assets/imageTemplate.png"
+                      alt={`Theme ${index + 1}`}
+                      className="completed-theme-image"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Painel de edição (abre ao clicar no ícone) */}
             {isEditingProfile && (
               <form className="profile-form" onSubmit={handleSaveProfile}>
@@ -377,6 +393,22 @@ export function ProfilePage() {
                 </div>
               </div>
             )}
+
+            {/* Completed Themes */}
+            <div className="completed-themes-section">
+              <h2 className="completed-themes-title">Completed Themes</h2>
+              <div className="completed-themes-grid">
+                {Array.from({ length: 16 }).map((_, index) => (
+                  <div key={index} className="completed-theme-item">
+                    <img
+                      src="/assets/imageTemplate.png"
+                      alt={`Theme ${index + 1}`}
+                      className="completed-theme-image"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Link para Create Theme (só para professor) */}
             <div className="teacher-actions">

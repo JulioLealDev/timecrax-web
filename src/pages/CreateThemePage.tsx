@@ -105,6 +105,22 @@ export function CreateThemePage() {
   }, []);
 
   /* ============================================================
+   * Fechar menu de ações ao clicar fora
+   * ========================================================== */
+  useEffect(() => {
+    function handleClickOutside() {
+      setSelectedCardId(null);
+    }
+
+    if (selectedCardId) {
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }
+  }, [selectedCardId]);
+
+  /* ============================================================
    * Utils
    * ========================================================== */
   function nextOrderIndex() {
@@ -965,7 +981,8 @@ export function CreateThemePage() {
                     <button
                       type="button"
                       className={["added-card-thumb", isFilled ? "filled" : "empty"].join(" ")}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         if (c) {
                           setSelectedCardId(isSelected ? null : c.id);
                         }
@@ -989,11 +1006,12 @@ export function CreateThemePage() {
                     </button>
 
                     {isSelected && c && (
-                      <div className="card-actions">
+                      <div className="card-actions" onClick={(e) => e.stopPropagation()}>
                         <button
                           type="button"
                           className="edit-card-button"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             loadCardForEdit(c);
                             setSelectedCardId(null);
                           }}
@@ -1005,7 +1023,10 @@ export function CreateThemePage() {
                         <button
                           type="button"
                           className="delete-card-button"
-                          onClick={() => handleDeleteCard(c)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteCard(c);
+                          }}
                           aria-label="Deletar carta"
                           title="Deletar carta e todos seus assets"
                         >

@@ -431,6 +431,52 @@
   letter-spacing: 0.08em;
 }
 
+.student-role {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.0rem;
+  color: #e5d0a1;
+  font-style: italic;
+}
+
+/* TEACHER ACTIONS ============================================ */
+
+.teacher-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  display: flex;
+  justify-content: center;
+}
+
+.teacher-link {
+  display: inline-block;
+  padding: 0.85rem 1.8rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: #f9fafb;
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+  border: 2px solid rgba(250, 204, 107, 0.85);
+  border-radius: 10px;
+
+  transition: filter 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.teacher-link:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.teacher-link:active {
+  transform: translateY(0);
+}
+
 
 @media (max-width: 720px) {
   .student-header {

@@ -266,6 +266,44 @@ export function CreateThemePage() {
   }
 
   /* ============================================================
+   * Delete a card (remover do grid + backend)
+   * ========================================================== */
+  async function handleDeleteCard(cardToDelete: SavedCard) {
+    if (!assetsSessionId) {
+      setErrors((prev) => ({ ...prev, "assets.delete": "Sessão de upload não está pronta." }));
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Tem certeza que deseja deletar a carta "${cardToDelete.caption}" (${cardToDelete.year})?\n\nIsso irá remover todos os assets (8 imagens) do servidor.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      // Chama API para deletar assets do backend
+      await themeAssetsService.deleteCardAssets(assetsSessionId, cardToDelete.orderIndex);
+
+      // Remove do estado local
+      setSavedCards((prev) => prev.filter((c) => c.id !== cardToDelete.id));
+
+      // Se estava editando essa carta, limpa o formulário
+      if (editingCardId === cardToDelete.id) {
+        setCard(createEmptyCardDraft(nextOrderIndex()));
+        setEditingCardId(null);
+      }
+
+      // Fecha o menu de ações
+      setSelectedCardId(null);
+    } catch (err: any) {
+      setErrors((prev) => ({
+        ...prev,
+        "assets.delete": err?.message ?? "Erro ao deletar carta.",
+      }));
+    }
+  }
+
+  /* ============================================================
    * Era (AC/DC): só seleciona, não permite desmarcar
    * ========================================================== */
   function selectEra(next: "AC" | "DC") {
@@ -951,17 +989,29 @@ export function CreateThemePage() {
                     </button>
 
                     {isSelected && c && (
-                      <button
-                        type="button"
-                        className="edit-card-button"
-                        onClick={() => {
-                          loadCardForEdit(c);
-                          setSelectedCardId(null);
-                        }}
-                        aria-label="Editar carta"
-                      >
-                        ✏️
-                      </button>
+                      <div className="card-actions">
+                        <button
+                          type="button"
+                          className="edit-card-button"
+                          onClick={() => {
+                            loadCardForEdit(c);
+                            setSelectedCardId(null);
+                          }}
+                          aria-label="Editar carta"
+                          title="Editar carta"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          type="button"
+                          className="delete-card-button"
+                          onClick={() => handleDeleteCard(c)}
+                          aria-label="Deletar carta"
+                          title="Deletar carta e todos seus assets"
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     )}
                   </div>
                 );

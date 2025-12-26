@@ -27,4 +27,13 @@ export const themeAssetsService = {
       body: fd,
     });
   },
+
+  async deleteCardAssets(sessionId: string, cardIndex: number): Promise<{ deletedCount: number; message: string }> {
+    return await apiRequest<{ deletedCount: number; message: string }>(
+      `/theme-assets/sessions/${sessionId}/cards/${cardIndex}`,
+      {
+        method: "DELETE",
+      }
+    );
+  },
 };

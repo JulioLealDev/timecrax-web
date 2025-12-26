@@ -13,6 +13,7 @@ export function ProfilePage() {
   const { user, refreshMe } = useAuth();
   const [ isEditingProfile, setIsEditingProfile] = useState(false);
   const [ profileError, setProfileError] = useState<string | null>(null);
+  const [pictureVersion, setPictureVersion] = useState(() => Date.now());
 
   // Upload de imagem (por enquanto só UI)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -29,6 +30,10 @@ export function ProfilePage() {
     const full = `${fn} ${ln}`.trim();
     return full || user?.email || "";
   }, [user]);
+
+  useEffect(() => {
+  if (user?.picture) setPictureVersion(Date.now());
+}, [user?.picture]);
 
   useEffect(() => {
     if (!user) return;
@@ -81,6 +86,8 @@ export function ProfilePage() {
 
       // 2) recarrega /me para atualizar user.picture
       await refreshMe();
+      setPictureVersion(Date.now());
+      
     } catch (err: any) {
       console.error("Erro no upload:", err);
       setUploadError(err?.message ?? "Erro ao enviar imagem.");
@@ -145,7 +152,7 @@ export function ProfilePage() {
               <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
                 {/* imagem */}
                 {user.picture ? (
-                  <img className="avatar-img" src={user.picture ? `${user.picture}?v=${user.updatedAt}` : undefined} alt="Foto do perfil" />
+                  <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
                 ) : (
                   <div className="avatar-fallback" aria-label="Sem foto">
                     <span className="avatar-initials">

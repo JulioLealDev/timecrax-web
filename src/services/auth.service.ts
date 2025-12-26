@@ -1,5 +1,13 @@
 import { apiRequest } from "./api";
 
+export type AchievementDto = {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  unlockedAt: string | null;
+};
+
 export type UserDto = {
   id?: string;
   email: string;
@@ -11,6 +19,7 @@ export type UserDto = {
   score: number;
   createdAt?: Date | null;
   updatedAt?: Date | null;
+  achievements?: AchievementDto[];
 };
 
 export type LoginRequest = {

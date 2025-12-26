@@ -209,6 +209,32 @@ export function ProfilePage() {
               </div>
             </div>
 
+            {/* Achievements */}
+            {user.achievements && user.achievements.length > 0 && (
+              <div className="achievements-section">
+                <h2 className="achievements-title">Achievements</h2>
+                <div className="achievements-grid">
+                  {user.achievements.map((achievement) => (
+                    <div
+                      key={achievement.id}
+                      className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
+                      title={`${achievement.name}\n${achievement.description}\n${
+                        achievement.unlockedAt
+                          ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}`
+                          : 'Bloqueado'
+                      }`}
+                    >
+                      <img
+                        src={achievement.image}
+                        alt={achievement.name}
+                        className="achievement-image"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Painel de edição (abre ao clicar no ícone) */}
             {isEditingProfile && (
               <form className="profile-form" onSubmit={handleSaveProfile}>
@@ -325,6 +351,32 @@ export function ProfilePage() {
                 <p className="profile-score-value">{user.score ?? 0}</p>
               </div>
             </div>
+
+            {/* Achievements */}
+            {user.achievements && user.achievements.length > 0 && (
+              <div className="achievements-section">
+                <h2 className="achievements-title">Achievements</h2>
+                <div className="achievements-grid">
+                  {user.achievements.map((achievement) => (
+                    <div
+                      key={achievement.id}
+                      className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
+                      title={`${achievement.name}\n${achievement.description}\n${
+                        achievement.unlockedAt
+                          ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}`
+                          : 'Bloqueado'
+                      }`}
+                    >
+                      <img
+                        src={achievement.image}
+                        alt={achievement.name}
+                        className="achievement-image"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Link para Create Theme (só para professor) */}
             <div className="teacher-actions">

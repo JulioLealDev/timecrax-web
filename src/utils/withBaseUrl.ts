@@ -1,6 +1,9 @@
-
 export function withBaseUrl(url?: string | null): string | undefined {
   if (!url) return undefined;
+  
+  if (url.startsWith("data:image/")) {
+    return url;
+  }
 
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
@@ -11,4 +14,3 @@ export function withBaseUrl(url?: string | null): string | undefined {
 
   return `${base}${url.startsWith("/") ? "" : "/"}${url}`;
 }
-

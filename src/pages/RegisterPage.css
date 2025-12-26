@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap");
+
+.register-page {
+  min-height: calc(100vh - 90px);
+  display: grid;
+  place-items: center;
+  padding: 2.2rem 1rem;
+
+  background: radial-gradient(circle at top, #020617 0, #020617 35%, #060709 100%);
+}
+
+.register-card {
+  width: min(560px, 92vw);
+  padding: 1.6rem 1.6rem 1.4rem;
+
+  border-radius: 14px;
+
+  background: radial-gradient(circle at top, #151c27 0, #020617 55%, #060709 100%);
+  border: 1px solid rgba(250, 204, 107, 0.35);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+
+  color: #f9fafb;
+}
+
+.register-header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+  padding-bottom: 0.85rem;
+}
+
+.register-title {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem 0;
+  font-size: 1.35rem;
+}
+
+.register-subtitle {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: #e5d0a1;
+}
+
+.register-form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.register-row {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.register-label {
+  font-family: "Cinzel", serif;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(249, 250, 251, 0.92);
+}
+
+.register-input,
+.register-select {
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+
+  border-radius: 8px;
+  border: 1px solid #4b3a2a;
+
+  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
+  color: #f9fafb;
+
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: 0.03em;
+}
+
+.register-input::placeholder {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.register-input:focus,
+.register-input:focus-visible,
+.register-select:focus,
+.register-select:focus-visible {
+  outline: none !important;
+  border-color: silver !important;
+  box-shadow: 0 0 8px silver !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+.register-select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #facc6b 50%),
+    linear-gradient(135deg, #facc6b 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.2rem;
+}
+
+.register-error {
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+
+  background: rgba(127, 29, 29, 0.25);
+  border: 1px solid rgba(250, 204, 107, 0.25);
+
+  font-size: 0.95rem;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.register-button {
+  margin-top: 0.25rem;
+
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+
+  border: 2px solid #facc6b;
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+  color: #ffffff;
+
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+
+  transition: transform 0.15s ease-out, filter 0.2s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.register-button:hover {
+  filter: brightness(1.08);
+}
+
+.register-button:active {
+  transform: scale(0.98);
+}
+
+.register-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.register-footer {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  color: rgba(249, 250, 251, 0.88);
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: 0.03em;
+}
+
+.register-link {
+  color: #facc6b;
+  text-decoration: none;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.register-link:hover {
+  color: #fde68a;
+}
+
+/* responsivo */
+@media (max-width: 520px) {
+  .register-card {
+    padding: 1.2rem 1.1rem 1.1rem;
+  }
+  .register-title {
+    font-size: 1.15rem;
+  }
+}

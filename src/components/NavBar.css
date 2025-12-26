@@ -1,0 +1,688 @@
+/* fontes com vibe clássica/steampunk */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap");
+
+/* NAVBAR ====================================================== */
+
+.navbar-steam {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding: 1rem 2rem;
+
+  /* Barra metálica */
+  background: linear-gradient(
+    to right,
+    #060709 0%,
+    #151c27 25%,
+    #26171e 60%,
+    #151c27 100%
+  );
+  border-bottom: 3px solid #8b5a33;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9);
+
+  color: #f9fafb;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  font-size: 1.05rem;
+}
+
+.navbar-burger {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: auto;
+}
+
+.navbar-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 4px 0;
+  background: #facc6b;
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 40;
+}
+
+.navbar-mobile-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(320px, 80vw);
+
+  background: radial-gradient(circle at top, #020617 0, #020617 60%, #020617 100%);
+  border-left: 1px solid rgba(250, 204, 107, 0.35);
+  box-shadow: -18px 0 40px rgba(0, 0, 0, 0.95);
+  padding: 1.2rem 1.4rem 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  z-index: 50;
+
+  /* animação de slide-in */
+  transform: translateX(0);
+  animation: mobilePanelIn 0.18s ease-out;
+}
+
+@keyframes mobilePanelIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: #facc6b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.3rem;
+}
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.login-title{
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.mobile-links a {
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.mobile-links a:hover {
+  color: #facc6b;
+}
+
+.mobile-login {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  padding-top: 0.9rem;
+}
+
+.mobile-login input {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #4b3a2a;
+  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
+  color: #f9fafb;
+}
+
+.mobile-login input::placeholder {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.mobile-login-actions {
+  padding: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-button-small {
+  padding: 0.35rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* LOGO E TÍTULO ============================================== */
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem; /* antes 0.6 */
+  cursor: pointer;
+}
+
+.navbar-logo-img {
+  width: 58px;     /* antes 40 */
+  height: 58px;    /* antes 40 */
+  border-radius: 999px;
+  border: 3px solid #e5d0a1;
+  box-shadow: 0 0 0 3px #3b2a1d, 0 4px 14px rgba(0, 0, 0, 0.85);
+  object-fit: cover;
+}
+
+.navbar-title-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.navbar-title-main {
+  font-family: "Cinzel", serif;
+  font-size: 1.6rem;  /* antes 1.15 */
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.navbar-title-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;  /* antes 0.9 */
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e5d0a1;
+}
+
+/* LINKS CENTRAIS ============================================= */
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* antes 0.6 */
+  font-family: "Cinzel", serif;
+  font-size: 1.05rem; /* antes 0.9 */
+  justify-content: center; /* CENTRO GEOMÉTRICO */
+}
+
+.navbar-center a {
+  color: #f9fafb;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.9rem;
+}
+
+.navbar-center a:hover {
+  color: #facc6b;
+}
+
+.navbar-sep {
+  color: #a3a3a3;
+  font-size: 1rem; /* antes 0.7 */
+}
+
+/* dividers metálicos */
+
+.navbar-divider {
+  width: 70px; /* antes 46px */
+  height: 3px; /* antes 2px */
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e5d0a1,
+    transparent
+  );
+  opacity: 0.8;
+}
+
+/* LOGIN À DIREITA ============================================ */
+
+.navbar-right {
+  margin-left: auto;
+  position: relative;
+}
+
+.login-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-auto-rows: auto;
+  column-gap: 0.6rem;
+  row-gap: 0.4rem;
+  align-items: center;
+}
+
+/* inputs (mesmos estilos que já usava antes) */
+.login-grid input {
+  padding: 0.55rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #4b3a2a;
+  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
+  color: #f9fafb;
+  min-width: 180px;
+}
+
+.login-grid input::placeholder {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.login-grid input:focus,
+.login-grid input:focus-visible {
+  outline: none !important;
+  border-color: silver !important;
+  box-shadow: 0 0 6px silver !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+.login-button {
+  border-radius: 8px;
+  padding: 0.30rem 1rem;
+  font-size: 0.9rem;
+  border: 2px solid #facc6b;
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 0.15s ease-out, filter 0.2s ease;
+
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.login-button::-moz-focus-inner {
+  border: 0;
+}
+
+.login-button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 8px silver !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+.login-button:hover {
+  filter: brightness(1.1);
+}
+
+.login-button:active {
+  transform: scale(0.9);
+}
+
+.login-register-link {
+  justify-self: center; 
+  font-size: 1.0rem;
+  font-family: "Cormorant Garamond", serif;
+  color: #facc6b;
+  text-decoration: none;
+  text-shadow: 0 0 8px rgba(250, 204, 107, 0.3);
+}
+
+.login-register-link:hover {
+  color: #fde68a;
+}
+
+.desktop-login {
+  display: grid;
+}
+
+
+.login-compact {
+  display: none;
+}
+
+.login-dropdown {
+  display: none;
+}
+
+.login-forgot-password-sandwich {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.login-forgot-password-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: #f9fafb;
+  text-decoration: none;
+  text-align: center;
+}
+
+.login-text-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.login-text-link:hover {
+  color: #facc6b;
+}
+
+.navbar-profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar-logout {
+  background: none;
+  border: none;
+  padding: 0.25rem 0.4rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: #facc6b;
+  cursor: pointer;
+
+  text-shadow: 0 0 8px rgba(250, 204, 107, 0.25);
+  transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.navbar-logout:hover {
+  color: #fde68a;
+}
+
+.navbar-logout:active {
+  transform: scale(0.95);
+}
+
+
+/* RESPONSIVO ================================================= */
+
+@media (max-width: 1450px) {
+  /* esconde a grade desktop */
+  .desktop-login {
+    display: none;
+  }
+
+  .login-compact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* estilo do dropdown */
+  .login-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    padding: 0.8rem 0.9rem;
+    min-width: 230px;
+
+    background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+    border-radius: 10px;
+    border: 1px solid rgba(250, 204, 107, 0.4);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+    z-index: 30;
+  }
+
+  .login-dropdown input {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    border: 1px solid #4b3a2a;
+    background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
+    color: #f9fafb;
+  }
+
+  .login-dropdown input::placeholder {
+    color: #9ca3af;
+    font-size: 0.85rem;
+  }
+
+  .login-dropdown-actions {
+    padding: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .login-button-small {
+    padding: 0.35rem 1.1rem;
+    font-size: 0.85rem;
+  }
+
+  .login-dropdown {
+    justify-self: center;
+    font-size: 0.9rem;
+  }
+
+  .login-forgot-password-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: #f9fafb;
+    text-decoration: none;
+  }
+
+}
+
+/* PERFIL (navbar-right quando logado) ========================= */
+
+.navbar-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  padding: 0.45rem 0.85rem;
+  border-radius: 12px;
+
+  border: 1px solid rgba(250, 204, 107, 0.35);
+  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
+  color: #f9fafb;
+
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65);
+  transition: filter 0.2s ease, transform 0.15s ease-out;
+}
+
+.navbar-profile:hover {
+  filter: brightness(1.1);
+}
+
+.navbar-profile:active {
+  transform: scale(0.98);
+}
+
+.navbar-profile-icon {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+
+  border: 2px solid #facc6b;
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+  color: #ffffff;
+}
+
+.navbar-profile-name {
+  max-width: 210px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-size: 0.85rem;
+}
+
+
+@media (max-width: 1300px) {
+  .navbar-steam {
+    gap: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .navbar-center {
+    gap: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .navbar-profile-name {
+    max-width: 150px;
+  }
+
+}
+
+@media (max-width: 1200px) {
+  /* garante que a navbar seja o “container” do posicionamento absoluto */
+  .navbar-steam {
+    position: relative;
+  }
+
+  /* some links centrais e área de login */
+  .navbar-center {
+    display: none;
+  }
+
+  .navbar-right {
+    display: none;
+  }
+
+  /* mostra o burger e o posiciona NO CANTO DIREITO */
+  .navbar-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 1.5rem;           /* distância da borda direita */
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .navbar-burger span {
+    width: 22px;
+    height: 2px;
+    margin: 4px 0;
+    background: #facc6b;
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar-steam {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .navbar-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.4rem;
+  }
+
+  .navbar-right {
+    order: 2;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .login-grid {
+    grid-template-columns: 1fr 1fr;       /* inputs e ações dividem a linha */
+  }
+
+  .login-grid input {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Até 600px: empilha tudo em coluna (mobile) */
+@media (max-width: 600px) {
+  .navbar-steam {
+    align-items: flex-start;
+  }
+
+  .navbar-right {
+    width: 100%;
+  }
+
+  .login-grid {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  .login-button {
+    justify-self: stretch;
+  }
+
+  .login-register-link {
+    justify-self: flex-start;
+  }
+}

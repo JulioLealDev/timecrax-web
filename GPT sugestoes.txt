@@ -1,0 +1,136 @@
+Considerando o que você já tem (React + TypeScript no front, Unity/C# como consumidor do “download de temas”, e necessidade de login, ranking e CRUD de temas), eu sugiro uma stack que maximize: **produtividade**, **tipagem**, **observabilidade**, **simplicidade de deploy** e **compatibilidade com Unity**.
+
+## Backend (recomendado)
+
+### Plataforma e API
+
+* **ASP.NET Core Web API (.NET 8)**
+  Motivo: performance, maturidade, ótimo ecossistema, Swagger nativo, integração natural com Unity/C#.
+
+### Persistência
+
+* **EF Core 8** (ORM)
+* Banco:
+
+  * **PostgreSQL** (recomendado para deploy moderno e barato) ou
+  * **SQL Server** (se você já está confortável e/ou quer manter alinhado ao ecossistema Microsoft)
+
+### Autenticação e contas
+
+* **ASP.NET Core Identity** (bom para registrar/login, hash de senha, reset password)
+* Emissão de **JWT (access token)** para o front e para o Unity quando necessário
+* (Opcional) **Refresh token** se você quiser sessões longas
+
+### Validações e regras de domínio
+
+* **FluentValidation** para validar DTOs/requests
+* Regras de domínio (ex: **nome obrigatório**, **mínimo 12 cartas**) aplicadas no serviço de aplicação/domínio
+
+### Documentação e teste de API
+
+* **Swagger/OpenAPI** (já vem muito bem no ASP.NET)
+* (Opcional) **NSwag** se você quiser gerar clientes TypeScript automaticamente
+
+### Imagens
+
+Você tem 2 caminhos bons; escolha conforme fase:
+
+* **Fase 1 (rápida):** aceitar `dataUrl` e salvar como texto/JSON (OK para MVP)
+* **Fase 2 (recomendada):** upload para storage e guardar apenas URL
+
+  * Storage: **Azure Blob**, **S3**, ou **filesystem local** (para começo)
+
+Como você já definiu `ImageDto` com `dataUrl | url`, dá para evoluir sem quebrar contrato.
+
+### Performance para temas grandes
+
+* **Response Compression (gzip)** no ASP.NET Core (vale a pena ativar desde já)
+
+### Infra/Dev Experience
+
+* **Docker Compose** (API + DB) para ambiente local consistente
+* Migrações EF Core para evoluir o schema
+
+---
+
+## Frontend (recomendado)
+
+### Stack base
+
+* **React + TypeScript + Vite** (você já está nisso)
+
+### Networking e cache
+
+* **TanStack Query (React Query)**
+  Motivo: cache, retry, loading states, invalidação, e reduz MUITO código manual de fetch.
+
+### Forms e validação
+
+* Para o Create Theme (form grande):
+
+  * **React Hook Form** + **Zod** (ou Yup)
+    Motivo: validação tipada e performance.
+* Mesmo que você mantenha seu estado atual com `useState`, eu consideraria migrar o form grande para RHF depois, quando começar a enviar para API.
+
+### Tipos e DTOs
+
+* Manter:
+
+  * `types/` para estado de UI (`CardDraft`)
+  * `dtos/` para contrato da API (você já começou)
+  * `mappers/` para converter UI → DTO (essencial)
+
+### UI
+
+* Seu CSS está funcionando bem. Se quiser evoluir:
+
+  * **CSS Modules** ou **Styled Components** (opcional)
+  * Eu evitaria trocar para Tailwind agora, para não reescrever seu estilo steampunk.
+
+---
+
+## Unity (consumo)
+
+* Unity consome JSON via `UnityWebRequest`
+* Ideal: endpoints retornam payload “limpo”, sem campos de UI
+* Se imagens estiverem como URL, Unity pode baixar e cachear on-demand
+
+---
+
+## Estrutura de módulos que recomendo (para ficar sustentável)
+
+### API
+
+* `Controllers` (HTTP)
+* `Application` (serviços/casos de uso)
+* `Domain` (regras e entidades)
+* `Infrastructure` (EF Core, storage, auth, etc.)
+
+### Front
+
+* `dtos/` (contratos)
+* `types/` (UI)
+* `mappers/`
+* `services/api/` (cliente HTTP)
+* `pages/` e `components/`
+
+---
+
+## Próximo passo prático (ordem certa)
+
+Se você concordar com essa stack, a ordem mais segura é:
+
+1. **Criar o projeto Web API .NET 8 + Swagger**
+2. **Definir os endpoints mínimos**
+
+   * `POST /auth/register`
+   * `POST /auth/login`
+   * `POST /themes` (criar theme)
+   * `GET /themes` (listar publicados)
+   * `GET /themes/{id}` (download do tema)
+   * (opcional) `PUT /themes/{id}` (editar)
+3. **Modelar o banco**
+4. **Ligar o front ao backend**
+5. **Depois**: ranking/score + moderação/publicação
+
+Se você me disser qual banco você prefere (**Postgres** ou **SQL Server**) e se você quer começar com **dataUrl no payload** (fase 1) ou já com **upload/storage** (fase 2), eu já te passo a estrutura inicial do projeto backend (pastas, dependências e primeiros controllers/services) e o cliente HTTP no React.

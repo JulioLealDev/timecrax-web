@@ -148,65 +148,68 @@ export function ProfilePage() {
            ========================= */}
         {isStudent && (
           <>
-            <div className="student-header">
-              <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
-                {/* imagem */}
-                {user.picture ? (
-                  <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
-                ) : (
-                  <div className="avatar-fallback" aria-label="Sem foto">
-                    <span className="avatar-initials">
-                      {(user.firstName?.[0] ?? "U").toUpperCase()}
-                      {(user.lastName?.[0] ?? "").toUpperCase()}
-                    </span>
+            <div className="profile-header-new">
+              <div className="profile-left">
+                <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
+                  {/* imagem */}
+                  {user.picture ? (
+                    <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
+                  ) : (
+                    <div className="avatar-fallback" aria-label="Sem foto">
+                      <span className="avatar-initials">
+                        {(user.firstName?.[0] ?? "U").toUpperCase()}
+                        {(user.lastName?.[0] ?? "").toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* overlay hover */}
+                  <div className="avatar-overlay">
+                    <span className="avatar-overlay-text">Editar imagem</span>
                   </div>
-                )}
 
-                {/* overlay hover */}
-                <div className="avatar-overlay">
-                  <span className="avatar-overlay-text">Editar imagem</span>
+                  {/* input file escondido */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="avatar-file"
+                    onChange={handleImageSelected}
+                  />
+
+                  {isUploading && <div className="profile-hint">Enviando imagem...</div>}
+                  {uploadError && <div className="profile-error">{uploadError}</div>}
                 </div>
 
-                {/* input file escondido */}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="avatar-file"
-                  onChange={handleImageSelected}
-                />
-
-                {isUploading && <div className="profile-hint">Enviando imagem...</div>}
-                {uploadError && <div className="profile-error">{uploadError}</div>}
-
-              </div>
-
-              <div className="student-meta">
-                <div className="student-name-row">
-                  <h1 className="student-name" title={displayName}>
-                    {displayName}
-                  </h1>
-
-                  <button
-                    type="button"
-                    className="icon-edit"
-                    onClick={() => setIsEditingProfile(true)}
-                    aria-label="Editar informações do perfil"
-                    title="Editar perfil"
-                  >
-                    ✎
-                  </button>
+                <div className="profile-info">
+                  <div className="profile-name-row">
+                    <h1 className="profile-name" title={displayName}>
+                      {displayName}
+                    </h1>
+                    <button
+                      type="button"
+                      className="icon-edit"
+                      onClick={() => setIsEditingProfile(true)}
+                      aria-label="Editar informações do perfil"
+                      title="Editar perfil"
+                    >
+                      ✎
+                    </button>
+                  </div>
+                  <p className="profile-role">Estudante</p>
                 </div>
-
-                <p className="student-school" title={user.schoolName ?? ""}>
-                  {user.schoolName || "Escola não informada"}
-                </p>
-
-                <p className="student-score">
-                  Score: <span className="student-score-value">{user.score ?? 0}</span>
-                </p>
-
               </div>
+
+              <div className="profile-right">
+                <p className="profile-score-label">Score:</p>
+                <p className="profile-score-value">{user.score ?? 0}</p>
+              </div>
+            </div>
+
+            <div className="profile-school-row">
+              <p className="profile-school" title={user.schoolName ?? ""}>
+                {user.schoolName || "Escola não informada"}
+              </p>
             </div>
 
             {/* Painel de edição (abre ao clicar no ícone) */}
@@ -265,65 +268,68 @@ export function ProfilePage() {
            ========================= */}
         {isTeacher && (
           <>
-            <div className="student-header">
-              <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
-                {/* imagem */}
-                {user.picture ? (
-                  <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
-                ) : (
-                  <div className="avatar-fallback" aria-label="Sem foto">
-                    <span className="avatar-initials">
-                      {(user.firstName?.[0] ?? "U").toUpperCase()}
-                      {(user.lastName?.[0] ?? "").toUpperCase()}
-                    </span>
+            <div className="profile-header-new">
+              <div className="profile-left">
+                <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
+                  {/* imagem */}
+                  {user.picture ? (
+                    <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
+                  ) : (
+                    <div className="avatar-fallback" aria-label="Sem foto">
+                      <span className="avatar-initials">
+                        {(user.firstName?.[0] ?? "U").toUpperCase()}
+                        {(user.lastName?.[0] ?? "").toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* overlay hover */}
+                  <div className="avatar-overlay">
+                    <span className="avatar-overlay-text">Editar imagem</span>
                   </div>
-                )}
 
-                {/* overlay hover */}
-                <div className="avatar-overlay">
-                  <span className="avatar-overlay-text">Editar imagem</span>
+                  {/* input file escondido */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="avatar-file"
+                    onChange={handleImageSelected}
+                  />
+
+                  {isUploading && <div className="profile-hint">Enviando imagem...</div>}
+                  {uploadError && <div className="profile-error">{uploadError}</div>}
                 </div>
 
-                {/* input file escondido */}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="avatar-file"
-                  onChange={handleImageSelected}
-                />
-
-                {isUploading && <div className="profile-hint">Enviando imagem...</div>}
-                {uploadError && <div className="profile-error">{uploadError}</div>}
-
-              </div>
-
-              <div className="student-meta">
-                <div className="student-name-row">
-                  <h1 className="student-name" title={displayName}>
-                    {displayName}
-                  </h1>
-
-                  <button
-                    type="button"
-                    className="icon-edit"
-                    onClick={() => setIsEditingProfile(true)}
-                    aria-label="Editar informações do perfil"
-                    title="Editar perfil"
-                  >
-                    ✎
-                  </button>
+                <div className="profile-info">
+                  <div className="profile-name-row">
+                    <h1 className="profile-name" title={displayName}>
+                      {displayName}
+                    </h1>
+                    <button
+                      type="button"
+                      className="icon-edit"
+                      onClick={() => setIsEditingProfile(true)}
+                      aria-label="Editar informações do perfil"
+                      title="Editar perfil"
+                    >
+                      ✎
+                    </button>
+                  </div>
+                  <p className="profile-role">Professor</p>
                 </div>
-
-                <p className="student-school" title={user.schoolName ?? ""}>
-                  {user.schoolName || "Escola não informada"}
-                </p>
-
-                <p className="student-role">
-                  Professor
-                </p>
-
               </div>
+
+              <div className="profile-right">
+                <p className="profile-score-label">Score:</p>
+                <p className="profile-score-value">{user.score ?? 0}</p>
+              </div>
+            </div>
+
+            <div className="profile-school-row">
+              <p className="profile-school" title={user.schoolName ?? ""}>
+                {user.schoolName || "Escola não informada"}
+              </p>
             </div>
 
             {/* Link para Create Theme (só para professor) */}

@@ -431,12 +431,85 @@
   letter-spacing: 0.08em;
 }
 
-.student-role {
+/* NEW HEADER LAYOUT ========================================== */
+
+.profile-header-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.profile-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 1;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.profile-name {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: #f9fafb;
+  font-weight: 600;
+}
+
+.profile-role {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.0rem;
+  font-size: 0.95rem;
   color: #e5d0a1;
   font-style: italic;
+}
+
+.profile-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.profile-score-label {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: #f9fafb;
+}
+
+.profile-score-value {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: #facc6b;
+  font-weight: 700;
+}
+
+.profile-school-row {
+  padding-top: 0.8rem;
+}
+
+.profile-school {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  color: #d6d6d6;
 }
 
 /* TEACHER ACTIONS ============================================ */
@@ -479,6 +552,20 @@
 
 
 @media (max-width: 720px) {
+  .profile-header-new {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .profile-left {
+    width: 100%;
+  }
+
+  .profile-right {
+    align-self: flex-end;
+  }
+
   .student-header {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -491,6 +578,26 @@
 
   .teacher-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header-new {
+    gap: 0.8rem;
+  }
+
+  .profile-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .profile-name {
+    font-size: 1.25rem;
+  }
+
+  .profile-score-value {
+    font-size: 1.5rem;
   }
 }
 

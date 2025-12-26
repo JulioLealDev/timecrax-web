@@ -19,7 +19,7 @@
 /* CARD ======================================================= */
 
 .profile-card {
-  width: min(620px, 94vw);
+  width: min(80vw, 1200px);
   padding: 1.6rem 1.6rem 1.5rem;
 
   border-radius: 16px;
@@ -478,6 +478,13 @@
   font-style: italic;
 }
 
+.profile-school {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.95rem;
+  color: #d6d6d6;
+}
+
 .profile-right {
   display: flex;
   align-items: baseline;
@@ -499,17 +506,6 @@
   letter-spacing: 0.08em;
   color: #facc6b;
   font-weight: 700;
-}
-
-.profile-school-row {
-  padding-top: 0.8rem;
-}
-
-.profile-school {
-  margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.05rem;
-  color: #d6d6d6;
 }
 
 /* TEACHER ACTIONS ============================================ */

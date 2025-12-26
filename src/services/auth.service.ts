@@ -51,6 +51,8 @@ function toAbsoluteUrl(pathOrUrl?: string | null) {
 }
 
 function normalizeUser(u: any): UserDto {
+  const achievements = u?.achievements ?? u?.Achievements;
+
   return {
     id: u?.id ?? u?.userId ?? u?.Id,
     email: u?.email ?? u?.Email,
@@ -60,6 +62,13 @@ function normalizeUser(u: any): UserDto {
     schoolName: u?.schoolName ?? u?.SchoolName ?? null,
     picture: toAbsoluteUrl(u?.picture ?? u?.Picture ?? null),
     score: u?.score ?? u?.Score,
+    achievements: achievements ? achievements.map((a: any) => ({
+      id: a?.id ?? a?.Id,
+      name: a?.name ?? a?.Name,
+      image: a?.image ?? a?.Image,
+      description: a?.description ?? a?.Description,
+      unlockedAt: a?.unlockedAt ?? a?.UnlockedAt ?? null,
+    })) : undefined,
   };
 }
 

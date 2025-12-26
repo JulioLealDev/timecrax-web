@@ -197,6 +197,9 @@ export function ProfilePage() {
                     </button>
                   </div>
                   <p className="profile-role">Estudante</p>
+                  <p className="profile-school" title={user.schoolName ?? ""}>
+                    {user.schoolName || "Escola não informada"}
+                  </p>
                 </div>
               </div>
 
@@ -204,12 +207,6 @@ export function ProfilePage() {
                 <p className="profile-score-label">Score:</p>
                 <p className="profile-score-value">{user.score ?? 0}</p>
               </div>
-            </div>
-
-            <div className="profile-school-row">
-              <p className="profile-school" title={user.schoolName ?? ""}>
-                {user.schoolName || "Escola não informada"}
-              </p>
             </div>
 
             {/* Painel de edição (abre ao clicar no ícone) */}
@@ -317,6 +314,9 @@ export function ProfilePage() {
                     </button>
                   </div>
                   <p className="profile-role">Professor</p>
+                  <p className="profile-school" title={user.schoolName ?? ""}>
+                    {user.schoolName || "Escola não informada"}
+                  </p>
                 </div>
               </div>
 
@@ -324,12 +324,6 @@ export function ProfilePage() {
                 <p className="profile-score-label">Score:</p>
                 <p className="profile-score-value">{user.score ?? 0}</p>
               </div>
-            </div>
-
-            <div className="profile-school-row">
-              <p className="profile-school" title={user.schoolName ?? ""}>
-                {user.schoolName || "Escola não informada"}
-              </p>
             </div>
 
             {/* Link para Create Theme (só para professor) */}

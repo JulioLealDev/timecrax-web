@@ -348,26 +348,36 @@ export function CreateThemePage() {
       // arquivo principal
       if (!card.imageFile) throw new Error("Imagem principal da carta é obrigatória.");
 
-      // 1) upload imagem principal
-      const main = await themeAssetsService.uploadOne(assetsSessionId, card.imageFile, slotCard(i));
-
-      // 2) upload imageQuiz (4)
-      const imageQuizUrls: string[] = [];
+      // Valida se todos os arquivos existem antes de fazer upload
       for (let k = 0; k < 4; k++) {
-        const f = card.imageQuiz.options[k]?.imageFile;
-        if (!f) throw new Error(`Imagem da opção ${k + 1} do Image Quiz é obrigatória.`);
-        const up = await themeAssetsService.uploadOne(assetsSessionId, f, slotImageQuiz(i, k));
-        imageQuizUrls[k] = up.url;
+        if (!card.imageQuiz.options[k]?.imageFile) {
+          throw new Error(`Imagem da opção ${k + 1} do Image Quiz é obrigatória.`);
+        }
+      }
+      for (let k = 0; k < 3; k++) {
+        if (!card.correlationQuiz.items[k]?.imageFile) {
+          throw new Error(`Imagem ${k + 1} do Correlation é obrigatória.`);
+        }
       }
 
-      // 3) upload correlation (3)
-      const corrUrls: string[] = [];
-      for (let k = 0; k < 3; k++) {
-        const f = card.correlationQuiz.items[k]?.imageFile;
-        if (!f) throw new Error(`Imagem ${k + 1} do Correlation é obrigatória.`);
-        const up = await themeAssetsService.uploadOne(assetsSessionId, f, slotCorr(i, k));
-        corrUrls[k] = up.url;
-      }
+      // Upload de todas as 8 imagens em paralelo
+      const [mainResult, ...restResults] = await Promise.all([
+        // 1) Imagem principal
+        themeAssetsService.uploadOne(assetsSessionId, card.imageFile, slotCard(i)),
+        // 2) ImageQuiz (4 imagens)
+        ...card.imageQuiz.options.map((opt, k) =>
+          themeAssetsService.uploadOne(assetsSessionId, opt.imageFile!, slotImageQuiz(i, k))
+        ),
+        // 3) Correlation (3 imagens)
+        ...card.correlationQuiz.items.map((item, k) =>
+          themeAssetsService.uploadOne(assetsSessionId, item.imageFile!, slotCorr(i, k))
+        ),
+      ]);
+
+      // Extrai URLs dos resultados
+      const main = mainResult;
+      const imageQuizUrls = restResults.slice(0, 4).map((r) => r.url);
+      const corrUrls = restResults.slice(4, 7).map((r) => r.url);
 
       // monta card salvo com URLs reais
       const newCard: SavedCard = {

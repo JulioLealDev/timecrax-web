@@ -265,38 +265,75 @@ export function ProfilePage() {
            ========================= */}
         {isTeacher && (
           <>
-            <header className="profile-header">
-              <h1 className="profile-title">Área do Professor</h1>
-              <p className="profile-subtitle">Gerencie seus dados e recursos do TimeCrax</p>
-            </header>
+            <div className="student-header">
+              <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
+                {/* imagem */}
+                {user.picture ? (
+                  <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
+                ) : (
+                  <div className="avatar-fallback" aria-label="Sem foto">
+                    <span className="avatar-initials">
+                      {(user.firstName?.[0] ?? "U").toUpperCase()}
+                      {(user.lastName?.[0] ?? "").toUpperCase()}
+                    </span>
+                  </div>
+                )}
 
-            {/* Exemplo: para teacher, você pode mostrar cards/ações */}
-            <div className="teacher-grid">
-              <div className="teacher-card">
-                <h2 className="teacher-card-title">Perfil</h2>
-                <p className="teacher-card-text">
-                  {displayName}
-                  {user.schoolName ? ` • ${user.schoolName}` : ""}
-                </p>
+                {/* overlay hover */}
+                <div className="avatar-overlay">
+                  <span className="avatar-overlay-text">Editar imagem</span>
+                </div>
 
-                <button
-                  type="button"
-                  className="profile-button primary"
-                  onClick={() => setIsEditingProfile(true)}
-                >
-                  Editar dados
-                </button>
+                {/* input file escondido */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="avatar-file"
+                  onChange={handleImageSelected}
+                />
+
+                {isUploading && <div className="profile-hint">Enviando imagem...</div>}
+                {uploadError && <div className="profile-error">{uploadError}</div>}
+
               </div>
 
-              <div className="teacher-card">
-                <h2 className="teacher-card-title">Ferramentas</h2>
-                <p className="teacher-card-text">Acesso a criação e gestão de temas.</p>
-                <a className="teacher-link" href="/create-theme">
-                  Ir para Create Theme
-                </a>
+              <div className="student-meta">
+                <div className="student-name-row">
+                  <h1 className="student-name" title={displayName}>
+                    {displayName}
+                  </h1>
+
+                  <button
+                    type="button"
+                    className="icon-edit"
+                    onClick={() => setIsEditingProfile(true)}
+                    aria-label="Editar informações do perfil"
+                    title="Editar perfil"
+                  >
+                    ✎
+                  </button>
+                </div>
+
+                <p className="student-school" title={user.schoolName ?? ""}>
+                  {user.schoolName || "Escola não informada"}
+                </p>
+
+                <p className="student-role">
+                  Professor
+                </p>
+
               </div>
             </div>
 
+            {/* Link para Create Theme (só para professor) */}
+            <div className="teacher-actions">
+              <a className="teacher-link" href="/create-theme">
+                📝 Ir para Create Theme
+              </a>
+            </div>
+
+            {/* Painel de edição (abre ao clicar no ícone) */}
             {isEditingProfile && (
               <form className="profile-form" onSubmit={handleSaveProfile}>
                 <div className="profile-row">
@@ -305,6 +342,7 @@ export function ProfilePage() {
                     className="profile-input"
                     value={form.firstName}
                     onChange={(e) => handleChange("firstName", e.target.value)}
+                    disabled={!isEditingProfile || isSavingProfile}
                   />
                 </div>
 
@@ -314,6 +352,7 @@ export function ProfilePage() {
                     className="profile-input"
                     value={form.lastName}
                     onChange={(e) => handleChange("lastName", e.target.value)}
+                    disabled={!isEditingProfile || isSavingProfile}
                   />
                 </div>
 
@@ -323,17 +362,18 @@ export function ProfilePage() {
                     className="profile-input"
                     value={form.schoolName}
                     onChange={(e) => handleChange("schoolName", e.target.value)}
+                    disabled={!isEditingProfile || isSavingProfile}
                   />
                 </div>
 
                 {profileError && <div className="profile-error">{profileError}</div>}
 
                 <div className="profile-actions">
-                  <button type="submit" className="profile-button primary">
-                    Salvar
+                  <button type="submit" className="profile-button primary" disabled={isSavingProfile}>
+                    {isSavingProfile ? "Salvando..." : "Salvar"}
                   </button>
 
-                  <button type="button" className="profile-button secondary" onClick={handleCancelProfile}>
+                  <button type="button" className="profile-button secondary" onClick={handleCancelProfile} disabled={isSavingProfile}>
                     Cancelar
                   </button>
                 </div>

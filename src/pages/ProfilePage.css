@@ -439,7 +439,6 @@
   align-items: center;
   gap: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 .profile-left {
@@ -508,6 +507,24 @@
   font-weight: 700;
 }
 
+.profile-medal {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-medal-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(250, 204, 107, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.profile-medal-image:hover {
+  transform: scale(1.1);
+}
+
 /* ACHIEVEMENTS =============================================== */
 
 .achievements-section {
@@ -541,7 +558,6 @@
   overflow: hidden;
   cursor: help;
   transition: transform 0.2s ease, filter 0.2s ease;
-  border: 2px solid rgba(250, 204, 107, 0.3);
 }
 
 .achievement-item.locked {
@@ -549,10 +565,6 @@
   opacity: 0.6;
 }
 
-.achievement-item.unlocked {
-  border-color: rgba(250, 204, 107, 0.8);
-  box-shadow: 0 0 12px rgba(250, 204, 107, 0.4);
-}
 
 .achievement-item.unlocked:hover {
   transform: scale(1.05);

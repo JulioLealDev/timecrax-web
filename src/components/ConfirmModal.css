@@ -1,0 +1,112 @@
+.confirm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirm-modal-content {
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  min-width: 320px;
+  max-width: 450px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.confirm-modal-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #facc6b;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.confirm-modal-message {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  color: #f9fafb;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.confirm-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-modal-btn {
+  padding: 0.7rem 1.5rem;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 110px;
+}
+
+.cancel-btn {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.cancel-btn:hover {
+  background: rgba(148, 163, 184, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.confirm-btn {
+  background: radial-gradient(circle at 30% 0, #f87171 0, #dc2626 55%, #7f1d1d 100%);
+  color: #fff;
+  border: 2px solid rgba(248, 113, 113, 0.85);
+}
+
+.confirm-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+}
+
+.confirm-modal-btn:active {
+  transform: scale(0.95);
+}

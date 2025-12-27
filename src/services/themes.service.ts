@@ -46,7 +46,10 @@ export type ThemeResponse = {
   id: string;
   name: string;
   image?: string | null;
+  readyToPlay?: boolean;
 };
+
+export type UserThemesResponse = ThemeResponse[];
 
 export const themesService = {
   async createTheme(payload: CreateThemeRequest): Promise<ThemeResponse> {
@@ -65,5 +68,17 @@ export const themesService = {
 
   async getTheme(id: string): Promise<any> {
     return await apiRequest<any>(`/themes/${id}`, { method: "GET" });
+  },
+
+  async getUserThemes(): Promise<UserThemesResponse> {
+    return await apiRequest<UserThemesResponse>("/themes/my-themes", {
+      method: "GET",
+    });
+  },
+
+  async deleteTheme(id: string): Promise<void> {
+    await apiRequest<void>(`/themes/${id}`, {
+      method: "DELETE",
+    });
   },
 };

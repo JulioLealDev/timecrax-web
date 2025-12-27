@@ -1,0 +1,199 @@
+.theme-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.theme-ready-to-play {
+  font-family: "Cinzel", serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #facc6b;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.theme-item {
+  position: relative;
+  aspect-ratio: 5/6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  overflow: visible;
+}
+
+.theme-item-content {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.theme-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.theme-actions {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  z-index: 10;
+}
+
+.theme-action-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, filter 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Tooltip customizado para os botões de ação */
+.theme-action-btn[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.5rem 0.9rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  color: #f9fafb;
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10000;
+}
+
+/* Seta do tooltip */
+.theme-action-btn[data-tooltip]::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 10px 6px 0 6px;
+  border-style: solid;
+  border-color: rgba(250, 204, 107, 0.4) transparent transparent transparent;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10001;
+}
+
+.theme-action-btn:hover::before,
+.theme-action-btn:hover::after {
+  opacity: 1;
+}
+
+.delete-btn {
+  border: 2px solid rgba(248, 113, 113, 0.85);
+  background: radial-gradient(circle at 30% 0, #f87171 0, #dc2626 55%, #7f1d1d 100%);
+}
+
+.edit-btn {
+  border: 2px solid rgba(250, 204, 107, 0.85);
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+}
+
+.theme-action-btn:hover {
+  filter: brightness(1.2);
+  transform: scale(1.1);
+}
+
+.theme-action-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-item:hover:not(.active) {
+  transform: scale(1.05);
+}
+
+.theme-item:hover:not(.active) .theme-image,
+.theme-item:hover:not(.active) .theme-frame {
+  filter: brightness(1.1);
+}
+
+.theme-item:focus-visible {
+  outline: 2px solid #facc6b;
+  outline-offset: 2px;
+}
+
+.theme-image {
+  position: absolute;
+  inset: 1% 1% 28% 1%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1;
+  transition: filter 0.2s ease;
+}
+
+.theme-item.active .theme-image,
+.theme-item.active .theme-frame {
+  filter: brightness(0.6);
+}
+
+.theme-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.theme-name {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f9fafb;
+  text-align: center;
+  padding: 0 0.25rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  line-height: 1.3;
+}

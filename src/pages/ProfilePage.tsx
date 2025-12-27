@@ -249,15 +249,40 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
             <div className="completed-themes-section">
               <h2 className="completed-themes-title">Completed Themes</h2>
               <div className="completed-themes-grid">
-                {Array.from({ length: 16 }).map((_, index) => (
-                  <div key={index} className="completed-theme-item">
-                    <img
-                      src={imageTemplate}
-                      alt={`Theme ${index + 1}`}
-                      className="completed-theme-image"
-                    />
-                  </div>
-                ))}
+                {(() => {
+                  const completedCount = user.completedThemes?.length ?? 0;
+                  const itemsPerRow = 8;
+                  const minRows = 1;
+                  const minItems = itemsPerRow * minRows; // 8
+
+                  // Calcula quantas rows são necessárias para que o número de items seja maior que completedCount
+                  const requiredRows = Math.ceil((completedCount + 1) / itemsPerRow);
+                  const totalRows = Math.max(minRows, requiredRows);
+                  const totalItems = totalRows * itemsPerRow;
+
+                  return Array.from({ length: totalItems }).map((_, index) => {
+                    const completedTheme = user.completedThemes?.[index];
+                    return (
+                      <div
+                        key={index}
+                        className={`completed-theme-item ${!completedTheme ? 'empty' : ''}`}
+                        data-tooltip={completedTheme?.name ?? `Theme ${index + 1}`}
+                      >
+                        {completedTheme && (
+                          <div
+                            className="completed-theme-user-image"
+                            style={{ backgroundImage: `url(${completedTheme.image})` }}
+                          />
+                        )}
+                        <img
+                          src={imageTemplate}
+                          alt="Theme frame"
+                          className="completed-theme-frame"
+                        />
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </div>
 
@@ -417,23 +442,41 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
             <div className="completed-themes-section">
               <h2 className="completed-themes-title">Completed Themes</h2>
               <div className="completed-themes-grid">
-                {Array.from({ length: 16 }).map((_, index) => (
-                  <div key={index} className="completed-theme-item">
-                    <img
-                      src={imageTemplate}
-                      alt={`Theme ${index + 1}`}
-                      className="completed-theme-image"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+                {(() => {
+                  const completedCount = user.completedThemes?.length ?? 0;
+                  const itemsPerRow = 8;
+                  const minRows = 1;
+                  const minItems = itemsPerRow * minRows; // 8
 
-            {/* Link para Create Theme (só para professor) */}
-            <div className="teacher-actions">
-              <a className="teacher-link" href="/create-theme">
-                📝 Ir para Create Theme
-              </a>
+                  // Calcula quantas rows são necessárias para que o número de items seja maior que completedCount
+                  const requiredRows = Math.ceil((completedCount + 1) / itemsPerRow);
+                  const totalRows = Math.max(minRows, requiredRows);
+                  const totalItems = totalRows * itemsPerRow;
+
+                  return Array.from({ length: totalItems }).map((_, index) => {
+                    const completedTheme = user.completedThemes?.[index];
+                    return (
+                      <div
+                        key={index}
+                        className={`completed-theme-item ${!completedTheme ? 'empty' : ''}`}
+                        data-tooltip={completedTheme?.name ?? `Theme ${index + 1}`}
+                      >
+                        {completedTheme && (
+                          <div
+                            className="completed-theme-user-image"
+                            style={{ backgroundImage: `url(${completedTheme.image})` }}
+                          />
+                        )}
+                        <img
+                          src={imageTemplate}
+                          alt="Theme frame"
+                          className="completed-theme-frame"
+                        />
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
             </div>
 
             {/* Painel de edição (abre ao clicar no ícone) */}

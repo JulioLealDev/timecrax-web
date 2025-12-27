@@ -206,11 +206,10 @@ export function ProfilePage() {
 
               <div className="profile-right">
                 {user.currentMedal && (
-                  <div className="profile-medal">
+                  <div className="profile-medal" data-tooltip={user.currentMedal.name}>
                     <img
                       src={user.currentMedal.image}
                       alt={user.currentMedal.name}
-                      title={`${user.currentMedal.name} (${user.currentMedal.minScore}+ pontos)`}
                       className="profile-medal-image"
                     />
                   </div>
@@ -377,11 +376,10 @@ export function ProfilePage() {
 
               <div className="profile-right">
                 {user.currentMedal && (
-                  <div className="profile-medal">
+                  <div className="profile-medal" data-tooltip={user.currentMedal.name}>
                     <img
                       src={user.currentMedal.image}
                       alt={user.currentMedal.name}
-                      title={`${user.currentMedal.name} (${user.currentMedal.minScore}+ pontos)`}
                       className="profile-medal-image"
                     />
                   </div>

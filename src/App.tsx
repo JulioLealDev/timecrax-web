@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { CreateThemePage } from "./pages/CreateThemePage";
@@ -16,11 +16,14 @@ import "./App.css";
 
 
 function App() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/" || location.pathname === "/register";
+
   return (
     <>
       <NavBar />
-      <Sidebar />
-      <div className="main-content">
+      {!isHomePage && <Sidebar />}
+      <div className={`main-content ${!isHomePage ? 'with-sidebar' : ''}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -30,12 +33,12 @@ function App() {
             <Route path="/themes" element={<ThemesPage />} />
             <Route path="/ranking" element={<RankingPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/themes-storage" element={<ThemesStoragePage />} />
           </Route>
 
           <Route element={<RoleProtectedRoute allowedRoles={["teacher"]} />}>
             <Route path="/create-theme" element={<CreateThemePage />} />
             <Route path="/my-themes" element={<MyThemesPage />} />
-            <Route path="/themes-storage" element={<ThemesStoragePage />} />
           </Route>
         </Routes>
       </div>

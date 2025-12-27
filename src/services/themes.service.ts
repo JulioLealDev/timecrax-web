@@ -32,12 +32,14 @@ export type ThemeCardRequest = {
 
 export type CreateThemeRequest = {
   name: string;
+  resume?: string | null;
   image?: string | null;
   cards: ThemeCardRequest[];
 };
 
 export type UpdateThemeRequest = {
   name?: string;
+  resume?: string | null;
   image?: string | null;
   cards?: ThemeCardRequest[];
 };
@@ -47,6 +49,8 @@ export type ThemeResponse = {
   name: string;
   image?: string | null;
   readyToPlay?: boolean;
+  creatorName?: string;
+  createdAt?: string;
 };
 
 export type UserThemesResponse = ThemeResponse[];
@@ -79,6 +83,12 @@ export const themesService = {
   async deleteTheme(id: string): Promise<void> {
     await apiRequest<void>(`/themes/${id}`, {
       method: "DELETE",
+    });
+  },
+
+  async getThemesStorage(): Promise<ThemeResponse[]> {
+    return await apiRequest<ThemeResponse[]>("/themes/storage", {
+      method: "GET",
     });
   },
 };

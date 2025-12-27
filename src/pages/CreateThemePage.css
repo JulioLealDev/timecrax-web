@@ -645,6 +645,28 @@
   user-select: none;
 }
 
+/* Tooltip customizado para o info icon - mesmo estilo de MyThemesPage */
+.info-icon[data-tooltip]::before {
+  white-space: pre;
+  text-align: left;
+  left: calc(100% + 12px);
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  max-width: none;
+  width: max-content;
+  line-height: 1.6;
+}
+
+.info-icon[data-tooltip]::after {
+  left: calc(100% + 2px);
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  border-width: 6px 10px 6px 0;
+  border-color: transparent rgba(250, 204, 107, 0.4) transparent transparent;
+}
+
 .tooltip-box {
   position: absolute;
   left: 0;
@@ -679,12 +701,13 @@
 
 .added-cards-grid {
   display: grid;
-  grid-template-columns: repeat(20, 1fr); /* 20x1 */
+  grid-template-columns: repeat(10, 1fr); /* 10x2 (2 linhas de 10) */
   gap: 0.6rem;
   align-items: start;
 }
 
 .added-card-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -717,6 +740,21 @@
 
 .added-card-thumb.filled:hover {
   transform: translateY(-2px);
+}
+
+/* Carta selecionada: levemente escurecida */
+.added-card-thumb.selected {
+  position: relative;
+}
+
+.added-card-thumb.selected::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  z-index: 5;
+  pointer-events: none;
 }
 
 .added-card-frame.selected {
@@ -805,19 +843,28 @@
 .theme-top-row {
   display: grid;
   grid-template-columns: 1fr 220px;
+  grid-template-rows: auto auto;
   column-gap: 5rem;
+  row-gap: 1.5rem;
   align-items: start;
 }
 
 .theme-name-field {
   margin: 0;
   display: grid;
-  grid-template-rows: auto 150px;
+  grid-template-rows: auto 1fr;
   row-gap: 0.55rem;
 }
 
 .theme-name-field .field-input {
   align-self: center;
+}
+
+.theme-resume-field {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 0.55rem;
 }
 
 .theme-image-field {
@@ -828,6 +875,8 @@
   min-width: 0;
   align-items: center;
   justify-items: center;
+  grid-row: 1 / 3;
+  grid-column: 2;
 }
 
 .theme-image-circle {
@@ -852,6 +901,11 @@
 
 .theme-image-circle:active {
   transform: scale(0.98);
+}
+
+.theme-image-circle.is-invalid {
+  border-color: rgba(248, 113, 113, 0.95) !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.4), 0 6px 18px rgba(0, 0, 0, 0.75);
 }
 
 .theme-image-preview {
@@ -918,9 +972,14 @@
 }
 
 .card-actions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
-  gap: 0.4rem;
+  gap: 0.8rem;
   align-items: center;
+  z-index: 20;
 }
 
 .edit-card-button,
@@ -960,11 +1019,29 @@
   transform: scale(0.95);
 }
 
-@media (max-width: 1200px) {
+/* Tooltip abaixo para botões de ação dos added-cards */
+.edit-card-button[data-tooltip]::before,
+.delete-card-button[data-tooltip]::before {
+  bottom: auto;
+  top: calc(100% + 12px);
+}
+
+.edit-card-button[data-tooltip]::after,
+.delete-card-button[data-tooltip]::after {
+  bottom: auto;
+  top: calc(100% + 2px);
+  border-width: 0 6px 10px 6px;
+  border-color: transparent transparent rgba(250, 204, 107, 0.4) transparent;
+}
+
+/* Telas muito grandes: 1 linha de 20 */
+@media (min-width: 1800px) {
   .added-cards-grid {
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(20, 1fr);
   }
 }
+
+/* Padrão já é 10 colunas (2 linhas) - não precisa de media query */
 
 @media (max-width: 700px) {
   .added-cards-grid {

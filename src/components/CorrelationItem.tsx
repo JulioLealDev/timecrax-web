@@ -80,6 +80,7 @@ export function CorrelationRow({
         onChange={(e) => onTextChange(e.target.value)}
         placeholder={`Text ${index + 1}`}
         rows={3}
+        maxLength={150}
       />
     </div>
   );

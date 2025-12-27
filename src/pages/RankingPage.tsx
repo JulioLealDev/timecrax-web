@@ -1,8 +1,144 @@
+import { useEffect, useState, useRef } from "react";
+import { meService, type RankingUser } from "../services/me.service";
+import { authService } from "../services/auth.service";
+import "./RankingPage.css";
+
 export function RankingPage() {
+  const [users, setUsers] = useState<RankingUser[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const currentUserRef = useRef<HTMLDivElement>(null);
+
+  const itemsPerPage = 50;
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedUsers = users.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    async function loadRanking() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Load current user and ranking in parallel
+        const [me, ranking] = await Promise.all([
+          authService.me(),
+          meService.getRanking()
+        ]);
+
+        const userId = me.id ?? null;
+        setCurrentUserId(userId);
+        setUsers(ranking);
+
+        // Navegar para a página do usuário logado
+        if (userId) {
+          const userIndex = ranking.findIndex(u => u.id === userId);
+          if (userIndex !== -1) {
+            const userPage = Math.floor(userIndex / itemsPerPage) + 1;
+            setCurrentPage(userPage);
+          }
+        }
+      } catch (err: any) {
+        setError(err?.message ?? "Failed to load ranking");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadRanking();
+  }, []);
+
+  // Scroll para o item do usuário logado após carregar
+  useEffect(() => {
+    if (!isLoading && currentUserId && currentUserRef.current) {
+      setTimeout(() => {
+        currentUserRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 100);
+    }
+  }, [isLoading, currentUserId, currentPage]);
+
+  function getRankClass(index: number): string {
+    if (index === 0) return "rank-1";
+    if (index === 1) return "rank-2";
+    if (index === 2) return "rank-3";
+    return "rank-other";
+  }
+
+  function getMedalEmoji(index: number): string {
+    if (index === 0) return "🥇";
+    if (index === 1) return "🥈";
+    if (index === 2) return "🥉";
+    return "";
+  }
+
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Ranking</h1>
-      <p>Ranking dos estudantes será exibido aqui.</p>
+    <div className="ranking-page">
+      <h1 className="ranking-title">Ranking</h1>
+
+      <div className="ranking-card">
+        <div className="ranking-container">
+          {isLoading ? (
+            <div className="ranking-loading">Loading ranking...</div>
+          ) : error ? (
+            <div className="ranking-error">{error}</div>
+          ) : users.length === 0 ? (
+            <div className="ranking-empty">No users found.</div>
+          ) : (
+            <>
+              <div className="ranking-list">
+                {displayedUsers.map((user, pageIndex) => {
+                  const actualIndex = startIndex + pageIndex;
+                  const isCurrentUser = user.id === currentUserId;
+                  return (
+                    <div
+                      key={user.id}
+                      ref={isCurrentUser ? currentUserRef : null}
+                      className={`ranking-item ${getRankClass(actualIndex)} ${isCurrentUser ? 'current-user' : ''}`}
+                    >
+                      <div className="ranking-position">
+                        <span className="medal">{getMedalEmoji(actualIndex)}</span>
+                        <span className="position-number">#{actualIndex + 1}</span>
+                      </div>
+                      <div className="ranking-name">{user.name}</div>
+                      <div className="ranking-score">{user.score} pts</div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="ranking-pagination">
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </button>
+
+                  <span className="pagination-info">
+                    Page {currentPage} of {totalPages}
+                  </span>
+
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

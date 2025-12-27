@@ -26,10 +26,10 @@ export function Sidebar() {
         {isStudent && (
           <>
             <Link
-              to="/themes"
-              className={`sidebar-link ${isActive("/themes") ? "active" : ""}`}
+              to="/themes-storage"
+              className={`sidebar-link ${isActive("/themes-storage") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Storage Themes</span>
+              <span className="sidebar-label">Themes Storage</span>
             </Link>
 
             <Link

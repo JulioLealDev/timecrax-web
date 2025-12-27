@@ -2,6 +2,7 @@ import { apiRequest } from "./api";
 
 export type CreateSessionResponse = {
   sessionId: string;
+  themeId?: string;
   createdAt: string;
 };
 
@@ -11,9 +12,11 @@ export type UploadAssetResponse = {
 };
 
 export const themeAssetsService = {
-  async createSession(): Promise<CreateSessionResponse> {
+  async createSession(themeId?: string): Promise<CreateSessionResponse> {
     return await apiRequest<CreateSessionResponse>("/theme-assets/sessions", {
       method: "POST",
+      body: themeId ? JSON.stringify({ themeId }) : undefined,
+      headers: themeId ? { "Content-Type": "application/json" } : undefined,
     });
   },
 

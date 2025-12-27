@@ -518,6 +518,7 @@
   margin-bottom: 0.8rem;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .profile-medal-image {
@@ -530,6 +531,61 @@
 
 .profile-medal-image:hover {
   transform: scale(1.1);
+}
+
+/* Custom Tooltip */
+.profile-medal[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.5rem 0.9rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  color: #f9fafb;
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* Tooltip arrow */
+.profile-medal[data-tooltip]::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 0 6px 10px 6px;
+  border-style: solid;
+  border-color: transparent transparent rgba(250, 204, 107, 0.4) transparent;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1001;
+}
+
+.profile-medal:hover::before,
+.profile-medal:hover::after {
+  opacity: 1;
 }
 
 /* ACHIEVEMENTS =============================================== */

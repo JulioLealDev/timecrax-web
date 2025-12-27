@@ -217,8 +217,6 @@ export function ProfilePage() {
               </div>
 
               <div className="profile-right">
-                <p className="profile-score-label">Score:</p>
-                <p className="profile-score-value">{user.score ?? 0}</p>
                 {currentMedal && (
                   <div className="profile-medal">
                     <img
@@ -229,6 +227,8 @@ export function ProfilePage() {
                     />
                   </div>
                 )}
+                <p className="profile-score-label">Score:</p>
+                <p className="profile-score-value">{user.score ?? 0}</p>
               </div>
             </div>
 
@@ -386,8 +386,6 @@ export function ProfilePage() {
               </div>
 
               <div className="profile-right">
-                <p className="profile-score-label">Score:</p>
-                <p className="profile-score-value">{user.score ?? 0}</p>
                 {currentMedal && (
                   <div className="profile-medal">
                     <img
@@ -398,6 +396,8 @@ export function ProfilePage() {
                     />
                   </div>
                 )}
+                <p className="profile-score-label">Score:</p>
+                <p className="profile-score-value">{user.score ?? 0}</p>
               </div>
             </div>
 

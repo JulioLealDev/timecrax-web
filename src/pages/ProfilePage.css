@@ -564,7 +564,7 @@
   position: relative;
   aspect-ratio: 1;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   cursor: help;
   transition: transform 0.2s ease, filter 0.2s ease;
 }
@@ -574,6 +574,10 @@
   opacity: 0.6;
 }
 
+.achievement-item.unlocked .achievement-image {
+  border: 2px solid rgba(250, 204, 107, 0.8);
+  box-shadow: 0 0 12px rgba(250, 204, 107, 0.4);
+}
 
 .achievement-item.unlocked:hover {
   transform: scale(1.05);
@@ -584,6 +588,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(250, 204, 107, 0.3);
 }
 
 /* COMPLETED THEMES =========================================== */

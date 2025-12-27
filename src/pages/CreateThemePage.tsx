@@ -615,7 +615,7 @@ export function CreateThemePage() {
                 className="theme-image-circle"
                 onClick={onPickThemeImage}
                 aria-label="Upload theme image"
-                title="Upload theme image"
+                data-tooltip="Upload theme image"
               >
                 {themeImageDataUrl ? (
                   <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
@@ -1016,7 +1016,7 @@ export function CreateThemePage() {
                             setSelectedCardId(null);
                           }}
                           aria-label="Editar carta"
-                          title="Editar carta"
+                          data-tooltip="Editar carta"
                         >
                           ✏️
                         </button>
@@ -1028,7 +1028,7 @@ export function CreateThemePage() {
                             handleDeleteCard(c);
                           }}
                           aria-label="Deletar carta"
-                          title="Deletar carta e todos seus assets"
+                          data-tooltip="Deletar carta"
                         >
                           🗑️
                         </button>

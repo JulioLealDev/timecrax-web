@@ -53,3 +53,67 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+
+/* ================================================
+   GLOBAL CUSTOM TOOLTIPS
+   ================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap");
+
+[data-tooltip] {
+  position: relative;
+}
+
+/* Tooltip box */
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.5rem 0.9rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  color: #f9fafb;
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10000;
+}
+
+/* Tooltip arrow */
+[data-tooltip]::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 10px 6px 0 6px;
+  border-style: solid;
+  border-color: rgba(250, 204, 107, 0.4) transparent transparent transparent;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10001;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+  opacity: 1;
+}

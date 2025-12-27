@@ -184,7 +184,7 @@ export function ProfilePage() {
 
                 <div className="profile-info">
                   <div className="profile-name-row">
-                    <h1 className="profile-name" title={displayName}>
+                    <h1 className="profile-name" data-tooltip={displayName}>
                       {displayName}
                     </h1>
                     <button
@@ -192,13 +192,13 @@ export function ProfilePage() {
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
                       aria-label="Editar informações do perfil"
-                      title="Editar perfil"
+                      data-tooltip="Editar perfil"
                     >
                       ✎
                     </button>
                   </div>
                   <p className="profile-role">Estudante</p>
-                  <p className="profile-school" title={user.schoolName ?? ""}>
+                  <p className="profile-school" data-tooltip={user.schoolName ?? ""}>
                     {user.schoolName || "Escola não informada"}
                   </p>
                 </div>
@@ -230,11 +230,7 @@ export function ProfilePage() {
                     <div
                       key={achievement.id}
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
-                      title={`${achievement.name}\n${achievement.description}\n${
-                        achievement.unlockedAt
-                          ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}`
-                          : 'Bloqueado'
-                      }`}
+                      data-tooltip={achievement.name}
                     >
                       <img
                         src={achievement.image}
@@ -400,11 +396,7 @@ export function ProfilePage() {
                     <div
                       key={achievement.id}
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
-                      title={`${achievement.name}\n${achievement.description}\n${
-                        achievement.unlockedAt
-                          ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}`
-                          : 'Bloqueado'
-                      }`}
+                      data-tooltip={achievement.name}
                     >
                       <img
                         src={achievement.image}

@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { ImageQuizCard } from "../components/ImageQuizCard";
 import { CorrelationRow } from "../components/CorrelationItem";
 import { ErrorModal } from "../components/ErrorModal";
+import { ConfirmModal } from "../components/ConfirmModal";
 import type { CardDraft, SavedCard } from "../types";
 import "./CreateThemePage.css";
 import cardTemplate from "../assets/cardTemplate.png";
@@ -16,6 +17,17 @@ import { withBaseUrl } from "../utils/withBaseUrl";
 const slotCard = (i: number) => `cards[${i}].imageUrl`;
 const slotImageQuiz = (i: number, k: number) => `cards[${i}].imageQuiz.options[${k}].imageUrl`;
 const slotCorr = (i: number, k: number) => `cards[${i}].correlationQuiz.items[${k}].imageUrl`;
+
+/* ============================================================
+ * ID Generator (fallback for crypto.randomUUID)
+ * ========================================================== */
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback: timestamp + random
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+};
 
 /* ============================================================
  * Draft inicial
@@ -62,6 +74,7 @@ export function CreateThemePage() {
   const nextOrderIndexRef = useRef(0);
 
   const [themeName, setThemeName] = useState("");
+  const [themeResume, setThemeResume] = useState("");
   const [themeImageDataUrl, setThemeImageDataUrl] = useState<string | null>(null);
 
   const [savedCards, setSavedCards] = useState<SavedCard[]>([]);
@@ -88,6 +101,10 @@ export function CreateThemePage() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorModalErrors, setErrorModalErrors] = useState<Record<string, string>>({});
 
+  // Delete confirmation modal state
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState<SavedCard | null>(null);
+
   const themeImageInputRef = useRef<HTMLInputElement | null>(null);
   const cardImageInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -98,6 +115,18 @@ export function CreateThemePage() {
 
   const canSaveTheme = savedCards.length >= MIN_CARDS_PER_THEME;
   const isCardBuilderDisabled = savedCards.length >= MAX_SAVED_CARDS;
+
+  // Fix cards with undefined IDs
+  useEffect(() => {
+    const cardsWithUndefinedIds = savedCards.some(card => !card.id);
+    if (cardsWithUndefinedIds) {
+      console.log('Fixing cards with undefined IDs...');
+      setSavedCards(prev => prev.map(card => ({
+        ...card,
+        id: card.id || generateId()
+      })));
+    }
+  }, [savedCards]);
 
   /* ============================================================
    * 0) Load theme for edit mode
@@ -115,11 +144,12 @@ export function CreateThemePage() {
           // Populate form states
           setEditingThemeId(editId);
           setThemeName(theme.name);
+          setThemeResume(theme.resume || "");
           setThemeImageDataUrl(theme.image || null);
 
           // Transform cards from API to SavedCard
           const loadedCards: SavedCard[] = theme.cards.map((card: any) => ({
-            id: card.id,
+            id: card.id || generateId(), // Garantir ID único
             orderIndex: card.orderIndex,
             year: String(card.year),
             era: card.era,
@@ -180,11 +210,15 @@ export function CreateThemePage() {
    * 1) Criar sessão ao entrar na página
    * ========================================================== */
   useEffect(() => {
+    // Aguarda o carregamento do tema terminar antes de criar a sessão
+    if (isLoadingTheme) return;
+
     (async () => {
       try {
         setIsSessionLoading(true);
 
-        const res = await themeAssetsService.createSession();
+        // Se estiver editando, passa o themeId. Caso contrário, passa undefined
+        const res = await themeAssetsService.createSession(editingThemeId || undefined);
         setAssetsSessionId(res.sessionId);
       } catch (err: any) {
         const errorMsg = err?.message ?? "Falha ao criar sessão de upload.";
@@ -194,7 +228,7 @@ export function CreateThemePage() {
         setIsSessionLoading(false);
       }
     })();
-  }, []);
+  }, [isLoadingTheme, editingThemeId]);
 
   /* ============================================================
    * Fechar menu de ações ao clicar fora
@@ -376,17 +410,19 @@ export function CreateThemePage() {
   /* ============================================================
    * Delete a card (remover do grid + backend)
    * ========================================================== */
-  async function handleDeleteCard(cardToDelete: SavedCard) {
+  function handleDeleteCard(card: SavedCard) {
     if (!assetsSessionId) {
       setErrors((prev) => ({ ...prev, "assets.delete": "Sessão de upload não está pronta." }));
       return;
     }
+    setCardToDelete(card);
+    setShowDeleteModal(true);
+  }
 
-    const confirmed = window.confirm(
-      `Tem certeza que deseja deletar a carta "${cardToDelete.caption}" (${cardToDelete.year})?\n\nIsso irá remover todos os assets (8 imagens) do servidor.`
-    );
+  async function confirmDeleteCard() {
+    if (!cardToDelete || !assetsSessionId) return;
 
-    if (!confirmed) return;
+    setShowDeleteModal(false);
 
     try {
       // Chama API para deletar assets do backend
@@ -403,12 +439,21 @@ export function CreateThemePage() {
 
       // Fecha o menu de ações
       setSelectedCardId(null);
+
+      // Limpa o estado do card a deletar
+      setCardToDelete(null);
     } catch (err: any) {
       setErrors((prev) => ({
         ...prev,
         "assets.delete": err?.message ?? "Erro ao deletar carta.",
       }));
+      setCardToDelete(null);
     }
+  }
+
+  function cancelDeleteCard() {
+    setShowDeleteModal(false);
+    setCardToDelete(null);
   }
 
   /* ============================================================
@@ -556,7 +601,7 @@ export function CreateThemePage() {
       const newCard: SavedCard = {
         ...card,
         orderIndex: i,
-        id: editingCardId ?? crypto.randomUUID(),
+        id: editingCardId ?? generateId(),
 
         imageUrl: mainUrl, // URL real (existing or new)
 
@@ -640,7 +685,10 @@ export function CreateThemePage() {
 
       const payload = {
         name: themeName.trim(),
+        resume: themeResume.trim() || null,
         image: themeImageDataUrl!,      // dataUrl
+        // Sempre envia sessionId para validação
+        // Backend detecta se precisa promover baseado em session.ThemeId
         uploadSessionId: assetsSessionId,
         cards: ordered.map((c) => ({
           orderIndex: c.orderIndex,
@@ -687,6 +735,7 @@ export function CreateThemePage() {
         // Reset form only in CREATE mode
         nextOrderIndexRef.current = 0;
         setThemeName("");
+        setThemeResume("");
         setThemeImageDataUrl(null);
         setSavedCards([]);
         setEditingCardId(null);
@@ -729,7 +778,7 @@ export function CreateThemePage() {
             pointerEvents: isLoadingTheme ? "none" : "auto"
           }}
         >
-          {/* TOP ROW: name + theme image */}
+          {/* TOP ROW: name + resume + theme image */}
           <div className="theme-top-row">
             <label className="field theme-name-field">
               <h2 className="field-label">Theme's Name</h2>
@@ -738,6 +787,18 @@ export function CreateThemePage() {
                 value={themeName}
                 onChange={(e) => setThemeName(e.target.value)}
                 placeholder="Ex: French Revolution"
+                maxLength={50}
+              />
+            </label>
+
+            <label className="field theme-resume-field">
+              <h2 className="field-label">Resume</h2>
+              <input
+                className="field-input"
+                value={themeResume}
+                onChange={(e) => setThemeResume(e.target.value)}
+                placeholder="Ex: Brief description of the theme"
+                maxLength={100}
               />
             </label>
 
@@ -754,10 +815,9 @@ export function CreateThemePage() {
 
               <button
                 type="button"
-                className="theme-image-circle"
+                className={["theme-image-circle", hasError("theme.image") ? "is-invalid" : ""].join(" ")}
                 onClick={onPickThemeImage}
                 aria-label="Upload theme image"
-                data-tooltip="Upload theme image"
               >
                 {themeImageDataUrl ? (
                   <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
@@ -780,13 +840,13 @@ export function CreateThemePage() {
             <div className="card-builder-header">
               <h2 className="card-builder-title">
                 Add Card
-                <span className="info-tooltip">
-                  <span className="info-icon" aria-label="Informação" role="img">
-                    i
-                  </span>
-                  <span className="tooltip-box">
-                    Fill in all the fields on the event card and quizzes to create the card.
-                  </span>
+                <span
+                  className="info-icon"
+                  data-tooltip="Fill in all the fields on the event card and quizzes to create the card."
+                  aria-label="Informação"
+                  role="img"
+                >
+                  ℹ
                 </span>
               </h2>
               {isCardBuilderDisabled && (
@@ -947,6 +1007,7 @@ export function CreateThemePage() {
                               imageQuiz: { ...prev.imageQuiz, question: e.target.value },
                             }))
                           }
+                          maxLength={70}
                         />
                       </label>
 
@@ -976,7 +1037,7 @@ export function CreateThemePage() {
                   {activeTab === "text-quiz" && (
                     <>
                       <label className="field field-inline">
-                        <span className="field-label">Pergunta</span>
+                        <span className="field-label">Question:</span>
                         <input
                           className={["field-input", "quiz-question-input", hasError("textQuiz.question") ? "is-invalid" : ""].join(" ")}
                           placeholder="Ex: Which quote is related to the event?"
@@ -987,6 +1048,7 @@ export function CreateThemePage() {
                               textQuiz: { ...prev.textQuiz, question: e.target.value },
                             }))
                           }
+                          maxLength={70}
                         />
                       </label>
 
@@ -1017,6 +1079,7 @@ export function CreateThemePage() {
                               }
                               placeholder={`Option ${index + 1}`}
                               rows={2}
+                              maxLength={150}
                             />
                           </div>
                         ))}
@@ -1039,6 +1102,7 @@ export function CreateThemePage() {
                           }
                           placeholder="Type the affirmation..."
                           rows={4}
+                          maxLength={200}
                         />
                       </label>
 
@@ -1108,11 +1172,13 @@ export function CreateThemePage() {
           <section className="added-cards-section">
             <h2 className="added-cards-title">
               Added Cards
-              <span className="info-tooltip">
-                <span className="info-icon" aria-label="Informação" role="img">
-                  i
-                </span>
-                <span className="tooltip-box">You need at least 12 cards to create a new theme.</span>
+              <span
+                className="info-icon"
+                data-tooltip="You need at least 12 cards to create a new theme."
+                aria-label="Informação"
+                role="img"
+              >
+                ℹ
               </span>
             </h2>
 
@@ -1126,7 +1192,11 @@ export function CreateThemePage() {
                   <div key={i} className="added-card-wrapper">
                     <button
                       type="button"
-                      className={["added-card-thumb", isFilled ? "filled" : "empty"].join(" ")}
+                      className={[
+                        "added-card-thumb",
+                        isFilled ? "filled" : "empty",
+                        isSelected ? "selected" : ""
+                      ].filter(Boolean).join(" ")}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (c) {
@@ -1206,6 +1276,16 @@ export function CreateThemePage() {
         isOpen={showErrorModal}
         errors={errorModalErrors}
         onClose={() => setShowErrorModal(false)}
+      />
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Delete Card"
+        message="Are you sure about this?"
+        onConfirm={confirmDeleteCard}
+        onCancel={cancelDeleteCard}
+        confirmText="DELETE"
+        cancelText="Cancel"
       />
     </div>
   );

@@ -39,8 +39,8 @@ export function NavBar() {
       setShowLoginPanel(false);
       setIsMobileMenuOpen(false);
 
-      // opcional: navegar para home ou dashboard
-      navigate("/");
+      // redireciona para profile
+      navigate("/profile");
     } catch (err: any) {
       setErrorMsg(err?.message ?? "Falha no login.");
     } finally {
@@ -82,7 +82,6 @@ export function NavBar() {
               <a href="#home" onClick={closeMobileMenu}>Home</a>
               <a href="#download" onClick={closeMobileMenu}>Download</a>
               <a href="#features" onClick={closeMobileMenu}>Features</a>
-              <a href="#ranking" onClick={closeMobileMenu}>Ranking</a>
               <a href="#contact" onClick={closeMobileMenu}>Contact</a>
             </nav>
 
@@ -190,8 +189,6 @@ export function NavBar() {
           <span className="navbar-sep">•</span>
           <a href="#features">Features</a>
           <span className="navbar-sep">•</span>
-          <a href="#ranking">Ranking</a>
-          <span className="navbar-sep">•</span>
           <a href="#contact">Contact</a>
           <div className="navbar-divider" />
         </nav>
@@ -235,36 +232,40 @@ export function NavBar() {
         ) : (
           <form className="navbar-right" onSubmit={handleLogin}>
             <div className="login-grid desktop-login">
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isSubmitting}
-              />
+              <div className="login-inputs-grid">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                />
 
-              <button type="submit" className="login-button" disabled={isSubmitting}>
-                {isSubmitting ? "..." : "Login"}
-              </button>
+                <input
+                  type="password"
+                  placeholder="Senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isSubmitting}
+                />
 
-              <input
-                type="password"
-                placeholder="Senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={isSubmitting}
-              />
+                <Link to="/forgot-password" className="login-forgot-password-link">
+                  FORGOT PASSWORD
+                </Link>
+              </div>
 
-              <Link to="/register" className="login-register-link">
-                REGISTER
-              </Link>
+              <div className="login-actions-grid">
+                <button type="submit" className="login-button" disabled={isSubmitting}>
+                  {isSubmitting ? "..." : "Login"}
+                </button>
 
-              <Link to="/forgot-password" className="login-forgot-password-link">
-                FORGOT PASSWORD
-              </Link>
+                <Link to="/register" className="login-register-link">
+                  REGISTER
+                </Link>
+              </div>
 
               {errorMsg && (
-                <div style={{ gridColumn: "1 / span 4", fontSize: 12 }}>
+                <div style={{ gridColumn: "1 / span 2", fontSize: 12 }}>
                   {errorMsg}
                 </div>
               )}

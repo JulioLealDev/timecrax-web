@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { meService } from "../services/me.service";
 import { useAuth } from "../context/AuthContext";
 import imageTemplate from "../assets/imageTemplate.png";
+import { EditProfileModal } from "../components/EditProfileModal";
 import "./ProfilePage.css";
 
 type EditableProfile = {
@@ -184,7 +185,7 @@ export function ProfilePage() {
 
                 <div className="profile-info">
                   <div className="profile-name-row">
-                    <h1 className="profile-name" data-tooltip={displayName}>
+                    <h1 className="profile-name">
                       {displayName}
                     </h1>
                     <button
@@ -198,7 +199,7 @@ export function ProfilePage() {
                     </button>
                   </div>
                   <p className="profile-role">Estudante</p>
-                  <p className="profile-school" data-tooltip={user.schoolName ?? ""}>
+                  <p className="profile-school">
                     {user.schoolName || "Escola não informada"}
                   </p>
                 </div>
@@ -266,7 +267,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       <div
                         key={index}
                         className={`completed-theme-item ${!completedTheme ? 'empty' : ''}`}
-                        data-tooltip={completedTheme?.name ?? `Theme ${index + 1}`}
+                        {...(completedTheme && { 'data-tooltip': completedTheme.name })}
                       >
                         {completedTheme && (
                           <div
@@ -285,53 +286,6 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                 })()}
               </div>
             </div>
-
-            {/* Painel de edição (abre ao clicar no ícone) */}
-            {isEditingProfile && (
-              <form className="profile-form" onSubmit={handleSaveProfile}>
-                <div className="profile-row">
-                  <label className="profile-label">Primeiro nome</label>
-                  <input
-                    className="profile-input"
-                    value={form.firstName}
-                    onChange={(e) => handleChange("firstName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                <div className="profile-row">
-                  <label className="profile-label">Sobrenome</label>
-                  <input
-                    className="profile-input"
-                    value={form.lastName}
-                    onChange={(e) => handleChange("lastName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                <div className="profile-row">
-                  <label className="profile-label">Escola</label>
-                  <input
-                    className="profile-input"
-                    value={form.schoolName}
-                    onChange={(e) => handleChange("schoolName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                {profileError && <div className="profile-error">{profileError}</div>}
-
-                <div className="profile-actions">
-                  <button type="submit" className="profile-button primary" disabled={isSavingProfile}>
-                    {isSavingProfile ? "Salvando..." : "Salvar"}
-                  </button>
-
-                  <button type="button" className="profile-button secondary" onClick={handleCancelProfile} disabled={isSavingProfile}>
-                    Cancelar
-                  </button>
-                </div>
-              </form>
-            )}
 
             {/* Aqui você pode manter também a seção de trocar senha, se quiser */}
           </>
@@ -377,7 +331,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
 
                 <div className="profile-info">
                   <div className="profile-name-row">
-                    <h1 className="profile-name" title={displayName}>
+                    <h1 className="profile-name">
                       {displayName}
                     </h1>
                     <button
@@ -385,13 +339,13 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
                       aria-label="Editar informações do perfil"
-                      title="Editar perfil"
+                      data-tooltip="Editar perfil"
                     >
                       ✎
                     </button>
                   </div>
                   <p className="profile-role">Professor</p>
-                  <p className="profile-school" title={user.schoolName ?? ""}>
+                  <p className="profile-school">
                     {user.schoolName || "Escola não informada"}
                   </p>
                 </div>
@@ -459,7 +413,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       <div
                         key={index}
                         className={`completed-theme-item ${!completedTheme ? 'empty' : ''}`}
-                        data-tooltip={completedTheme?.name ?? `Theme ${index + 1}`}
+                        {...(completedTheme && { 'data-tooltip': completedTheme.name })}
                       >
                         {completedTheme && (
                           <div
@@ -479,55 +433,23 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
               </div>
             </div>
 
-            {/* Painel de edição (abre ao clicar no ícone) */}
-            {isEditingProfile && (
-              <form className="profile-form" onSubmit={handleSaveProfile}>
-                <div className="profile-row">
-                  <label className="profile-label">Primeiro nome</label>
-                  <input
-                    className="profile-input"
-                    value={form.firstName}
-                    onChange={(e) => handleChange("firstName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                <div className="profile-row">
-                  <label className="profile-label">Sobrenome</label>
-                  <input
-                    className="profile-input"
-                    value={form.lastName}
-                    onChange={(e) => handleChange("lastName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                <div className="profile-row">
-                  <label className="profile-label">Escola</label>
-                  <input
-                    className="profile-input"
-                    value={form.schoolName}
-                    onChange={(e) => handleChange("schoolName", e.target.value)}
-                    disabled={!isEditingProfile || isSavingProfile}
-                  />
-                </div>
-
-                {profileError && <div className="profile-error">{profileError}</div>}
-
-                <div className="profile-actions">
-                  <button type="submit" className="profile-button primary" disabled={isSavingProfile}>
-                    {isSavingProfile ? "Salvando..." : "Salvar"}
-                  </button>
-
-                  <button type="button" className="profile-button secondary" onClick={handleCancelProfile} disabled={isSavingProfile}>
-                    Cancelar
-                  </button>
-                </div>
-              </form>
-            )}
           </>
         )}
       </div>
+
+      <EditProfileModal
+        isOpen={isEditingProfile}
+        firstName={form.firstName}
+        lastName={form.lastName}
+        schoolName={form.schoolName}
+        onFirstNameChange={(value) => handleChange("firstName", value)}
+        onLastNameChange={(value) => handleChange("lastName", value)}
+        onSchoolNameChange={(value) => handleChange("schoolName", value)}
+        onSave={handleSaveProfile}
+        onCancel={handleCancelProfile}
+        isSaving={isSavingProfile}
+        error={profileError}
+      />
     </div>
   );
 }

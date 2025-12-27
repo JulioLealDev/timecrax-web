@@ -23,13 +23,12 @@
   padding: 0 1.5rem 4rem;
 }
 
-/* GRID LAYOUT */
+/* LIST LAYOUT */
 .my-themes-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   max-width: 100%;
-  align-items: end;
   background: radial-gradient(
     circle at top,
     #151c27 0%,
@@ -69,18 +68,66 @@
   color: rgba(249, 250, 251, 0.6);
 }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .my-themes-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+/* INFO ICON */
+.my-themes-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 768px) {
-  .my-themes-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.info-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 0,
+    rgba(250, 204, 107, 0.3) 0%,
+    rgba(2, 6, 23, 0.8) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.5);
+  color: #facc6b;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  transition: all 0.2s ease;
+}
 
+.info-icon:hover {
+  background: radial-gradient(
+    circle at 30% 0,
+    rgba(250, 204, 107, 0.4) 0%,
+    rgba(2, 6, 23, 0.9) 100%
+  );
+  transform: scale(1.1);
+}
+
+/* Tooltip customizado para o info icon */
+.info-icon[data-tooltip]::before {
+  white-space: pre;
+  text-align: left;
+  left: calc(100% + 12px);
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  max-width: none;
+  width: max-content;
+  line-height: 1.6;
+}
+
+.info-icon[data-tooltip]::after {
+  left: calc(100% + 2px);
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  border-width: 6px 10px 6px 0;
+  border-color: transparent rgba(250, 204, 107, 0.4) transparent transparent;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
   .my-themes-container {
     padding: 1.2rem;
   }
@@ -88,12 +135,16 @@
   .my-themes-title {
     font-size: 1.2rem;
   }
+
+  .my-themes-grid {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
   .my-themes-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    gap: 0.8rem;
+    padding: 1rem;
   }
 
   .my-themes-title {

@@ -21,6 +21,12 @@ export type MeResponse = {
   picture?: string | null;
 };
 
+export type RankingUser = {
+  id: string;
+  name: string;
+  score: number;
+};
+
 export const meService = {
   async getMe(): Promise<MeResponse> {
     return await apiRequest<MeResponse>("/me", { method: "GET" });
@@ -48,6 +54,12 @@ export const meService = {
       method: "POST",
       body: formData,
       headers: {}, // IMPORTANTE: não definir Content-Type
+    });
+  },
+
+  async getRanking(): Promise<RankingUser[]> {
+    return await apiRequest<RankingUser[]>("/me/ranking", {
+      method: "GET",
     });
   },
 };

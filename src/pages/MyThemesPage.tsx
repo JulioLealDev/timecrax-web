@@ -10,7 +10,6 @@ export function MyThemesPage() {
   const [themes, setThemes] = useState<ThemeResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeThemeId, setActiveThemeId] = useState<string | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [themeToDelete, setThemeToDelete] = useState<string | null>(null);
 
@@ -31,25 +30,6 @@ export function MyThemesPage() {
     loadThemes();
   }, []);
 
-  // Close active theme when clicking anywhere
-  useEffect(() => {
-    function handleClickOutside() {
-      setActiveThemeId(null);
-    }
-
-    if (activeThemeId) {
-      document.addEventListener("click", handleClickOutside);
-      return () => {
-        document.removeEventListener("click", handleClickOutside);
-      };
-    }
-  }, [activeThemeId]);
-
-  function handleThemeClick(themeId: string) {
-    // Toggle actions: if clicking the same theme, close it; otherwise open new one
-    setActiveThemeId(activeThemeId === themeId ? null : themeId);
-  }
-
   function handleEdit(themeId: string) {
     console.log("Edit theme:", themeId);
     navigate(`/create-theme?edit=${themeId}`);
@@ -68,7 +48,6 @@ export function MyThemesPage() {
 
       // Remove from state after successful deletion
       setThemes((prev) => prev.filter((t) => t.id !== themeToDelete));
-      setActiveThemeId(null);
       setDeleteModalOpen(false);
       setThemeToDelete(null);
     } catch (err: any) {
@@ -97,21 +76,33 @@ export function MyThemesPage() {
             <p>No themes created yet. Start creating your first theme!</p>
           </div>
         ) : (
-          <div className="my-themes-grid">
-            {themes.map((theme) => (
-              <ThemeItem
-                key={theme.id}
-                id={theme.id}
-                name={theme.name}
-                image={theme.image}
-                readyToPlay={theme.readyToPlay}
-                showActions={activeThemeId === theme.id}
-                onClick={handleThemeClick}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ))}
-          </div>
+          <>
+            <div className="my-themes-header">
+              <div
+                className="info-icon"
+                data-tooltip={`• O tema precisa ter pelo menos 12 cartas para poder ser usado no jogo\n• Temas não aptos para o jogo serão excluídos após 30 dias de inatividade`}
+              >
+                ℹ
+              </div>
+            </div>
+
+            <div className="my-themes-grid">
+              {themes.map((theme) => (
+                <ThemeItem
+                  key={theme.id}
+                  id={theme.id}
+                  name={theme.name}
+                  image={theme.image}
+                  readyToPlay={theme.readyToPlay}
+                  createdAt={theme.createdAt}
+                  showActions={true}
+                  onClick={() => {}}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
+          </>
         )}
       </div>
 

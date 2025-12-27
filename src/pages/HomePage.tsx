@@ -171,21 +171,7 @@ export function HomePage() {
 
       </section>
 
-      {/* Seção 4: Crie seu próprio tema */}
-        
-        <section id="ranking" className="home-ranking-section">
-
-        <h2>Ranking</h2>
-
-        <p>
-            Acompanhe os jogadores com as melhores pontuações no TimeCrax Machine.
-            Compare seu desempenho e veja quem domina as linhas do tempo históricas.
-            Em breve, o ranking será atualizado automaticamente conforme as partidas acontecem.
-        </p>
-
-        </section>
-
-      {/* Seção 5: Contatos */}
+      {/* Seção 4: Contatos */}
 
         <section id="contact" className="home-contact-section">
 

@@ -1,0 +1,162 @@
+.edit-profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-profile-modal-content {
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  min-width: 400px;
+  max-width: 500px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.edit-profile-modal-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #facc6b;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-profile-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.edit-profile-label {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #facc6b;
+}
+
+.edit-profile-input {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: "Cormorant Garamond", serif;
+  border-radius: 6px;
+  border: 1px solid rgba(250, 204, 107, 0.3);
+  background: rgba(2, 6, 23, 0.6);
+  color: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-input:focus {
+  outline: none;
+  border-color: rgba(250, 204, 107, 0.6);
+  box-shadow: 0 0 8px rgba(250, 204, 107, 0.3);
+}
+
+.edit-profile-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.edit-profile-error {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.95rem;
+  color: #f87171;
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 6px;
+}
+
+.edit-profile-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.edit-profile-modal-btn {
+  padding: 0.7rem 1.5rem;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 110px;
+}
+
+.edit-profile-modal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: rgba(148, 163, 184, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.save-btn {
+  background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
+  color: #fff;
+  border: 2px solid rgba(250, 204, 107, 0.85);
+}
+
+.save-btn:hover:not(:disabled) {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.5);
+}
+
+.edit-profile-modal-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}

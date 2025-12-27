@@ -265,8 +265,23 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-auto-rows: auto;
-  column-gap: 0.6rem;
+  column-gap: 0.8rem;
   row-gap: 0.4rem;
+  align-items: center;
+}
+
+.login-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0.4rem;
+}
+
+.login-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.8rem;
   align-items: center;
 }
 
@@ -572,6 +587,62 @@
   text-overflow: ellipsis;
 
   font-size: 0.85rem;
+  position: relative;
+}
+
+/* Tooltip customizado para o nome do perfil */
+.navbar-profile-name[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.5rem 0.9rem;
+
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  color: #f9fafb;
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.15) 0%,
+    rgba(2, 6, 23, 0.95) 100%
+  );
+  border: 1px solid rgba(250, 204, 107, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10000;
+}
+
+/* Seta do tooltip */
+.navbar-profile-name[data-tooltip]::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 10px 6px 0 6px;
+  border-style: solid;
+  border-color: rgba(250, 204, 107, 0.4) transparent transparent transparent;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10001;
+}
+
+.navbar-profile:hover .navbar-profile-name[data-tooltip]::before,
+.navbar-profile:hover .navbar-profile-name[data-tooltip]::after {
+  opacity: 1;
 }
 
 

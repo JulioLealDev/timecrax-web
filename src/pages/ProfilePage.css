@@ -599,13 +599,10 @@
   line-height: 1.4;
 }
 
-/* Tooltip menos transparente para achievements bloqueados */
+/* Texto mais visível para achievements bloqueados */
 .achievement-item.locked[data-tooltip]::before {
-  background: radial-gradient(
-    circle at top,
-    rgba(250, 204, 107, 0.25) 0%,
-    rgba(2, 6, 23, 1) 100%
-  );
+  color: #ffffff;
+  font-weight: 600;
 }
 
 /* COMPLETED THEMES =========================================== */

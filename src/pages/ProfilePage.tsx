@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { meService } from "../services/me.service";
 import { useAuth } from "../context/AuthContext";
+import imageTemplate from "../assets/imageTemplate.png";
 import "./ProfilePage.css";
 
 type EditableProfile = {
@@ -29,6 +30,18 @@ export function ProfilePage() {
     const ln = user?.lastName?.trim() ?? "";
     const full = `${fn} ${ln}`.trim();
     return full || user?.email || "";
+  }, [user]);
+
+  const currentMedal = useMemo(() => {
+    if (!user?.medals || user.medals.length === 0) return null;
+
+    // Filtra medals onde user.score >= minScore e pega a de maior minScore
+    const eligibleMedals = user.medals.filter(m => user.score >= m.minScore);
+    if (eligibleMedals.length === 0) return null;
+
+    return eligibleMedals.reduce((highest, current) =>
+      current.minScore > highest.minScore ? current : highest
+    );
   }, [user]);
 
   useEffect(() => {
@@ -206,6 +219,16 @@ export function ProfilePage() {
               <div className="profile-right">
                 <p className="profile-score-label">Score:</p>
                 <p className="profile-score-value">{user.score ?? 0}</p>
+                {currentMedal && (
+                  <div className="profile-medal">
+                    <img
+                      src={currentMedal.image}
+                      alt={currentMedal.name}
+                      title={`${currentMedal.name} (${currentMedal.minScore}+ pontos)`}
+                      className="profile-medal-image"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -242,7 +265,7 @@ export function ProfilePage() {
                 {Array.from({ length: 16 }).map((_, index) => (
                   <div key={index} className="completed-theme-item">
                     <img
-                      src="/assets/imageTemplate.png"
+                      src={imageTemplate}
                       alt={`Theme ${index + 1}`}
                       className="completed-theme-image"
                     />
@@ -365,6 +388,16 @@ export function ProfilePage() {
               <div className="profile-right">
                 <p className="profile-score-label">Score:</p>
                 <p className="profile-score-value">{user.score ?? 0}</p>
+                {currentMedal && (
+                  <div className="profile-medal">
+                    <img
+                      src={currentMedal.image}
+                      alt={currentMedal.name}
+                      title={`${currentMedal.name} (${currentMedal.minScore}+ pontos)`}
+                      className="profile-medal-image"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -401,7 +434,7 @@ export function ProfilePage() {
                 {Array.from({ length: 16 }).map((_, index) => (
                   <div key={index} className="completed-theme-item">
                     <img
-                      src="/assets/imageTemplate.png"
+                      src={imageTemplate}
                       alt={`Theme ${index + 1}`}
                       className="completed-theme-image"
                     />

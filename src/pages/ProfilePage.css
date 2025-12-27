@@ -574,11 +574,6 @@
   opacity: 0.6;
 }
 
-.achievement-item.unlocked .achievement-image {
-  border: 2px solid rgba(250, 204, 107, 0.8);
-  box-shadow: 0 0 12px rgba(250, 204, 107, 0.4);
-}
-
 .achievement-item.unlocked:hover {
   transform: scale(1.05);
   filter: brightness(1.2);
@@ -589,7 +584,14 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
-  border: 2px solid rgba(250, 204, 107, 0.3);
+}
+
+/* Multiline tooltip for achievements */
+.achievement-item[data-tooltip]::before {
+  white-space: pre-line;
+  max-width: 300px;
+  text-align: center;
+  line-height: 1.4;
 }
 
 /* COMPLETED THEMES =========================================== */

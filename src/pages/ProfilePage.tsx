@@ -230,7 +230,9 @@ export function ProfilePage() {
                     <div
                       key={achievement.id}
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
-                      data-tooltip={achievement.name}
+                      data-tooltip={`${achievement.name}
+${achievement.description}
+${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
                     >
                       <img
                         src={achievement.image}
@@ -396,7 +398,9 @@ export function ProfilePage() {
                     <div
                       key={achievement.id}
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
-                      data-tooltip={achievement.name}
+                      data-tooltip={`${achievement.name}
+${achievement.description}
+${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
                     >
                       <img
                         src={achievement.image}

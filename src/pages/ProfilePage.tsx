@@ -227,8 +227,10 @@ export function ProfilePage() {
                     />
                   </div>
                 )}
-                <p className="profile-score-label">Score:</p>
-                <p className="profile-score-value">{user.score ?? 0}</p>
+                <div className="profile-score-container">
+                  <p className="profile-score-label">Score:</p>
+                  <p className="profile-score-value">{user.score ?? 0}</p>
+                </div>
               </div>
             </div>
 
@@ -396,8 +398,10 @@ export function ProfilePage() {
                     />
                   </div>
                 )}
-                <p className="profile-score-label">Score:</p>
-                <p className="profile-score-value">{user.score ?? 0}</p>
+                <div className="profile-score-container">
+                  <p className="profile-score-label">Score:</p>
+                  <p className="profile-score-value">{user.score ?? 0}</p>
+                </div>
               </div>
             </div>
 

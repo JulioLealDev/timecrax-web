@@ -491,6 +491,12 @@
   gap: 0.5rem;
 }
 
+.profile-score-container {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
 .profile-score-label {
   margin: 0;
   font-family: "Cinzel", serif;

@@ -399,8 +399,8 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       key={achievement.id}
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
                       data-tooltip={`${achievement.name}
-                      ${achievement.description}
-                      ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
+${achievement.description}
+${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
                     >
                       <img
                         src={achievement.image}

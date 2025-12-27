@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { ImageQuizCard } from "../components/ImageQuizCard";
 import { CorrelationRow } from "../components/CorrelationItem";
+import { ErrorModal } from "../components/ErrorModal";
 import type { CardDraft, SavedCard } from "../types";
 import "./CreateThemePage.css";
 import cardTemplate from "../assets/cardTemplate.png";
@@ -74,16 +76,105 @@ export function CreateThemePage() {
 
   const [assetsSessionId, setAssetsSessionId] = useState<string | null>(null);
   const [isSessionLoading, setIsSessionLoading] = useState(true);
-  const [sessionError, setSessionError] = useState<string | null>(null);
 
   const [isUploadingCard, setIsUploadingCard] = useState(false);
   const [isCreatingTheme, setIsCreatingTheme] = useState(false);
-  const [createThemeError, setCreateThemeError] = useState<string | null>(null);
+
+  // Edit mode states
+  const [editingThemeId, setEditingThemeId] = useState<string | null>(null);
+  const [isLoadingTheme, setIsLoadingTheme] = useState(false);
+
+  // Error modal state
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorModalErrors, setErrorModalErrors] = useState<Record<string, string>>({});
 
   const themeImageInputRef = useRef<HTMLInputElement | null>(null);
   const cardImageInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Hooks
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const isEditMode = editingThemeId !== null;
+
   const canSaveTheme = savedCards.length >= MIN_CARDS_PER_THEME;
+  const isCardBuilderDisabled = savedCards.length >= MAX_SAVED_CARDS;
+
+  /* ============================================================
+   * 0) Load theme for edit mode
+   * ========================================================== */
+  useEffect(() => {
+    const editId = searchParams.get("edit");
+
+    if (editId) {
+      (async () => {
+        try {
+          setIsLoadingTheme(true);
+
+          const theme = await themesService.getTheme(editId);
+
+          // Populate form states
+          setEditingThemeId(editId);
+          setThemeName(theme.name);
+          setThemeImageDataUrl(theme.image || null);
+
+          // Transform cards from API to SavedCard
+          const loadedCards: SavedCard[] = theme.cards.map((card: any) => ({
+            id: card.id,
+            orderIndex: card.orderIndex,
+            year: String(card.year),
+            era: card.era,
+            caption: card.caption,
+            imageUrl: card.imageUrl,
+            imageFile: undefined,
+            imagePreview: undefined,
+
+            imageQuiz: {
+              question: card.imageQuiz.question,
+              options: card.imageQuiz.options.map((opt: any) => ({
+                imageUrl: opt.imageUrl,
+                imageFile: undefined,
+              })),
+              correctIndex: card.imageQuiz.correctIndex,
+            },
+
+            textQuiz: {
+              question: card.textQuiz.question,
+              options: card.textQuiz.options,
+              correctIndex: card.textQuiz.correctIndex,
+            },
+
+            trueFalseQuiz: {
+              statement: card.trueFalseQuiz.statement,
+              answer: card.trueFalseQuiz.answer ? "true" : "false",
+            },
+
+            correlationQuiz: {
+              prompt: card.correlationQuiz.prompt || "Correlacione as figuras aos textos corretamente:",
+              items: card.correlationQuiz.items.map((item: any) => ({
+                text: item.text,
+                imageUrl: item.imageUrl,
+                imageFile: undefined,
+              })),
+            },
+          }));
+
+          setSavedCards(loadedCards);
+
+          // Update next orderIndex
+          const maxOrder = loadedCards.reduce((max, c) => Math.max(max, c.orderIndex), -1);
+          nextOrderIndexRef.current = maxOrder + 1;
+
+        } catch (err: any) {
+          const errorMsg = err?.message ?? "Falha ao carregar tema para edição.";
+          setEditingThemeId(null);
+          setErrorModalErrors({ "load.theme": errorMsg });
+          setShowErrorModal(true);
+        } finally {
+          setIsLoadingTheme(false);
+        }
+      })();
+    }
+  }, [searchParams]);
 
   /* ============================================================
    * 1) Criar sessão ao entrar na página
@@ -92,12 +183,13 @@ export function CreateThemePage() {
     (async () => {
       try {
         setIsSessionLoading(true);
-        setSessionError(null);
 
         const res = await themeAssetsService.createSession();
         setAssetsSessionId(res.sessionId);
       } catch (err: any) {
-        setSessionError(err?.message ?? "Falha ao criar sessão de upload.");
+        const errorMsg = err?.message ?? "Falha ao criar sessão de upload.";
+        setErrorModalErrors({ "assets.session": errorMsg });
+        setShowErrorModal(true);
       } finally {
         setIsSessionLoading(false);
       }
@@ -388,7 +480,11 @@ export function CreateThemePage() {
 
     const e = validateCardDraft(card);
     setErrors(e);
-    if (Object.keys(e).length > 0) return;
+    if (Object.keys(e).length > 0) {
+      setErrorModalErrors(e);
+      setShowErrorModal(true);
+      return;
+    }
 
     if (!assetsSessionId) {
       setErrors((prev) => ({ ...prev, "assets.session": "Sessão de upload não está pronta." }));
@@ -400,39 +496,61 @@ export function CreateThemePage() {
     try {
       setIsUploadingCard(true);
 
-      // arquivo principal
-      if (!card.imageFile) throw new Error("Imagem principal da carta é obrigatória.");
+      // Prepare upload tasks only for new images
+      const uploadTasks: Promise<any>[] = [];
+      const uploadMap: { type: string; index?: number }[] = [];
 
-      // Valida se todos os arquivos existem antes de fazer upload
+      // Main image
+      if (card.imageFile) {
+        uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, card.imageFile, slotCard(i)));
+        uploadMap.push({ type: "main" });
+      } else if (!card.imageUrl) {
+        throw new Error("Imagem principal da carta é obrigatória.");
+      }
+
+      // ImageQuiz options
       for (let k = 0; k < 4; k++) {
-        if (!card.imageQuiz.options[k]?.imageFile) {
+        const opt = card.imageQuiz.options[k];
+        if (opt?.imageFile) {
+          uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, opt.imageFile, slotImageQuiz(i, k)));
+          uploadMap.push({ type: "imageQuiz", index: k });
+        } else if (!opt?.imageUrl) {
           throw new Error(`Imagem da opção ${k + 1} do Image Quiz é obrigatória.`);
         }
       }
+
+      // Correlation items
       for (let k = 0; k < 3; k++) {
-        if (!card.correlationQuiz.items[k]?.imageFile) {
+        const item = card.correlationQuiz.items[k];
+        if (item?.imageFile) {
+          uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, item.imageFile, slotCorr(i, k)));
+          uploadMap.push({ type: "correlation", index: k });
+        } else if (!item?.imageUrl) {
           throw new Error(`Imagem ${k + 1} do Correlation é obrigatória.`);
         }
       }
 
-      // Upload de todas as 8 imagens em paralelo
-      const [mainResult, ...restResults] = await Promise.all([
-        // 1) Imagem principal
-        themeAssetsService.uploadOne(assetsSessionId, card.imageFile, slotCard(i)),
-        // 2) ImageQuiz (4 imagens)
-        ...card.imageQuiz.options.map((opt, k) =>
-          themeAssetsService.uploadOne(assetsSessionId, opt.imageFile!, slotImageQuiz(i, k))
-        ),
-        // 3) Correlation (3 imagens)
-        ...card.correlationQuiz.items.map((item, k) =>
-          themeAssetsService.uploadOne(assetsSessionId, item.imageFile!, slotCorr(i, k))
-        ),
-      ]);
+      // Upload only new images
+      const uploadResults = uploadTasks.length > 0 ? await Promise.all(uploadTasks) : [];
 
-      // Extrai URLs dos resultados
-      const main = mainResult;
-      const imageQuizUrls = restResults.slice(0, 4).map((r) => r.url);
-      const corrUrls = restResults.slice(4, 7).map((r) => r.url);
+      // Build URL map from upload results
+      let mainUrl = card.imageUrl; // default to existing
+      const imageQuizUrls = card.imageQuiz.options.map(opt => opt.imageUrl); // default to existing
+      const corrUrls = card.correlationQuiz.items.map(item => item.imageUrl); // default to existing
+
+      // Update with newly uploaded URLs
+      for (let i = 0; i < uploadResults.length; i++) {
+        const result = uploadResults[i];
+        const mapping = uploadMap[i];
+
+        if (mapping.type === "main") {
+          mainUrl = result.url;
+        } else if (mapping.type === "imageQuiz" && mapping.index !== undefined) {
+          imageQuizUrls[mapping.index] = result.url;
+        } else if (mapping.type === "correlation" && mapping.index !== undefined) {
+          corrUrls[mapping.index] = result.url;
+        }
+      }
 
       // monta card salvo com URLs reais
       const newCard: SavedCard = {
@@ -440,13 +558,13 @@ export function CreateThemePage() {
         orderIndex: i,
         id: editingCardId ?? crypto.randomUUID(),
 
-        imageUrl: main.url, // URL real
+        imageUrl: mainUrl, // URL real (existing or new)
 
         imageQuiz: {
           ...card.imageQuiz,
           options: card.imageQuiz.options.map((opt, k) => ({
             ...opt,
-            imageUrl: imageQuizUrls[k], // URL real
+            imageUrl: imageQuizUrls[k] ?? opt.imageUrl, // URL real (existing or new)
           })),
         },
 
@@ -454,7 +572,7 @@ export function CreateThemePage() {
           ...card.correlationQuiz,
           items: card.correlationQuiz.items.map((it, k) => ({
             ...it,
-            imageUrl: corrUrls[k], // URL real
+            imageUrl: corrUrls[k] ?? it.imageUrl, // URL real (existing or new)
           })),
         },
       };
@@ -481,14 +599,18 @@ export function CreateThemePage() {
    * ========================================================== */
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    setCreateThemeError(null);
 
     const themeErrors = validateTheme();
     setErrors(themeErrors);
-    if (Object.keys(themeErrors).length > 0) return;
+    if (Object.keys(themeErrors).length > 0) {
+      setErrorModalErrors(themeErrors);
+      setShowErrorModal(true);
+      return;
+    }
 
     if (!assetsSessionId) {
-      setCreateThemeError("Sessão de upload não está pronta.");
+      setErrorModalErrors({ "assets.session": "Sessão de upload não está pronta." });
+      setShowErrorModal(true);
       return;
     }
 
@@ -508,11 +630,11 @@ export function CreateThemePage() {
         else seen.add(c.orderIndex);
       }
       if (duplicates.length > 0) {
-        setCreateThemeError(
-          `Existem cartas com orderIndex duplicado (${[...new Set(duplicates)].join(
-            ", "
-          )}). Recrie as cartas ou recarregue a página.`
-        );
+        const errorMsg = `Existem cartas com orderIndex duplicado (${[...new Set(duplicates)].join(
+          ", "
+        )}). Recrie as cartas ou recarregue a página.`;
+        setErrorModalErrors({ "cards.duplicate": errorMsg });
+        setShowErrorModal(true);
         return;
       }
 
@@ -553,19 +675,30 @@ export function CreateThemePage() {
         })),
       };
 
-      const created = await themesService.createTheme(payload as any);
-      console.log("Theme created:", created);
+      // Conditional: PUT for edit, POST for create
+      if (isEditMode && editingThemeId) {
+        await themesService.updateTheme(editingThemeId, payload as any);
+        console.log("Tema atualizado:", editingThemeId);
+        navigate("/my-themes");
+      } else {
+        const created = await themesService.createTheme(payload as any);
+        console.log("Tema criado:", created);
 
-      // reset
-      nextOrderIndexRef.current = 0;
-      setThemeName("");
-      setThemeImageDataUrl(null);
-      setSavedCards([]);
-      setEditingCardId(null);
-      setCard(createEmptyCardDraft(0));
-      setErrors({});
+        // Reset form only in CREATE mode
+        nextOrderIndexRef.current = 0;
+        setThemeName("");
+        setThemeImageDataUrl(null);
+        setSavedCards([]);
+        setEditingCardId(null);
+        setCard(createEmptyCardDraft(0));
+        setErrors({});
+
+        navigate("/my-themes");
+      }
     } catch (err: any) {
-      setCreateThemeError(err?.message ?? "Erro ao criar tema.");
+      const errorMsg = err?.message ?? "Erro ao criar tema.";
+      setErrorModalErrors({ "create.theme": errorMsg });
+      setShowErrorModal(true);
     } finally {
       setIsCreatingTheme(false);
     }
@@ -579,13 +712,23 @@ export function CreateThemePage() {
   return (
     <div className="create-theme-page">
       <main className="create-theme-container">
-        <h1 className="create-theme-title">Create New Theme</h1>
+        <h1 className="create-theme-title">
+          {isLoadingTheme
+            ? "Carregando..."
+            : isEditMode
+              ? "Edit Theme"
+              : "Create New Theme"
+          }
+        </h1>
 
-        {sessionError && <div className="field-error">{sessionError}</div>}
-        {hasError("assets.session") && <div className="field-error">{errors["assets.session"]}</div>}
-        {hasError("assets.upload") && <div className="field-error">{errors["assets.upload"]}</div>}
-
-        <form className="create-theme-form" onSubmit={onSubmit}>
+        <form
+          className="create-theme-form"
+          onSubmit={onSubmit}
+          style={{
+            opacity: isLoadingTheme ? 0.6 : 1,
+            pointerEvents: isLoadingTheme ? "none" : "auto"
+          }}
+        >
           {/* TOP ROW: name + theme image */}
           <div className="theme-top-row">
             <label className="field theme-name-field">
@@ -596,7 +739,6 @@ export function CreateThemePage() {
                 onChange={(e) => setThemeName(e.target.value)}
                 placeholder="Ex: French Revolution"
               />
-              {hasError("theme.name") && <div className="field-error">{errors["theme.name"]}</div>}
             </label>
 
             <div className="theme-image-field">
@@ -623,13 +765,18 @@ export function CreateThemePage() {
                   <span className="theme-image-placeholder">UPLOAD</span>
                 )}
               </button>
-
-              {hasError("theme.image") && <div className="field-error">{errors["theme.image"]}</div>}
             </div>
           </div>
 
           {/* CARD BUILDER */}
-          <section className="card-builder">
+          <section
+            className="card-builder"
+            style={{
+              opacity: isCardBuilderDisabled ? 0.5 : 1,
+              pointerEvents: isCardBuilderDisabled ? "none" : "auto",
+              position: "relative"
+            }}
+          >
             <div className="card-builder-header">
               <h2 className="card-builder-title">
                 Add Card
@@ -642,6 +789,17 @@ export function CreateThemePage() {
                   </span>
                 </span>
               </h2>
+              {isCardBuilderDisabled && (
+                <div style={{
+                  color: "#facc6b",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "1.05rem",
+                  marginTop: "0.5rem",
+                  textAlign: "center"
+                }}>
+                  Maximum of {MAX_SAVED_CARDS} cards reached. Remove a card to add a new one.
+                </div>
+              )}
             </div>
 
             <div className="card-builder-row">
@@ -725,12 +883,6 @@ export function CreateThemePage() {
                       </label>
                     </div>
                   </div>
-
-                  {(hasError("card.year") || hasError("card.era")) && (
-                    <div className="field-error">
-                      {errors["card.year"] ?? errors["card.era"]}
-                    </div>
-                  )}
                 </div>
 
                 <button
@@ -817,8 +969,6 @@ export function CreateThemePage() {
                           />
                         ))}
                       </div>
-
-                      {hasError("imageQuiz.correct") && <div className="field-error">{errors["imageQuiz.correct"]}</div>}
                     </>
                   )}
 
@@ -871,8 +1021,6 @@ export function CreateThemePage() {
                           </div>
                         ))}
                       </div>
-
-                      {hasError("textQuiz.correct") && <div className="field-error">{errors["textQuiz.correct"]}</div>}
                     </>
                   )}
 
@@ -923,8 +1071,6 @@ export function CreateThemePage() {
                           <span>False</span>
                         </label>
                       </div>
-
-                      {hasError("tf.answer") && <div className="field-error">{errors["tf.answer"]}</div>}
                     </>
                   )}
 
@@ -1038,8 +1184,6 @@ export function CreateThemePage() {
                 );
               })}
             </div>
-
-            {hasError("theme.cards") && <div className="field-error">{errors["theme.cards"]}</div>}
           </section>
 
           {/* Save Theme */}
@@ -1049,13 +1193,20 @@ export function CreateThemePage() {
               type="submit"
               disabled={!canSaveTheme || isCreatingTheme || isSessionLoading}
             >
-              {isCreatingTheme ? "Saving..." : "Save Theme"}
+              {isCreatingTheme
+                ? (isEditMode ? "Atualizando..." : "Salvando...")
+                : (isEditMode ? "Atualizar Tema" : "Save Theme")
+              }
             </button>
-
-            {createThemeError && <div className="field-error">{createThemeError}</div>}
           </div>
         </form>
       </main>
+
+      <ErrorModal
+        isOpen={showErrorModal}
+        errors={errorModalErrors}
+        onClose={() => setShowErrorModal(false)}
+      />
     </div>
   );
 }

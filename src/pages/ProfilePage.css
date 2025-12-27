@@ -588,8 +588,7 @@
 
 /* Multiline tooltip for achievements */
 .achievement-item[data-tooltip]::before {
-  white-space: pre-line;
-  max-width: 300px;
+  white-space: pre;
   text-align: center;
   line-height: 1.4;
 }

@@ -601,8 +601,9 @@
 
 /* Texto mais visível para achievements bloqueados */
 .achievement-item.locked[data-tooltip]::before {
-  color: #ffffff;
-  font-weight: 600;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  background: rgba(0, 0, 0, 0.95) !important;
 }
 
 /* COMPLETED THEMES =========================================== */

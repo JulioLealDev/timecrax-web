@@ -216,7 +216,7 @@ export function NavBar() {
                 </svg>
               </span>
 
-              <span className="navbar-profile-name" title={displayName}>
+              <span className="navbar-profile-name" data-tooltip={displayName}>
                 {displayName}
               </span>
             </button>

@@ -599,6 +599,15 @@
   line-height: 1.4;
 }
 
+/* Tooltip menos transparente para achievements bloqueados */
+.achievement-item.locked[data-tooltip]::before {
+  background: radial-gradient(
+    circle at top,
+    rgba(250, 204, 107, 0.2) 0%,
+    rgba(2, 6, 23, 0.98) 100%
+  );
+}
+
 /* COMPLETED THEMES =========================================== */
 
 .completed-themes-section {

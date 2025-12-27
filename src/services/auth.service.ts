@@ -27,7 +27,7 @@ export type UserDto = {
   createdAt?: Date | null;
   updatedAt?: Date | null;
   achievements?: AchievementDto[];
-  medals?: MedalDto[];
+  currentMedal?: MedalDto | null;
 };
 
 export type LoginRequest = {
@@ -60,7 +60,7 @@ function toAbsoluteUrl(pathOrUrl?: string | null) {
 
 function normalizeUser(u: any): UserDto {
   const achievements = u?.achievements ?? u?.Achievements;
-  const medals = u?.medals ?? u?.Medals;
+  const currentMedal = u?.currentMedal ?? u?.CurrentMedal;
 
   return {
     id: u?.id ?? u?.userId ?? u?.Id,
@@ -78,12 +78,12 @@ function normalizeUser(u: any): UserDto {
       description: a?.description ?? a?.Description,
       unlockedAt: a?.unlockedAt ?? a?.UnlockedAt ?? null,
     })) : undefined,
-    medals: medals ? medals.map((m: any) => ({
-      id: m?.id ?? m?.Id,
-      name: m?.name ?? m?.Name,
-      image: m?.image ?? m?.Image,
-      minScore: m?.minScore ?? m?.MinScore,
-    })) : undefined,
+    currentMedal: currentMedal ? {
+      id: currentMedal?.id ?? currentMedal?.Id,
+      name: currentMedal?.name ?? currentMedal?.Name,
+      image: currentMedal?.image ?? currentMedal?.Image,
+      minScore: currentMedal?.minScore ?? currentMedal?.MinScore,
+    } : null,
   };
 }
 

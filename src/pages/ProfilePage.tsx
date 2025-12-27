@@ -32,18 +32,6 @@ export function ProfilePage() {
     return full || user?.email || "";
   }, [user]);
 
-  const currentMedal = useMemo(() => {
-    if (!user?.medals || user.medals.length === 0) return null;
-
-    // Filtra medals onde user.score >= minScore e pega a de maior minScore
-    const eligibleMedals = user.medals.filter(m => user.score >= m.minScore);
-    if (eligibleMedals.length === 0) return null;
-
-    return eligibleMedals.reduce((highest, current) =>
-      current.minScore > highest.minScore ? current : highest
-    );
-  }, [user]);
-
   useEffect(() => {
   if (user?.picture) setPictureVersion(Date.now());
 }, [user?.picture]);
@@ -217,12 +205,12 @@ export function ProfilePage() {
               </div>
 
               <div className="profile-right">
-                {currentMedal && (
+                {user.currentMedal && (
                   <div className="profile-medal">
                     <img
-                      src={currentMedal.image}
-                      alt={currentMedal.name}
-                      title={`${currentMedal.name} (${currentMedal.minScore}+ pontos)`}
+                      src={user.currentMedal.image}
+                      alt={user.currentMedal.name}
+                      title={`${user.currentMedal.name} (${user.currentMedal.minScore}+ pontos)`}
                       className="profile-medal-image"
                     />
                   </div>
@@ -388,12 +376,12 @@ export function ProfilePage() {
               </div>
 
               <div className="profile-right">
-                {currentMedal && (
+                {user.currentMedal && (
                   <div className="profile-medal">
                     <img
-                      src={currentMedal.image}
-                      alt={currentMedal.name}
-                      title={`${currentMedal.name} (${currentMedal.minScore}+ pontos)`}
+                      src={user.currentMedal.image}
+                      alt={user.currentMedal.name}
+                      title={`${user.currentMedal.name} (${user.currentMedal.minScore}+ pontos)`}
                       className="profile-medal-image"
                     />
                   </div>

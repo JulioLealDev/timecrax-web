@@ -1,9 +1,13 @@
 import { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { DeleteAccountModal } from "../components/DeleteAccountModal";
 import "./SettingsPage.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
 
 export function SettingsPage() {
+  const navigate = useNavigate();
+
   // Change Email State
   const [emailPassword, setEmailPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -18,6 +22,11 @@ export function SettingsPage() {
   const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
+
+  // Delete Account State
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   // Change Email Handler
   async function handleChangeEmail(e: FormEvent) {
@@ -136,6 +145,39 @@ export function SettingsPage() {
       setPasswordErrors({ general: "Network error. Please try again." });
     } finally {
       setPasswordLoading(false);
+    }
+  }
+
+  // Delete Account Handler
+  async function handleDeleteAccount(password: string) {
+    setDeleteError("");
+    setDeleteLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/me/account`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setDeleteError(data.error || "Failed to delete account.");
+        setDeleteLoading(false);
+        return;
+      }
+
+      // Account deleted successfully - logout and redirect
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      setDeleteError("Network error. Please try again.");
+      setDeleteLoading(false);
     }
   }
 
@@ -279,6 +321,32 @@ export function SettingsPage() {
           )}
         </form>
       </section>
+
+      {/* Delete Account Section */}
+      <section className="settings-section danger-section">
+        <h2 className="settings-section-title danger-title">Danger Zone</h2>
+        <p className="danger-description">
+          Once you delete your account, there is no going back. Please be certain.
+        </p>
+        <button
+          type="button"
+          className="settings-button danger-button"
+          onClick={() => setDeleteModalOpen(true)}
+        >
+          Delete Account
+        </button>
+      </section>
+
+      <DeleteAccountModal
+        isOpen={deleteModalOpen}
+        onConfirm={handleDeleteAccount}
+        onCancel={() => {
+          setDeleteModalOpen(false);
+          setDeleteError("");
+        }}
+        isLoading={deleteLoading}
+        error={deleteError}
+      />
     </div>
   );
 }

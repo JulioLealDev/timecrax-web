@@ -136,3 +136,35 @@
   font-size: 1rem;
   margin-top: 1rem;
 }
+
+/* DANGER ZONE */
+.danger-section {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: radial-gradient(
+    circle at top,
+    #2d1515 0%,
+    #1a0808 55%,
+    #0a0303 100%
+  );
+}
+
+.danger-title {
+  color: #ef4444;
+}
+
+.danger-description {
+  color: #fca5a5;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.danger-button {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  border-color: rgba(248, 113, 113, 0.85);
+  color: #fff;
+}
+
+.danger-button:hover {
+  filter: brightness(0.9);
+}

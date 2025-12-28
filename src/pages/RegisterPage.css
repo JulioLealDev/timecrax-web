@@ -192,31 +192,6 @@
   cursor: not-allowed;
 }
 
-.register-footer {
-  margin-top: 0.7rem;
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-
-  color: rgba(249, 250, 251, 0.88);
-  font-family: "Cormorant Garamond", serif;
-  letter-spacing: 0.03em;
-}
-
-.register-link {
-  color: #facc6b;
-  text-decoration: none;
-  font-family: "Cinzel", serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.register-link:hover {
-  color: #fde68a;
-}
-
 /* responsivo */
 @media (max-width: 768px) {
   .register-title {

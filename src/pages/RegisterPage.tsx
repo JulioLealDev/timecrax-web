@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./RegisterPage.css";
 
@@ -151,13 +151,6 @@ export function RegisterPage() {
           <button className="register-button" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Creating..." : "Create account"}
           </button>
-
-          <div className="register-footer">
-            <span>Already have an account?</span>
-            <Link to="/" className="register-link">
-              Back to login
-            </Link>
-          </div>
         </form>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { CreateThemePage } from "./pages/CreateThemePage";
 import { NavBar } from "./components/NavBar";
 import { Sidebar } from "./components/Sidebar";
@@ -17,7 +18,7 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-  const isHomePage = location.pathname === "/" || location.pathname === "/register";
+  const isHomePage = location.pathname === "/" || location.pathname === "/register" || location.pathname === "/forgot-password";
 
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/profile" element={<ProfilePage />} />

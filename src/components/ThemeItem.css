@@ -108,6 +108,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5rem;
   min-width: 0;
   max-width: 50%;
   text-align: left;
@@ -309,6 +310,7 @@
 @media (max-width: 1050px) {
   .theme-info-section {
     flex-direction: column;
+    gap: 0;
   }
 
   .theme-info-left,

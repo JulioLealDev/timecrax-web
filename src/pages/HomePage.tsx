@@ -3,25 +3,25 @@ import "./HomePage.css";
 
 export function HomePage() {
 
-  // slides do carrossel: 60% imagem / 40% texto
+  // carousel slides: 60% image / 40% text
   const slides = [
     {
       id: 1,
-      imageUrl: "/images/gameScreen.png", 
-      title: "Viaje por diferentes épocas",
-      text: "Explore linhas do tempo temáticas, organizando os eventos corretamente evitando o colapso da máquina do tempo."
+      imageUrl: "/images/gameScreen.png",
+      title: "Travel through different eras",
+      text: "Explore themed timelines, organizing events correctly to prevent the time machine from collapsing."
     },
     {
       id: 2,
       imageUrl: "/images/menu.png",
-      title: "Jogue em equipe",
-      text: "Crie salas para jogar online. Discutam decisões, compartilham conhecimento e definam a melhor estratégia para vencer"
+      title: "Play as a team",
+      text: "Create rooms to play online. Discuss decisions, share knowledge and define the best strategy to win"
     },
     {
       id: 3,
       imageUrl: "/images/timeline.png",
-      title: "Mostre o seu conhecimento",
-      text: "Para fixar o evento na linha do tempo, deverá concluir diferentes desafios sobre aquele evento."
+      title: "Show your knowledge",
+      text: "To place the event on the timeline, you must complete different challenges about that event."
     }
   ];
 
@@ -40,16 +40,16 @@ export function HomePage() {
   return (
     <main className="home">
 
-      {/* PRIMEIRA SEÇÃO — TEXTO + VÍDEO */}
+      {/* FIRST SECTION — TEXT + VIDEO */}
       <section id="home" className="home-hero-section">
 
         <div className="home-hero-text">
           <h1>
-            Um jogo educacional <span className="highlight">GRÁTIS</span> para jogar{" "}
-            <span className="highlight">ONLINE</span> com seus amigos e aprender História de forma divertida.
+            A <span className="highlight">FREE</span> educational game to play{" "}
+            <span className="highlight">ONLINE</span> with your friends and learn History in a fun way.
           </h1>
           <p>
-            Viaje no tempo, organize eventos históricos e participe de desafios rápidos em partidas cooperativas.
+            Travel through time, organize historical events and participate in quick challenges in cooperative matches.
           </p>
         </div>
 
@@ -65,35 +65,35 @@ export function HomePage() {
 
       </section>
 
-      {/* SEGUNDA SEÇÃO — DOWNLOAD */}
+      {/* SECOND SECTION — DOWNLOAD */}
       <section id="download" className="home-download-section">
         <h2>Download</h2>
         <p className="download-subtitle">
-          O TimeCrax Machine está em desenvolvimento. Em breve você poderá baixar a versão beta
-          para computador e integrar os temas criados na plataforma.
+          TimeCrax Machine is under development. Soon you will be able to download the beta version
+          for computer and integrate the themes created on the platform.
         </p>
 
         <div className="download-grid">
 
           <div className="download-card disabled">
-            <h3>Iphone</h3>
-            <p>Planejado para versões futuras</p>
+            <h3>iPhone</h3>
+            <p>Planned for future versions</p>
           </div>
 
           <div className="download-card disabled">
             <h3>Android</h3>
-            <p>Planejado para versões futuras</p>
+            <p>Planned for future versions</p>
           </div>
 
           <div className="download-card disabled">
             <h3>Windows</h3>
-            <p>Disponível em breve</p>
+            <p>Available soon</p>
           </div>
 
         </div>
       </section>
 
-      {/* TERCEIRA SEÇÃO — FEATURES */}
+      {/* THIRD SECTION — FEATURES */}
 
         <section id="features" className="home-features-section">
 
@@ -111,7 +111,7 @@ export function HomePage() {
                     key={s.id}
                     className={index === currentSlide ? "dot active" : "dot"}
                     onClick={() => setCurrentSlide(index)}
-                    aria-label={`Ir para slide ${index + 1}`}
+                    aria-label={`Go to slide ${index + 1}`}
                 />
                 ))}
             </div>
@@ -171,22 +171,22 @@ export function HomePage() {
 
       </section>
 
-      {/* Seção 4: Contatos */}
+      {/* Section 4: Contact */}
 
         <section id="contact" className="home-contact-section">
 
-        <h2>Contatos</h2>
+        <h2>Contact</h2>
 
         <p className="contact-subtitle">
-            Quer usar o TimeCrax Machine na sua escola, testar a versão beta ou enviar sugestões?
-            Entre em contacto e vamos conversar.
+            Want to use TimeCrax Machine in your school, test the beta version or send suggestions?
+            Get in touch and let's talk.
         </p>
 
         <div className="contact-grid">
             <div className="contact-card">
             <h3>Email</h3>
             <p>
-                Para dúvidas gerais, parceria com escolas e feedback sobre o jogo:
+                For general questions, school partnerships and game feedback:
             </p>
             <a href="mailto:seuemail@exemplo.com" className="contact-link">
                 seuemail@exemplo.com
@@ -194,9 +194,9 @@ export function HomePage() {
             </div>
 
             <div className="contact-card">
-            <h3>Redes sociais</h3>
+            <h3>Social Media</h3>
             <p>
-                Acompanhe novidades sobre o desenvolvimento, testes e novos temas:
+                Follow news about development, tests and new themes:
             </p>
             <div className="contact-links-row">
                 <a href="#" target="_blank" rel="noreferrer" className="contact-link">

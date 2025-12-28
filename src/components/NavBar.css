@@ -787,13 +787,24 @@
   position: relative;
 }
 
+.navbar-language-dropdown::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 20px;
+  background: rgba(163, 163, 163, 0.5);
+}
+
 .navbar-language-button {
   font-family: "Cinzel", serif;
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #facc6b;
+  color: #f9fafb;
   background: none;
   border: none;
   cursor: pointer;
@@ -807,7 +818,7 @@
 
 .navbar-language-button:hover {
   background: rgba(250, 204, 107, 0.1);
-  color: #ffd98e;
+  color: #facc6b;
 }
 
 .navbar-language-button .dropdown-arrow {

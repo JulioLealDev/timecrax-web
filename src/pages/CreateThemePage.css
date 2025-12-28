@@ -867,6 +867,21 @@
   row-gap: 0.55rem;
 }
 
+.theme-resume-field .field-label {
+  font-size: 1.3rem;
+}
+
+.theme-recommendation-field {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 0.55rem;
+}
+
+.theme-recommendation-field .field-label {
+  font-size: 1.3rem;
+}
+
 .theme-image-field {
   display: grid;
   grid-template-rows: auto 150px;

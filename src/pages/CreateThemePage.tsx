@@ -75,6 +75,7 @@ export function CreateThemePage() {
 
   const [themeName, setThemeName] = useState("");
   const [themeResume, setThemeResume] = useState("");
+  const [themeRecommendation, setThemeRecommendation] = useState("");
   const [themeImageDataUrl, setThemeImageDataUrl] = useState<string | null>(null);
 
   const [savedCards, setSavedCards] = useState<SavedCard[]>([]);
@@ -145,6 +146,7 @@ export function CreateThemePage() {
           setEditingThemeId(editId);
           setThemeName(theme.name);
           setThemeResume(theme.resume || "");
+          setThemeRecommendation(theme.recommendation || "");
           setThemeImageDataUrl(theme.image || null);
 
           // Transform cards from API to SavedCard
@@ -686,6 +688,7 @@ export function CreateThemePage() {
       const payload = {
         name: themeName.trim(),
         resume: themeResume.trim() || null,
+        recommendation: themeRecommendation.trim() || null,
         image: themeImageDataUrl!,      // dataUrl
         // Sempre envia sessionId para validação
         // Backend detecta se precisa promover baseado em session.ThemeId
@@ -736,6 +739,7 @@ export function CreateThemePage() {
         nextOrderIndexRef.current = 0;
         setThemeName("");
         setThemeResume("");
+        setThemeRecommendation("");
         setThemeImageDataUrl(null);
         setSavedCards([]);
         setEditingCardId(null);
@@ -800,6 +804,21 @@ export function CreateThemePage() {
                 placeholder="Ex: Brief description of the theme"
                 maxLength={100}
               />
+            </label>
+
+            <label className="field theme-recommendation-field">
+              <h2 className="field-label">Recommendation</h2>
+              <select
+                className="field-input"
+                value={themeRecommendation}
+                onChange={(e) => setThemeRecommendation(e.target.value)}
+              >
+                <option value="">Select age group...</option>
+                <option value="1º cicle: 6 - 10 years old">1º cicle: 6 - 10 years old</option>
+                <option value="2º cicle: 10 - 12 years old">2º cicle: 10 - 12 years old</option>
+                <option value="3º cicle: 12 - 15 years old">3º cicle: 12 - 15 years old</option>
+                <option value="4º cicle: 15 - 18 years old">4º cicle: 15 - 18 years old</option>
+              </select>
             </label>
 
             <div className="theme-image-field">

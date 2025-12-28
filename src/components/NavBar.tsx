@@ -79,10 +79,10 @@ export function NavBar() {
             </button>
 
             <nav className="mobile-links">
-              <a href="#home" onClick={closeMobileMenu}>Home</a>
-              <a href="#download" onClick={closeMobileMenu}>Download</a>
-              <a href="#features" onClick={closeMobileMenu}>Features</a>
-              <a href="#contact" onClick={closeMobileMenu}>Contact</a>
+              <Link to="/" onClick={closeMobileMenu}>Home</Link>
+              <Link to="/#download" onClick={closeMobileMenu}>Download</Link>
+              <Link to="/#features" onClick={closeMobileMenu}>Features</Link>
+              <Link to="/#contact" onClick={closeMobileMenu}>Contact</Link>
             </nav>
 
             <div className="mobile-login">
@@ -183,13 +183,13 @@ export function NavBar() {
       {!hideNavbarCenter && (
         <nav className="navbar-center">
           <div className="navbar-divider" />
-          <a href="#home">Home</a>
+          <Link to="/">Home</Link>
           <span className="navbar-sep">•</span>
-          <a href="#download">Download</a>
+          <Link to="/#download">Download</Link>
           <span className="navbar-sep">•</span>
-          <a href="#features">Features</a>
+          <Link to="/#features">Features</Link>
           <span className="navbar-sep">•</span>
-          <a href="#contact">Contact</a>
+          <Link to="/#contact">Contact</Link>
           <div className="navbar-divider" />
         </nav>
       )}

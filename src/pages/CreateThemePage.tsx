@@ -813,6 +813,7 @@ export function CreateThemePage() {
                 value={themeRecommendation}
                 onChange={(e) => setThemeRecommendation(e.target.value)}
               >
+                <option value="">Select age group...</option>
                 <option value="1º cicle: 6 - 10 years old">1º cicle: 6 - 10 years old</option>
                 <option value="2º cicle: 10 - 12 years old">2º cicle: 10 - 12 years old</option>
                 <option value="3º cicle: 12 - 15 years old">3º cicle: 12 - 15 years old</option>

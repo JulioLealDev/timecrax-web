@@ -26,15 +26,15 @@ export function RegisterPage() {
     setErrorMsg(null);
 
     if (!firstName.trim() || !lastName.trim() || !schoolName.trim() || !email.trim() || !password) {
-      setErrorMsg("Preencha todos os campos.");
+      setErrorMsg("Please fill in all fields.");
       return;
     }
     if (password.length < 6) {
-      setErrorMsg("A senha deve ter pelo menos 6 caracteres.");
+      setErrorMsg("Password must be at least 6 characters.");
       return;
     }
     if (password !== password2) {
-      setErrorMsg("As senhas não conferem.");
+      setErrorMsg("Passwords do not match.");
       return;
     }
 
@@ -43,7 +43,7 @@ export function RegisterPage() {
       await register(firstName.trim(), lastName.trim(), email.trim(), password, schoolName.trim(), role);
       navigate("/");
     } catch (err: any) {
-      setErrorMsg(err?.message ?? "Falha no registro.");
+      setErrorMsg(err?.message ?? "Registration failed.");
     } finally {
       setIsSubmitting(false);
     }
@@ -53,17 +53,17 @@ export function RegisterPage() {
     <div className="register-page">
       <div className="register-card">
         <div className="register-header">
-          <h1 className="register-title">Registro</h1>
+          <h1 className="register-title">Register</h1>
           <p className="register-subtitle">
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="register-form">
           <div className="register-row">
-            <label className="register-label">Nome</label>
+            <label className="register-label">First Name</label>
             <input
               className="register-input"
-              placeholder="Primeiro Nome"
+              placeholder="First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               disabled={isSubmitting}
@@ -72,10 +72,10 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">Sobrenome</label>
+            <label className="register-label">Last Name</label>
             <input
               className="register-input"
-              placeholder="Ultimo Nome"
+              placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               disabled={isSubmitting}
@@ -84,10 +84,10 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">Escola</label>
+            <label className="register-label">School</label>
             <input
               className="register-input"
-              placeholder="Nome da escola"
+              placeholder="School Name"
               value={schoolName}
               onChange={(e) => setSchoolName(e.target.value)}
               disabled={isSubmitting}
@@ -95,15 +95,15 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">Função</label>
+            <label className="register-label">Role</label>
             <select
               className="register-select"
               value={role}
               onChange={(e) => setRole(e.target.value as Role)}
               disabled={isSubmitting}
             >
-              <option value="student">Sou aluno(a)</option>
-              <option value="teacher">Sou professor(a)</option>
+              <option value="student">I'm a student</option>
+              <option value="teacher">I'm a teacher</option>
             </select>
           </div>
 
@@ -111,7 +111,7 @@ export function RegisterPage() {
             <label className="register-label">Email</label>
             <input
               className="register-input"
-              placeholder="seuemail@exemplo.com"
+              placeholder="youremail@example.com"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -121,10 +121,10 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">Senha</label>
+            <label className="register-label">Password</label>
             <input
               className="register-input"
-              placeholder="Crie uma senha"
+              placeholder="Create a password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -134,10 +134,10 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">Confirmar senha</label>
+            <label className="register-label">Confirm Password</label>
             <input
               className="register-input"
-              placeholder="Repita a senha"
+              placeholder="Repeat password"
               type="password"
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
@@ -149,13 +149,13 @@ export function RegisterPage() {
           {errorMsg && <div className="register-error">{errorMsg}</div>}
 
           <button className="register-button" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Criando..." : "Criar conta"}
+            {isSubmitting ? "Creating..." : "Create account"}
           </button>
 
           <div className="register-footer">
-            <span>Já tem conta?</span>
+            <span>Already have an account?</span>
             <Link to="/" className="register-link">
-              Voltar e fazer login
+              Back to login
             </Link>
           </div>
         </form>

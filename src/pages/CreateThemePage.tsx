@@ -4,6 +4,7 @@ import { ImageQuizCard } from "../components/ImageQuizCard";
 import { CorrelationRow } from "../components/CorrelationItem";
 import { ErrorModal } from "../components/ErrorModal";
 import { ConfirmModal } from "../components/ConfirmModal";
+import { CustomSelect } from "../components/CustomSelect";
 import type { CardDraft, SavedCard } from "../types";
 import "./CreateThemePage.css";
 import cardTemplate from "../assets/cardTemplate.png";
@@ -810,17 +811,18 @@ export function CreateThemePage() {
 
             <label className="field theme-recommendation-field">
               <h2 className="field-label">Recommendation</h2>
-              <select
-                className={["field-input", hasError("theme.recommendation") ? "is-invalid" : ""].join(" ")}
+              <CustomSelect
+                className={hasError("theme.recommendation") ? "is-invalid" : ""}
                 value={themeRecommendation}
-                onChange={(e) => setThemeRecommendation(e.target.value)}
-              >
-                <option value="">Select age group...</option>
-                <option value="1º cicle: 6 - 10 years old">1º cicle: 6 - 10 years old</option>
-                <option value="2º cicle: 10 - 12 years old">2º cicle: 10 - 12 years old</option>
-                <option value="3º cicle: 12 - 15 years old">3º cicle: 12 - 15 years old</option>
-                <option value="4º cicle: 15 - 18 years old">4º cicle: 15 - 18 years old</option>
-              </select>
+                onChange={(value) => setThemeRecommendation(value)}
+                options={[
+                  { value: "", label: "Select age group..." },
+                  { value: "1º cicle: 6 - 10 years old", label: "1º cicle: 6 - 10 years old" },
+                  { value: "2º cicle: 10 - 12 years old", label: "2º cicle: 10 - 12 years old" },
+                  { value: "3º cicle: 12 - 15 years old", label: "3º cicle: 12 - 15 years old" },
+                  { value: "4º cicle: 15 - 18 years old", label: "4º cicle: 15 - 18 years old" },
+                ]}
+              />
             </label>
 
             <div className="theme-image-field">

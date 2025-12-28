@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { CustomSelect } from "../components/CustomSelect";
 import "./RegisterPage.css";
 
 type Role = "student" | "teacher" | "player";
@@ -86,16 +87,16 @@ export function RegisterPage() {
 
           <div className="register-row">
             <label className="register-label">Role</label>
-            <select
-              className="register-select"
+            <CustomSelect
               value={role}
-              onChange={(e) => setRole(e.target.value as Role)}
+              onChange={(value) => setRole(value as Role)}
               disabled={isSubmitting}
-            >
-              <option value="player">I'm just a player</option>
-              <option value="student">I'm a student</option>
-              <option value="teacher">I'm a teacher</option>
-            </select>
+              options={[
+                { value: "player", label: "I'm just a player" },
+                { value: "student", label: "I'm a student" },
+                { value: "teacher", label: "I'm a teacher" },
+              ]}
+            />
           </div>
 
           {(role === "student" || role === "teacher") && (

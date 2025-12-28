@@ -844,8 +844,7 @@
   display: grid;
   grid-template-columns: 1fr 220px;
   grid-template-rows: auto auto;
-  column-gap: 5rem;
-  row-gap: 1.5rem;
+  column-gap: 3rem;
   align-items: start;
 }
 
@@ -930,7 +929,7 @@
 
 .theme-image-field {
   display: grid;
-  grid-template-rows: auto 150px;
+  grid-template-rows: auto 200px;
   row-gap: 0.55rem;
   padding-top: 0;
   min-width: 0;
@@ -941,8 +940,8 @@
 }
 
 .theme-image-circle {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 999px;
 
   border: 2px solid rgba(229, 208, 161, 0.9);

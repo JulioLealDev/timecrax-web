@@ -52,7 +52,7 @@ export function NavBar() {
             <div className="mobile-login">
               {user ? (
                 <>
-                  <p className="login-title">LOGGED IN</p>
+                  <p className="mobile-login-title">LOGGED IN</p>
                   <p style={{ margin: "6px 0" }}>
                     {user.firstName ?? user.email}
                   </p>

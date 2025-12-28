@@ -309,7 +309,7 @@
   -webkit-focus-ring-color: transparent !important;
 }
 
-.login-button {
+.navbar-login-button {
   border-radius: 8px;
   padding: 0.30rem 1rem;
   font-size: 0.9rem;
@@ -326,21 +326,21 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.login-button::-moz-focus-inner {
+.navbar-login-button::-moz-focus-inner {
   border: 0;
 }
 
-.login-button:focus-visible {
+.navbar-login-button:focus-visible {
   outline: none !important;
   box-shadow: 0 0 8px silver !important;
   -webkit-focus-ring-color: transparent !important;
 }
 
-.login-button:hover {
+.navbar-login-button:hover {
   filter: brightness(1.1);
 }
 
-.login-button:active {
+.navbar-login-button:active {
   transform: scale(0.9);
 }
 
@@ -749,7 +749,7 @@
     justify-items: stretch;
   }
 
-  .login-button {
+  .navbar-login-button {
     justify-self: stretch;
   }
 

@@ -72,7 +72,7 @@ export function NavBar() {
                   </p>
                   <button
                     type="button"
-                    className="login-button login-button-small"
+                    className="navbar-login-button login-button-small"
                     onClick={handleLogout}
                   >
                     Logout

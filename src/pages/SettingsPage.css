@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem 2rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
 }
 
 .settings-title {
@@ -58,7 +58,7 @@
 .settings-input {
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   background: rgba(2, 6, 23, 0.8);
   border: 1px solid rgba(250, 204, 107, 0.3);
   border-radius: 10px;

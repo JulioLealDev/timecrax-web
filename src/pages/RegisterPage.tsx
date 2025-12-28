@@ -19,8 +19,36 @@ export function RegisterPage() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
+  const [agreeGdpr, setAgreeGdpr] = useState(false);
+  const [showGdprModal, setShowGdprModal] = useState(false);
+  const [gdprText, setGdprText] = useState<string | null>(null);
+  const [gdprLoading, setGdprLoading] = useState(false);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // TODO: Replace with actual API call to fetch GDPR text from database
+  async function fetchGdprText() {
+    setGdprLoading(true);
+    try {
+      // Placeholder - replace with actual API call
+      // const response = await api.get("/legal/gdpr");
+      // setGdprText(response.data.content);
+      setGdprText("GDPR terms content will be loaded from the database. This is a placeholder text.");
+    } catch {
+      setGdprText("Failed to load GDPR terms. Please try again later.");
+    } finally {
+      setGdprLoading(false);
+    }
+  }
+
+  function handleOpenGdprModal(e: React.MouseEvent) {
+    e.preventDefault();
+    setShowGdprModal(true);
+    if (!gdprText) {
+      fetchGdprText();
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -37,6 +65,10 @@ export function RegisterPage() {
     }
     if (password !== password2) {
       setErrorMsg("Passwords do not match.");
+      return;
+    }
+    if (!agreeGdpr) {
+      setErrorMsg("You must agree to the GDPR terms.");
       return;
     }
 
@@ -151,6 +183,28 @@ export function RegisterPage() {
             />
           </div>
 
+          <div className="register-gdpr-row">
+            <label className="register-gdpr-label">
+              <input
+                type="checkbox"
+                className="register-gdpr-checkbox"
+                checked={agreeGdpr}
+                onChange={(e) => setAgreeGdpr(e.target.checked)}
+                disabled={isSubmitting}
+              />
+              <span>
+                I agree with{" "}
+                <a
+                  href="#"
+                  className="register-gdpr-link"
+                  onClick={handleOpenGdprModal}
+                >
+                  GDPR terms
+                </a>
+              </span>
+            </label>
+          </div>
+
           {errorMsg && <div className="register-error">{errorMsg}</div>}
 
           <button className="register-button" type="submit" disabled={isSubmitting}>
@@ -158,6 +212,29 @@ export function RegisterPage() {
           </button>
         </form>
       </div>
+
+      {showGdprModal && (
+        <div className="gdpr-modal-overlay" onClick={() => setShowGdprModal(false)}>
+          <div className="gdpr-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="gdpr-modal-close"
+              onClick={() => setShowGdprModal(false)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h2 className="gdpr-modal-title">GDPR Terms</h2>
+            <div className="gdpr-modal-body">
+              {gdprLoading ? (
+                <p className="gdpr-modal-loading">Loading...</p>
+              ) : (
+                <p>{gdprText}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

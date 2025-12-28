@@ -875,7 +875,7 @@ export function CreateThemePage() {
               {isCardBuilderDisabled && (
                 <div style={{
                   color: "#facc6b",
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Marcellus', serif",
                   fontSize: "1.05rem",
                   marginTop: "0.5rem",
                   textAlign: "center"

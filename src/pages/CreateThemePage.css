@@ -91,7 +91,7 @@
 }
 
 .card-builder-subtitle {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.1rem;
   color: #d6d6d6;
   margin: 0;
@@ -483,7 +483,7 @@
   color: #f9fafb;
   outline: none;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   line-height: 1.35;
 }
 
@@ -594,7 +594,7 @@
   color: #f9fafb;
   outline: none;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.05rem;
   line-height: 1.35;
 }
@@ -637,7 +637,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 0.85rem;
   line-height: 1;
   cursor: help;
@@ -680,7 +680,7 @@
   background: rgba(2, 6, 23, 0.92);
   color: #e5e7eb;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.0rem;
   line-height: 1.25;
 
@@ -791,7 +791,7 @@
   margin-top: 0.35rem;
   color: #fca5a5;
   font-size: 0.95rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
 }
 
 .is-invalid {

@@ -1,6 +1,3 @@
-/* fontes com vibe clássica/steampunk */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap");
-
 /* NAVBAR ====================================================== */
 
 .navbar-steam {
@@ -185,8 +182,8 @@
   width: 58px;     /* antes 40 */
   height: 58px;    /* antes 40 */
   border-radius: 999px;
-  border: 3px solid #e5d0a1;
-  box-shadow: 0 0 0 3px #3b2a1d, 0 4px 14px rgba(0, 0, 0, 0.85);
+  border: 1px solid #e5d0a1;
+  box-shadow: 0 0 0 1px #3b2a1d, 0 4px 14px rgba(0, 0, 0, 0.85);
   object-fit: cover;
 }
 
@@ -204,7 +201,7 @@
 }
 
 .navbar-title-sub {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.2rem;  /* antes 0.9 */
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -259,6 +256,9 @@
 .navbar-right {
   margin-left: auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .login-grid {
@@ -347,7 +347,7 @@
 .login-register-link {
   justify-self: center; 
   font-size: 1.0rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   color: #facc6b;
   text-decoration: none;
   text-shadow: 0 0 8px rgba(250, 204, 107, 0.3);
@@ -432,7 +432,7 @@
   padding: 0.25rem 0.4rem;
 
   font-family: "Cinzel", serif;
-  font-size: 0.75rem;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 
@@ -575,9 +575,17 @@
   height: 34px;
   border-radius: 999px;
 
-  border: 2px solid #facc6b;
+  border: 1px solid #facc6b;
   background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
   color: #ffffff;
+  overflow: hidden;
+}
+
+.navbar-profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 999px;
 }
 
 .navbar-profile-name {
@@ -720,8 +728,8 @@
 
   .navbar-right {
     order: 2;
-    width: 100%;
     margin-left: 0;
+    justify-content: flex-end;
   }
 
   .login-grid {
@@ -741,7 +749,8 @@
   }
 
   .navbar-right {
-    width: 100%;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 
   .login-grid {
@@ -768,7 +777,7 @@
 
 .navbar-login-link {
   font-family: "Cinzel", serif;
-  font-size: 1rem;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -800,7 +809,7 @@
 
 .navbar-language-button {
   font-family: "Cinzel", serif;
-  font-size: 1rem;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -857,7 +866,7 @@
 }
 
 .navbar-language-menu button {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1rem;
   letter-spacing: 0.03em;
   color: #f9fafb;
@@ -911,6 +920,6 @@
 
   .navbar-login-link,
   .navbar-language-button {
-    font-size: 0.9rem;
+    font-size: 12px;
   }
 }

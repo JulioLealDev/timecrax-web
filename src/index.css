@@ -55,9 +55,13 @@ h1 {
 }
 
 /* ================================================
+   GOOGLE FONTS
+   ================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Marcellus&display=swap");
+
+/* ================================================
    GLOBAL CUSTOM TOOLTIPS
    ================================================ */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap");
 
 [data-tooltip] {
   position: relative;

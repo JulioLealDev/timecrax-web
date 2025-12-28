@@ -26,7 +26,7 @@
 }
 
 .home-hero-text p {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.8rem;
   color: #d6d6d6;
   max-width: 900px;
@@ -80,7 +80,7 @@
 }
 
 .download-subtitle {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.8rem;
   color: #d6d6d6;
   max-width: 900px;
@@ -118,7 +118,7 @@
 .download-card p {
   color: #c1c1c1;
   font-size: 1rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
 }
 
 .download-card:not(.disabled):hover {
@@ -265,7 +265,7 @@
 }
 
 .highlight-text p {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.2rem;
   color: #e5e7eb;
   line-height: 1.6;
@@ -324,7 +324,7 @@
 }
 
 .home-ranking-section p {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.3rem;
   color: #e5e7eb;
   line-height: 1.6;
@@ -354,7 +354,7 @@
 }
 
 .contact-subtitle {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.2rem;
   color: #e5e7eb;
   max-width: 800px;
@@ -391,7 +391,7 @@
 }
 
 .contact-card p {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1.05rem;
   color: #e5e7eb;
   margin-bottom: 0.7rem;

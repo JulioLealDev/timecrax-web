@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation  } from "react-router-dom";
 import "./NavBar.css";
 import logoImg from "../assets/timecrax_logo.png";
 import { useAuth } from "../context/AuthContext";
+import { withBaseUrl } from "../utils/withBaseUrl";
 
 export function NavBar() {
   const navigate = useNavigate();
@@ -25,6 +26,11 @@ export function NavBar() {
     navigate("/");
   }
 
+  function handleGoHome() {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   const displayName = user?.firstName?.trim() || user?.email || "Perfil";
 
   // Close language dropdown when clicking outside
@@ -40,6 +46,17 @@ export function NavBar() {
       };
     }
   }, [showLanguageDropdown]);
+
+  // Scroll to section when hash changes
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <header className="navbar-steam">
@@ -57,7 +74,7 @@ export function NavBar() {
             </button>
 
             <nav className="mobile-links">
-              <Link to="/" onClick={closeMobileMenu}>Home</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); closeMobileMenu(); handleGoHome(); }}>Home</a>
               <Link to="/#download" onClick={closeMobileMenu}>Download</Link>
               <Link to="/#features" onClick={closeMobileMenu}>Features</Link>
               <Link to="/#contact" onClick={closeMobileMenu}>Contact</Link>
@@ -88,7 +105,7 @@ export function NavBar() {
         </>
       )}
 
-      <div className="navbar-left" onClick={() => navigate("/")}>
+      <div className="navbar-left" onClick={handleGoHome}>
         <img src={logoImg} alt="TimeCrax Machine logo" className="navbar-logo-img" />
         <div className="navbar-title-block">
           <span className="navbar-title-main">TimeCrax</span>
@@ -113,7 +130,7 @@ export function NavBar() {
       {!hideNavbarCenter && (
         <nav className="navbar-center">
           <div className="navbar-divider" />
-          <Link to="/">Home</Link>
+          <a href="#" onClick={(e) => { e.preventDefault(); handleGoHome(); }}>Home</a>
           <span className="navbar-sep">•</span>
           <Link to="/#download">Download</Link>
           <span className="navbar-sep">•</span>
@@ -134,13 +151,20 @@ export function NavBar() {
               aria-label="Abrir perfil"
             >
               <span className="navbar-profile-icon" aria-hidden="true">
-                {/* ícone inline (evita dependências) */}
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  <path
-                    fill="currentColor"
-                    d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+                {user?.picture ? (
+                  <img
+                    src={withBaseUrl(user.picture)}
+                    alt="Profile"
+                    className="navbar-profile-img"
                   />
-                </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+                    />
+                  </svg>
+                )}
               </span>
 
               <span className="navbar-profile-name" data-tooltip={displayName}>
@@ -160,39 +184,37 @@ export function NavBar() {
             </button>
           </div>
         ) : (
-          <div className="navbar-right-links">
-            <Link to="/login" className="navbar-login-link">
-              Login
-            </Link>
-
-            <div className="navbar-language-dropdown">
-              <button
-                type="button"
-                className="navbar-language-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowLanguageDropdown((prev) => !prev);
-                }}
-              >
-                Language
-                <svg width="12" height="8" viewBox="0 0 12 8" className="dropdown-arrow">
-                  <path fill="currentColor" d="M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z" />
-                </svg>
-              </button>
-
-              {showLanguageDropdown && (
-                <div className="navbar-language-menu">
-                  <button type="button" onClick={() => setShowLanguageDropdown(false)}>
-                    English
-                  </button>
-                  <button type="button" onClick={() => setShowLanguageDropdown(false)}>
-                    Português
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+          <Link to="/login" className="navbar-login-link">
+            Login
+          </Link>
         )}
+
+        <div className="navbar-language-dropdown">
+          <button
+            type="button"
+            className="navbar-language-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowLanguageDropdown((prev) => !prev);
+            }}
+          >
+            Language
+            <svg width="12" height="8" viewBox="0 0 12 8" className="dropdown-arrow">
+              <path fill="currentColor" d="M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z" />
+            </svg>
+          </button>
+
+          {showLanguageDropdown && (
+            <div className="navbar-language-menu">
+              <button type="button" onClick={() => setShowLanguageDropdown(false)}>
+                English
+              </button>
+              <button type="button" onClick={() => setShowLanguageDropdown(false)}>
+                Português
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap");
-
 .custom-select {
   position: relative;
   width: 100%;
@@ -20,7 +18,7 @@
   background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
   color: #f9fafb;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   letter-spacing: 0.03em;
   text-align: left;
   cursor: pointer;
@@ -101,7 +99,7 @@
   padding: 0.6rem 1rem;
   text-align: left;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Marcellus", serif;
   font-size: 1rem;
   letter-spacing: 0.03em;
   color: #f9fafb;

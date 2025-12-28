@@ -689,8 +689,8 @@ export function CreateThemePage() {
 
       const payload = {
         name: themeName.trim(),
-        resume: themeResume.trim() || null,
-        recommendation: themeRecommendation.trim() || null,
+        resume: themeResume.trim(),
+        recommendation: themeRecommendation.trim(),
         image: themeImageDataUrl!,      // dataUrl
         // Sempre envia sessionId para validação
         // Backend detecta se precisa promover baseado em session.ThemeId

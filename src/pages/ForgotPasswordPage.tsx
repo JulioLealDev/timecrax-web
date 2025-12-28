@@ -1,11 +1,8 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth.service";
 import "./ForgotPasswordPage.css";
 
 export function ForgotPasswordPage() {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -75,14 +72,6 @@ export function ForgotPasswordPage() {
             disabled={isSubmitting}
           >
             {isSubmitting ? "Sending..." : "Send Reset Link"}
-          </button>
-
-          <button
-            type="button"
-            className="forgot-password-back"
-            onClick={() => navigate("/")}
-          >
-            Back to Login
           </button>
         </form>
       </div>

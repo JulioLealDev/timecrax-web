@@ -30,12 +30,6 @@ export function RegisterPage() {
       setErrorMsg("Please fill in all fields.");
       return;
     }
-
-    // Validate schoolName for student/teacher roles
-    if ((role === "student" || role === "teacher") && !schoolName.trim()) {
-      setErrorMsg("School name is required for students and teachers.");
-      return;
-    }
     if (password.length < 6) {
       setErrorMsg("Password must be at least 6 characters.");
       return;

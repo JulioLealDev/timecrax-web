@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation  } from "react-router-dom";
 import "./NavBar.css";
 import logoImg from "../assets/timecrax_logo.png";
@@ -26,6 +26,20 @@ export function NavBar() {
   }
 
   const displayName = user?.firstName?.trim() || user?.email || "Perfil";
+
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside() {
+      setShowLanguageDropdown(false);
+    }
+
+    if (showLanguageDropdown) {
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }
+  }, [showLanguageDropdown]);
 
   return (
     <header className="navbar-steam">
@@ -155,7 +169,10 @@ export function NavBar() {
               <button
                 type="button"
                 className="navbar-language-button"
-                onClick={() => setShowLanguageDropdown((prev) => !prev)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowLanguageDropdown((prev) => !prev);
+                }}
               >
                 Language
                 <svg width="12" height="8" viewBox="0 0 12 8" className="dropdown-arrow">

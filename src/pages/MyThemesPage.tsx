@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { themesService, type ThemeResponse } from "../services/themes.service";
 import { ThemeItem } from "../components/ThemeItem";
 import { ConfirmModal } from "../components/ConfirmModal";
@@ -73,7 +73,9 @@ export function MyThemesPage() {
           <div className="my-themes-error">{error}</div>
         ) : themes.length === 0 ? (
           <div className="my-themes-empty">
-            <p>No themes created yet. Start creating your first theme!</p>
+            <p>
+              No themes created yet. <Link to="/create-theme">Start creating your first theme!</Link>
+            </p>
           </div>
         ) : (
           <>

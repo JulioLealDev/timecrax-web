@@ -66,6 +66,19 @@
 
 .my-themes-empty {
   color: rgba(249, 250, 251, 0.6);
+  font-size: 1.5rem;
+}
+
+.my-themes-empty a {
+  color: #facc6b;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.my-themes-empty a:hover {
+  color: #ffd98e;
+  text-decoration: underline;
 }
 
 /* INFO ICON */

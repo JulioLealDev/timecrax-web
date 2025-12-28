@@ -882,6 +882,31 @@
   font-size: 1.3rem;
 }
 
+.theme-recommendation-field select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23facc6b' d='M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px;
+}
+
+.theme-recommendation-field select:hover {
+  border-color: rgba(250, 204, 107, 0.4);
+}
+
+.theme-recommendation-field select:focus {
+  border-color: rgba(250, 204, 107, 0.7);
+  box-shadow: 0 0 12px rgba(250, 204, 107, 0.3);
+}
+
+.theme-recommendation-field select option {
+  background: #020617;
+  color: #f9fafb;
+  padding: 0.5rem;
+}
+
 .theme-image-field {
   display: grid;
   grid-template-rows: auto 150px;

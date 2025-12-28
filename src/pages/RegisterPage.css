@@ -30,10 +30,12 @@
 
 .register-title {
   font-family: "Cinzel", serif;
-  letter-spacing: 0.12em;
+  font-size: 2.4rem;
+  color: #facc6b;
+  text-shadow: 0 0 12px rgba(250, 204, 107, 0.35);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin: 0 0 0.35rem 0;
-  font-size: 1.35rem;
+  margin: 0 0 0.5rem 0;
 }
 
 .register-subtitle {
@@ -57,40 +59,45 @@
 
 .register-label {
   font-family: "Cinzel", serif;
-  font-size: 0.82rem;
+  font-size: 1.1rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: rgba(249, 250, 251, 0.92);
 }
 
 .register-input,
 .register-select {
-  padding: 0.65rem 0.9rem;
-  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
 
-  border-radius: 8px;
-  border: 1px solid #4b3a2a;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 204, 107, 0.3);
 
   background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
   color: #f9fafb;
 
   font-family: "Cormorant Garamond", serif;
   letter-spacing: 0.03em;
+  transition: all 0.2s ease;
 }
 
 .register-input::placeholder {
   color: #9ca3af;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+}
+
+.register-input:hover,
+.register-select:hover {
+  border-color: rgba(250, 204, 107, 0.5);
 }
 
 .register-input:focus,
 .register-input:focus-visible,
 .register-select:focus,
 .register-select:focus-visible {
-  outline: none !important;
-  border-color: silver !important;
-  box-shadow: 0 0 8px silver !important;
-  -webkit-focus-ring-color: transparent !important;
+  outline: none;
+  border-color: rgba(250, 204, 107, 0.7);
+  box-shadow: 0 0 12px rgba(250, 204, 107, 0.3);
 }
 
 .register-select {
@@ -177,11 +184,26 @@
 }
 
 /* responsivo */
+@media (max-width: 768px) {
+  .register-title {
+    font-size: 2rem;
+  }
+
+  .register-label {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 520px) {
   .register-card {
     padding: 1.2rem 1.1rem 1.1rem;
   }
+
   .register-title {
-    font-size: 1.15rem;
+    font-size: 1.7rem;
+  }
+
+  .register-label {
+    font-size: 0.95rem;
   }
 }

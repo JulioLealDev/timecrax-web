@@ -91,7 +91,7 @@
   flex-direction: row;
   gap: 2rem;
   min-width: 0;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .theme-info-left {
@@ -100,14 +100,16 @@
   flex-direction: column;
   gap: 0.5rem;
   min-width: 0;
+  max-width: 50%;
 }
 
 .theme-info-right {
-  flex: 0 0 auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  min-width: 200px;
+  justify-content: space-between;
+  min-width: 0;
+  max-width: 50%;
   text-align: right;
 }
 
@@ -288,7 +290,16 @@
   color: rgba(249, 250, 251, 0.8);
 }
 
-.resume-value,
+.resume-value {
+  color: #facc6b;
+  font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  line-height: 1.4;
+}
+
 .recommendation-value {
   color: #facc6b;
   font-weight: 500;

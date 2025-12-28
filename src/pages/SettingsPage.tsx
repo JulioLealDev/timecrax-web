@@ -141,7 +141,7 @@ export function SettingsPage() {
 
   return (
     <div className="settings-page">
-      <h1 className="settings-title">Account Settings</h1>
+      <h1 className="settings-title">Settings</h1>
 
       {/* Change Email Section */}
       <section className="settings-section">

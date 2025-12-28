@@ -27,7 +27,7 @@ export type UserDto = {
   email: string;
   firstName?: string;
   lastName?: string;
-  role?: "student" | "teacher";
+  role?: "student" | "teacher" | "player";
   schoolName?: string | null;
   picture?: string | null;
   score: number;
@@ -44,7 +44,7 @@ export type LoginRequest = {
 };
 
 export type RegisterRequest = {
-  role: "student" | "teacher";
+  role: "student" | "teacher" | "player";
   firstName: string;
   lastName: string;
   email: string;

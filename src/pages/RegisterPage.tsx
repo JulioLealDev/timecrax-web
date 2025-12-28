@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./RegisterPage.css";
 
-type Role = "student" | "teacher";
+type Role = "student" | "teacher" | "player";
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export function RegisterPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [schoolName, setSchoolName] = useState("");
-  const [role, setRole] = useState<Role>("student");
+  const [role, setRole] = useState<Role>("player");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,8 +25,15 @@ export function RegisterPage() {
     e.preventDefault();
     setErrorMsg(null);
 
-    if (!firstName.trim() || !lastName.trim() || !schoolName.trim() || !email.trim() || !password) {
+    // Validate required fields
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password) {
       setErrorMsg("Please fill in all fields.");
+      return;
+    }
+
+    // Validate schoolName for student/teacher roles
+    if ((role === "student" || role === "teacher") && !schoolName.trim()) {
+      setErrorMsg("School name is required for students and teachers.");
       return;
     }
     if (password.length < 6) {
@@ -84,17 +91,6 @@ export function RegisterPage() {
           </div>
 
           <div className="register-row">
-            <label className="register-label">School</label>
-            <input
-              className="register-input"
-              placeholder="School Name"
-              value={schoolName}
-              onChange={(e) => setSchoolName(e.target.value)}
-              disabled={isSubmitting}
-            />
-          </div>
-
-          <div className="register-row">
             <label className="register-label">Role</label>
             <select
               className="register-select"
@@ -102,10 +98,24 @@ export function RegisterPage() {
               onChange={(e) => setRole(e.target.value as Role)}
               disabled={isSubmitting}
             >
+              <option value="player">I'm just a player</option>
               <option value="student">I'm a student</option>
               <option value="teacher">I'm a teacher</option>
             </select>
           </div>
+
+          {(role === "student" || role === "teacher") && (
+            <div className="register-row">
+              <label className="register-label">School</label>
+              <input
+                className="register-input"
+                placeholder="School Name"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
+                disabled={isSubmitting}
+              />
+            </div>
+          )}
 
           <div className="register-row">
             <label className="register-label">Email</label>

@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 type Props = {
-  allowedRoles: Array<"teacher" | "student">;
+  allowedRoles: Array<"teacher" | "student" | "player">;
 };
 
 export function RoleProtectedRoute({ allowedRoles }: Props) {

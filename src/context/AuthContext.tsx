@@ -11,7 +11,7 @@ type AuthContextValue = {
     email: string,
     password: string,
     schoolName: string,
-    role: "student" | "teacher"
+    role: "student" | "teacher" | "player"
   ) => Promise<void>;
   logout: () => void;
   refreshMe: () => Promise<void>;
@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     email: string,
     password: string,
     schoolName: string,
-    role: "student" | "teacher"
+    role: "student" | "teacher" | "player"
   ) {
     // 1) cria o usuário
     await authService.register({ firstName, lastName, email, password, schoolName, role });

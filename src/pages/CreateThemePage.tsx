@@ -60,7 +60,7 @@ const createEmptyCardDraft = (orderIndex: number): CardDraft => ({
   },
 
   correlationQuiz: {
-    prompt: "Correlacione as figuras aos textos corretamente:",
+    prompt: "Match the images to the texts correctly:",
     items: [{ text: "" }, { text: "" }, { text: "" }],
   },
 });
@@ -181,7 +181,7 @@ export function CreateThemePage() {
             },
 
             correlationQuiz: {
-              prompt: card.correlationQuiz.prompt || "Correlacione as figuras aos textos corretamente:",
+              prompt: card.correlationQuiz.prompt || "Match the images to the texts correctly:",
               items: card.correlationQuiz.items.map((item: any) => ({
                 text: item.text,
                 imageUrl: item.imageUrl,
@@ -658,7 +658,7 @@ export function CreateThemePage() {
     }
 
     if (!assetsSessionId) {
-      setErrorModalErrors({ "assets.session": "Sessão de upload não está pronta." });
+      setErrorModalErrors({ "assets.session": "Upload session is not ready." });
       setShowErrorModal(true);
       return;
     }
@@ -679,9 +679,9 @@ export function CreateThemePage() {
         else seen.add(c.orderIndex);
       }
       if (duplicates.length > 0) {
-        const errorMsg = `Existem cartas com orderIndex duplicado (${[...new Set(duplicates)].join(
+        const errorMsg = `There are cards with duplicate orderIndex (${[...new Set(duplicates)].join(
           ", "
-        )}). Recrie as cartas ou recarregue a página.`;
+        )}). Recreate the cards or reload the page.`;
         setErrorModalErrors({ "cards.duplicate": errorMsg });
         setShowErrorModal(true);
         return;
@@ -769,7 +769,7 @@ export function CreateThemePage() {
       <main className="create-theme-container">
         <h1 className="create-theme-title">
           {isLoadingTheme
-            ? "Carregando..."
+            ? "Loading..."
             : isEditMode
               ? "Edit Theme"
               : "Create New Theme"
@@ -1285,8 +1285,8 @@ export function CreateThemePage() {
               disabled={!canSaveTheme || isCreatingTheme || isSessionLoading}
             >
               {isCreatingTheme
-                ? (isEditMode ? "Atualizando..." : "Salvando...")
-                : (isEditMode ? "Atualizar Tema" : "Save Theme")
+                ? (isEditMode ? "Updating..." : "Saving...")
+                : (isEditMode ? "Update Theme" : "Save Theme")
               }
             </button>
           </div>

@@ -44,9 +44,6 @@ export function ForgotPasswordPage() {
       <div className="forgot-password-card">
         <div className="forgot-password-header">
           <h1 className="forgot-password-title">Reset Password</h1>
-          <p className="forgot-password-subtitle">
-            Enter your email address and we'll send you instructions to reset your password.
-          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="forgot-password-form">
@@ -62,6 +59,10 @@ export function ForgotPasswordPage() {
               autoComplete="email"
             />
           </div>
+
+          <p className="forgot-password-subtitle">
+            Enter your email address and we'll send you instructions to reset your password.
+          </p>
 
           {errorMsg && <div className="forgot-password-error">{errorMsg}</div>}
           {successMsg && <div className="forgot-password-success">{successMsg}</div>}

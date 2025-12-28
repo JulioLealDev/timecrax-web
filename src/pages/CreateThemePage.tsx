@@ -197,7 +197,7 @@ export function CreateThemePage() {
           nextOrderIndexRef.current = maxOrder + 1;
 
         } catch (err: any) {
-          const errorMsg = err?.message ?? "Falha ao carregar tema para edição.";
+          const errorMsg = err?.message ?? "Failed to load theme for editing.";
           setEditingThemeId(null);
           setErrorModalErrors({ "load.theme": errorMsg });
           setShowErrorModal(true);
@@ -223,7 +223,7 @@ export function CreateThemePage() {
         const res = await themeAssetsService.createSession(editingThemeId || undefined);
         setAssetsSessionId(res.sessionId);
       } catch (err: any) {
-        const errorMsg = err?.message ?? "Falha ao criar sessão de upload.";
+        const errorMsg = err?.message ?? "Failed to create upload session.";
         setErrorModalErrors({ "assets.session": errorMsg });
         setShowErrorModal(true);
       } finally {
@@ -311,7 +311,7 @@ export function CreateThemePage() {
       img.onerror = () => {
         setErrors((prev) => ({
           ...prev,
-          "theme.image": "Falha ao carregar a imagem selecionada.",
+          "theme.image": "Failed to load selected image.",
         }));
       };
 
@@ -474,36 +474,36 @@ export function CreateThemePage() {
   function validateCardDraft(d: CardDraft) {
     const e: Record<string, string> = {};
 
-    if (!isNonEmpty(d.year)) e["card.year"] = "Ano é obrigatório.";
-    if (!d.era) e["card.era"] = "Selecione A.C. ou D.C.";
-    if (!isNonEmpty(d.caption)) e["card.caption"] = "Texto da carta é obrigatório.";
+    if (!isNonEmpty(d.year)) e["card.year"] = "Year is required.";
+    if (!d.era) e["card.era"] = "Select B.C. or A.D.";
+    if (!isNonEmpty(d.caption)) e["card.caption"] = "Card text is required.";
     if (!d.imageFile && !isNonEmpty(d.imageUrl) && !isNonEmpty(d.imagePreview))
-      e["card.image"] = "Imagem da carta é obrigatória.";
+      e["card.image"] = "Card image is required.";
 
-    if (!isNonEmpty(d.imageQuiz.question)) e["imageQuiz.question"] = "Pergunta do Image Quiz é obrigatória.";
-    if (d.imageQuiz.options.length !== 4) e["imageQuiz.options"] = "Image Quiz precisa de 4 opções.";
+    if (!isNonEmpty(d.imageQuiz.question)) e["imageQuiz.question"] = "Image Quiz question is required.";
+    if (d.imageQuiz.options.length !== 4) e["imageQuiz.options"] = "Image Quiz needs 4 options.";
     d.imageQuiz.options.forEach((opt, i) => {
       if (!opt.imageFile && !isNonEmpty(opt.imageUrl))
-        e[`imageQuiz.options.${i}`] = `Imagem da opção ${i + 1} é obrigatória.`;
+        e[`imageQuiz.options.${i}`] = `Option ${i + 1} image is required.`;
     });
-    if (d.imageQuiz.correctIndex === null) e["imageQuiz.correct"] = "Selecione a imagem correta (Image Quiz).";
+    if (d.imageQuiz.correctIndex === null) e["imageQuiz.correct"] = "Select the correct image (Image Quiz).";
 
-    if (!isNonEmpty(d.textQuiz.question)) e["textQuiz.question"] = "Pergunta do Text Quiz é obrigatória.";
-    if (d.textQuiz.options.length !== 4) e["textQuiz.options"] = "Text Quiz precisa de 4 opções.";
+    if (!isNonEmpty(d.textQuiz.question)) e["textQuiz.question"] = "Text Quiz question is required.";
+    if (d.textQuiz.options.length !== 4) e["textQuiz.options"] = "Text Quiz needs 4 options.";
     d.textQuiz.options.forEach((opt, i) => {
-      if (!isNonEmpty(opt.text)) e[`textQuiz.options.${i}`] = `Texto da opção ${i + 1} é obrigatório.`;
+      if (!isNonEmpty(opt.text)) e[`textQuiz.options.${i}`] = `Option ${i + 1} text is required.`;
     });
-    if (d.textQuiz.correctIndex === null) e["textQuiz.correct"] = "Selecione a opção correta (Text Quiz).";
+    if (d.textQuiz.correctIndex === null) e["textQuiz.correct"] = "Select the correct option (Text Quiz).";
 
-    if (!isNonEmpty(d.trueFalseQuiz.statement)) e["tf.statement"] = "Afirmação do Verdadeiro/Falso é obrigatória.";
-    if (d.trueFalseQuiz.answer === null) e["tf.answer"] = "Selecione Verdadeiro ou Falso.";
+    if (!isNonEmpty(d.trueFalseQuiz.statement)) e["tf.statement"] = "True/False statement is required.";
+    if (d.trueFalseQuiz.answer === null) e["tf.answer"] = "Select True or False.";
 
-    if (!isNonEmpty(d.correlationQuiz.prompt)) e["corr.prompt"] = "Texto do Correlation Quiz é obrigatório.";
-    if (d.correlationQuiz.items.length !== 3) e["corr.items"] = "Correlation Quiz precisa de 3 itens.";
+    if (!isNonEmpty(d.correlationQuiz.prompt)) e["corr.prompt"] = "Correlation Quiz text is required.";
+    if (d.correlationQuiz.items.length !== 3) e["corr.items"] = "Correlation Quiz needs 3 items.";
     d.correlationQuiz.items.forEach((it, i) => {
       if (!it.imageFile && !isNonEmpty(it.imageUrl))
-        e[`corr.items.${i}.img`] = `Imagem ${i + 1} (Correlation) é obrigatória.`;
-      if (!isNonEmpty(it.text)) e[`corr.items.${i}.text`] = `Texto ${i + 1} (Correlation) é obrigatório.`;
+        e[`corr.items.${i}.img`] = `Image ${i + 1} (Correlation) is required.`;
+      if (!isNonEmpty(it.text)) e[`corr.items.${i}.text`] = `Text ${i + 1} (Correlation) is required.`;
     });
 
     return e;
@@ -512,11 +512,11 @@ export function CreateThemePage() {
   function validateTheme() {
     const e: Record<string, string> = {};
 
-    if (!themeName.trim()) e["theme.name"] = "O nome do tema é obrigatório.";
-    if (!themeResume.trim()) e["theme.resume"] = "O resumo do tema é obrigatório.";
-    if (!themeRecommendation.trim()) e["theme.recommendation"] = "A recomendação de idade é obrigatória.";
-    if (!themeImageDataUrl) e["theme.image"] = "A imagem do tema é obrigatória.";
-    if (savedCards.length < MIN_CARDS_PER_THEME) e["theme.cards"] = `São necessárias pelo menos ${MIN_CARDS_PER_THEME} cartas.`;
+    if (!themeName.trim()) e["theme.name"] = "Theme name is required.";
+    if (!themeResume.trim()) e["theme.resume"] = "Theme summary is required.";
+    if (!themeRecommendation.trim()) e["theme.recommendation"] = "Age recommendation is required.";
+    if (!themeImageDataUrl) e["theme.image"] = "Theme image is required.";
+    if (savedCards.length < MIN_CARDS_PER_THEME) e["theme.cards"] = `At least ${MIN_CARDS_PER_THEME} cards are required.`;
 
     return e;
   }
@@ -554,7 +554,7 @@ export function CreateThemePage() {
         uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, card.imageFile, slotCard(i)));
         uploadMap.push({ type: "main" });
       } else if (!card.imageUrl) {
-        throw new Error("Imagem principal da carta é obrigatória.");
+        throw new Error("Card main image is required.");
       }
 
       // ImageQuiz options
@@ -564,7 +564,7 @@ export function CreateThemePage() {
           uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, opt.imageFile, slotImageQuiz(i, k)));
           uploadMap.push({ type: "imageQuiz", index: k });
         } else if (!opt?.imageUrl) {
-          throw new Error(`Imagem da opção ${k + 1} do Image Quiz é obrigatória.`);
+          throw new Error(`Image Quiz option ${k + 1} image is required.`);
         }
       }
 
@@ -575,7 +575,7 @@ export function CreateThemePage() {
           uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, item.imageFile, slotCorr(i, k)));
           uploadMap.push({ type: "correlation", index: k });
         } else if (!item?.imageUrl) {
-          throw new Error(`Imagem ${k + 1} do Correlation é obrigatória.`);
+          throw new Error(`Correlation image ${k + 1} is required.`);
         }
       }
 
@@ -1252,8 +1252,8 @@ export function CreateThemePage() {
                             loadCardForEdit(c);
                             setSelectedCardId(null);
                           }}
-                          aria-label="Editar carta"
-                          data-tooltip="Editar carta"
+                          aria-label="Edit card"
+                          data-tooltip="Edit card"
                         >
                           ✏️
                         </button>

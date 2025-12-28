@@ -26,7 +26,7 @@ export function NavBar() {
     setErrorMsg(null);
 
     if (!email || !password) {
-      setErrorMsg("Preencha email e senha.");
+      setErrorMsg("Please fill in email and password.");
       return;
     }
 
@@ -34,15 +34,15 @@ export function NavBar() {
       setIsSubmitting(true);
       await login(email, password);
 
-      // limpa e fecha painéis
+      // clear and close panels
       setPassword("");
       setShowLoginPanel(false);
       setIsMobileMenuOpen(false);
 
-      // redireciona para profile
+      // redirect to profile
       navigate("/profile");
     } catch (err: any) {
-      setErrorMsg(err?.message ?? "Falha no login.");
+      setErrorMsg(err?.message ?? "Login failed.");
     } finally {
       setIsSubmitting(false);
     }
@@ -73,7 +73,7 @@ export function NavBar() {
               type="button"
               className="mobile-close"
               onClick={closeMobileMenu}
-              aria-label="Fechar menu"
+              aria-label="Close menu"
             >
               ×
             </button>
@@ -88,7 +88,7 @@ export function NavBar() {
             <div className="mobile-login">
               {user ? (
                 <>
-                  <p className="login-title">LOGADO</p>
+                  <p className="login-title">LOGGED IN</p>
                   <p style={{ margin: "6px 0" }}>
                     {user.firstName ?? user.email}
                   </p>
@@ -113,7 +113,7 @@ export function NavBar() {
 
                   <input
                     type="password"
-                    placeholder="Senha"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -243,7 +243,7 @@ export function NavBar() {
 
                 <input
                   type="password"
-                  placeholder="Senha"
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isSubmitting}
@@ -299,7 +299,7 @@ export function NavBar() {
 
                 <input
                   type="password"
-                  placeholder="Senha"
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isSubmitting}

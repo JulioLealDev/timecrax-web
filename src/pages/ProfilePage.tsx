@@ -106,7 +106,7 @@ export function ProfilePage() {
     setProfileError(null);
 
     if (!form.firstName.trim()) {
-      setProfileError("O primeiro nome é obrigatório.");
+      setProfileError("First name is required.");
       return;
     }
 
@@ -167,7 +167,7 @@ export function ProfilePage() {
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
-                    <span className="avatar-overlay-text">Editar imagem</span>
+                    <span className="avatar-overlay-text">Edit image</span>
                   </div>
 
                   {/* input file escondido */}
@@ -192,8 +192,8 @@ export function ProfilePage() {
                       type="button"
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
-                      aria-label="Editar informações do perfil"
-                      data-tooltip="Editar perfil"
+                      aria-label="Edit profile information"
+                      data-tooltip="Edit profile"
                     >
                       ✎
                     </button>
@@ -313,7 +313,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
-                    <span className="avatar-overlay-text">Editar imagem</span>
+                    <span className="avatar-overlay-text">Edit image</span>
                   </div>
 
                   {/* input file escondido */}
@@ -338,8 +338,8 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       type="button"
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
-                      aria-label="Editar informações do perfil"
-                      data-tooltip="Editar perfil"
+                      aria-label="Edit profile information"
+                      data-tooltip="Edit profile"
                     >
                       ✎
                     </button>

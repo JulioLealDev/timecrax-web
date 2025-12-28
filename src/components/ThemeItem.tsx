@@ -10,6 +10,8 @@ interface ThemeItemProps {
   showReadyToPlay?: boolean;
   creatorName?: string;
   createdAt?: string;
+  resume?: string | null;
+  recommendation?: string | null;
   onClick: (themeId: string) => void;
   onEdit: (themeId: string) => void;
   onDelete: (themeId: string) => void;
@@ -37,6 +39,8 @@ export function ThemeItem({
   showReadyToPlay = true,
   creatorName,
   createdAt,
+  resume,
+  recommendation,
   onClick,
   onEdit,
   onDelete,
@@ -94,28 +98,46 @@ export function ThemeItem({
       </div>
 
       <div className="theme-info-section">
-        <div className="theme-name">{name}</div>
+        <div className="theme-info-left">
+          <div className="theme-name">{name}</div>
 
-        {showReadyToPlay && (
-          <div className="theme-ready-to-play">
-            <span className="ready-label">Ready to Play:</span>{" "}
-            <span className="ready-value">{readyToPlay ? "YES" : "NO"}</span>
-          </div>
-        )}
+          {showReadyToPlay && (
+            <div className="theme-ready-to-play">
+              <span className="ready-label">Ready to Play:</span>{" "}
+              <span className="ready-value">{readyToPlay ? "YES" : "NO"}</span>
+            </div>
+          )}
 
-        {createdAt && (
-          <div className="theme-created-at">
-            <span className="created-label">Created at:</span>{" "}
-            <span className="created-value">{getDaysAgo(createdAt)}</span>
-          </div>
-        )}
+          {createdAt && (
+            <div className="theme-created-at">
+              <span className="created-label">Created at:</span>{" "}
+              <span className="created-value">{getDaysAgo(createdAt)}</span>
+            </div>
+          )}
 
-        {creatorName && (
-          <div className="theme-creator">
-            <span className="creator-label">Creator:</span>{" "}
-            <span className="creator-name">{creatorName}</span>
-          </div>
-        )}
+          {creatorName && (
+            <div className="theme-creator">
+              <span className="creator-label">Creator:</span>{" "}
+              <span className="creator-name">{creatorName}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="theme-info-right">
+          {resume && (
+            <div className="theme-resume">
+              <span className="resume-label">Resume:</span>{" "}
+              <span className="resume-value">{resume}</span>
+            </div>
+          )}
+
+          {recommendation && (
+            <div className="theme-recommendation">
+              <span className="recommendation-label">Age Group:</span>{" "}
+              <span className="recommendation-value">{recommendation}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

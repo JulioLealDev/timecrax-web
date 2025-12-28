@@ -63,6 +63,8 @@ export function ThemesStoragePage() {
                 showReadyToPlay={false}
                 creatorName={theme.creatorName}
                 createdAt={theme.createdAt}
+                resume={theme.resume}
+                recommendation={theme.recommendation}
                 onClick={handleThemeClick}
                 onEdit={handleEdit}
                 onDelete={handleDelete}

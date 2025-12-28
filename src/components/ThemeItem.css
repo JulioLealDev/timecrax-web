@@ -88,9 +88,27 @@
 .theme-info-section {
   flex: 1;
   display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  min-width: 0;
+  align-items: flex-start;
+}
+
+.theme-info-left {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   gap: 0.5rem;
   min-width: 0;
+}
+
+.theme-info-right {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+  text-align: right;
 }
 
 .theme-item-content {
@@ -258,6 +276,24 @@
   margin-bottom: 0.25rem;
 }
 
+.theme-resume,
+.theme-recommendation {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+}
+
+.resume-label,
+.recommendation-label {
+  color: rgba(249, 250, 251, 0.8);
+}
+
+.resume-value,
+.recommendation-value {
+  color: #facc6b;
+  font-weight: 500;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .theme-item-wrapper {
@@ -277,13 +313,27 @@
   }
 
   .theme-info-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .theme-info-left,
+  .theme-info-right {
     align-items: center;
     text-align: center;
   }
 
+  .theme-info-right {
+    min-width: 0;
+  }
+
   .theme-ready-to-play,
   .theme-creator,
-  .theme-created-at {
+  .theme-created-at,
+  .theme-resume,
+  .theme-recommendation {
     text-align: center;
   }
 }

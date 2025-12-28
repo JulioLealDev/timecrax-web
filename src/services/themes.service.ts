@@ -51,6 +51,8 @@ export type ThemeResponse = {
   readyToPlay?: boolean;
   creatorName?: string;
   createdAt?: string;
+  resume?: string | null;
+  recommendation?: string | null;
 };
 
 export type UserThemesResponse = ThemeResponse[];

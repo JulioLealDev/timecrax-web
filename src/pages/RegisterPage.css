@@ -73,12 +73,15 @@
   border-radius: 10px;
   border: 1px solid rgba(250, 204, 107, 0.3);
 
-  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
   color: #f9fafb;
 
   font-family: "Cormorant Garamond", serif;
   letter-spacing: 0.03em;
   transition: all 0.2s ease;
+}
+
+.register-input {
+  background: radial-gradient(circle at top, #1f2933 0, #020617 70%);
 }
 
 .register-input::placeholder {
@@ -102,15 +105,29 @@
 
 .register-select {
   appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem;
+
+  background-color: #020617;
   background-image:
     linear-gradient(45deg, transparent 50%, #facc6b 50%),
-    linear-gradient(135deg, #facc6b 50%, transparent 50%);
+    linear-gradient(135deg, #facc6b 50%, transparent 50%),
+    radial-gradient(circle at top, #1f2933 0, #020617 70%);
   background-position:
-    calc(100% - 18px) calc(50% - 3px),
-    calc(100% - 12px) calc(50% - 3px);
-  background-size: 6px 6px, 6px 6px;
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px),
+    0 0;
+  background-size:
+    6px 6px,
+    6px 6px,
+    100% 100%;
   background-repeat: no-repeat;
-  padding-right: 2.2rem;
+}
+
+.register-select option {
+  background: #020617;
+  color: #f9fafb;
+  padding: 0.5rem;
 }
 
 .register-error {

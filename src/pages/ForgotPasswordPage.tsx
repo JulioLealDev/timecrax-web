@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../services/auth.service";
 import "./ForgotPasswordPage.css";
 
 export function ForgotPasswordPage() {
@@ -30,13 +31,9 @@ export function ForgotPasswordPage() {
     try {
       setIsSubmitting(true);
 
-      // TODO: Implement password reset endpoint call
-      // await authService.forgotPassword(email);
+      const response = await authService.forgotPassword(email);
 
-      // For now, show success message
-      setSuccessMsg(
-        "If an account exists with this email, you will receive password reset instructions shortly."
-      );
+      setSuccessMsg(response.message);
       setEmail("");
     } catch (err: any) {
       setErrorMsg(err?.message ?? "Failed to send reset email. Please try again.");

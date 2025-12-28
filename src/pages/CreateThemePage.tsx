@@ -1174,7 +1174,7 @@ export function CreateThemePage() {
               Added Cards
               <span
                 className="info-icon"
-                data-tooltip="You need at least 12 cards to create a new theme."
+                data-tooltip="Theme needs at least 12 cards to be playful."
                 aria-label="Informação"
                 role="img"
               >

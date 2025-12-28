@@ -122,8 +122,8 @@
 }
 
 .ranking-score {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.2rem;
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #facc6b;
   min-width: 100px;
@@ -344,7 +344,7 @@
   }
 
   .ranking-score {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .rank-1 .ranking-name {

@@ -841,7 +841,7 @@ export function CreateThemePage() {
                 {themeImageDataUrl ? (
                   <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
                 ) : (
-                  <span className="theme-image-placeholder">UPLOAD</span>
+                  <span className="theme-image-placeholder">UPLOAD COVER THEME</span>
                 )}
               </button>
             </div>

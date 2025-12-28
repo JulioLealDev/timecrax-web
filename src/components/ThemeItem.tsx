@@ -133,7 +133,7 @@ export function ThemeItem({
 
           {recommendation && (
             <div className="theme-recommendation">
-              <span className="recommendation-label">Age Group Recommendation:</span>{" "}
+              <span className="recommendation-label">Recommendation:</span>{" "}
               <span className="recommendation-value">{recommendation}</span>
             </div>
           )}

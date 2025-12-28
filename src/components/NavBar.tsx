@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation  } from "react-router-dom";
 import "./NavBar.css";
 import logoImg from "../assets/timecrax_logo.png";
@@ -11,42 +11,9 @@ export function NavBar() {
   const hideCenterOnRoutes = ["/profile", "/create-theme"];
   const hideNavbarCenter = hideCenterOnRoutes.includes(location.pathname);
 
-
-  const { user, login, logout } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showLoginPanel, setShowLoginPanel] = useState(false);
+  const { user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  async function handleLogin(e: FormEvent) {
-    e.preventDefault();
-    setErrorMsg(null);
-
-    if (!email || !password) {
-      setErrorMsg("Please fill in email and password.");
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      await login(email, password);
-
-      // clear and close panels
-      setPassword("");
-      setShowLoginPanel(false);
-      setIsMobileMenuOpen(false);
-
-      // redirect to profile
-      navigate("/profile");
-    } catch (err: any) {
-      setErrorMsg(err?.message ?? "Login failed.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false);
@@ -54,9 +21,6 @@ export function NavBar() {
 
   function handleLogout() {
     logout();
-    setEmail("");
-    setPassword("");
-    setShowLoginPanel(false);
     setIsMobileMenuOpen(false);
     navigate("/");
   }
@@ -101,57 +65,9 @@ export function NavBar() {
                   </button>
                 </>
               ) : (
-                <>
-                  <p className="login-title">LOGIN</p>
-
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-
-                  {errorMsg && (
-                    <p style={{ marginTop: 8, fontSize: 12 }}>
-                      {errorMsg}
-                    </p>
-                  )}
-
-                  <div className="mobile-login-actions">
-                    <button
-                      type="button"
-                      className="login-button login-button-small"
-                      onClick={(e) => {
-                        // simula submit do form
-                        handleLogin(e as any);
-                      }}
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "..." : "Enter"}
-                    </button>
-
-                    <Link
-                      to="/forgot-password"
-                      className="login-forgot-password-sandwich"
-                      onClick={closeMobileMenu}
-                    >
-                      Forgot Password
-                    </Link>
-                  </div>
-
-                  <div style={{ marginTop: 10 }}>
-                    <Link to="/register" onClick={closeMobileMenu}>
-                      REGISTER
-                    </Link>
-                  </div>
-                </>
+                <Link to="/login" className="mobile-login-link" onClick={closeMobileMenu}>
+                  Login
+                </Link>
               )}
             </div>
           </div>
@@ -230,101 +146,35 @@ export function NavBar() {
             </button>
           </div>
         ) : (
-          <form className="navbar-right" onSubmit={handleLogin}>
-            <div className="login-grid desktop-login">
-              <div className="login-inputs-grid">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isSubmitting}
-                />
+          <div className="navbar-right-links">
+            <Link to="/login" className="navbar-login-link">
+              Login
+            </Link>
 
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={isSubmitting}
-                />
+            <div className="navbar-language-dropdown">
+              <button
+                type="button"
+                className="navbar-language-button"
+                onClick={() => setShowLanguageDropdown((prev) => !prev)}
+              >
+                Language
+                <svg width="12" height="8" viewBox="0 0 12 8" className="dropdown-arrow">
+                  <path fill="currentColor" d="M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z" />
+                </svg>
+              </button>
 
-                <Link to="/forgot-password" className="login-forgot-password-link">
-                  FORGOT PASSWORD
-                </Link>
-              </div>
-
-              <div className="login-actions-grid">
-                <button type="submit" className="login-button" disabled={isSubmitting}>
-                  {isSubmitting ? "..." : "Login"}
-                </button>
-
-                <Link to="/register" className="login-register-link">
-                  REGISTER
-                </Link>
-              </div>
-
-              {errorMsg && (
-                <div style={{ gridColumn: "1 / span 2", fontSize: 12 }}>
-                  {errorMsg}
+              {showLanguageDropdown && (
+                <div className="navbar-language-menu">
+                  <button type="button" onClick={() => setShowLanguageDropdown(false)}>
+                    English
+                  </button>
+                  <button type="button" onClick={() => setShowLanguageDropdown(false)}>
+                    Português
+                  </button>
                 </div>
               )}
             </div>
-
-            <div className="login-compact">
-              <button
-                type="button"
-                className="login-text-link"
-                onClick={() => setShowLoginPanel((prev) => !prev)}
-              >
-                Login
-              </button>
-
-              <span className="navbar-sep">•</span>
-
-              <Link to="/register" className="login-text-link">
-                REGISTER
-              </Link>
-            </div>
-
-            {showLoginPanel && (
-              <div className="login-dropdown">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isSubmitting}
-                />
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={isSubmitting}
-                />
-
-                {errorMsg && (
-                  <p style={{ marginTop: 8, fontSize: 12 }}>{errorMsg}</p>
-                )}
-
-                <div className="login-dropdown-actions">
-                  <button
-                    type="submit"
-                    className="login-button login-button-small"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "..." : "Enter"}
-                  </button>
-
-                  <Link to="/forgot-password" className="login-forgot-password-link">
-                    Forgot Password?
-                  </Link>
-                </div>
-              </div>
-            )}
-          </form>
+          </div>
         )}
       </div>
     </header>

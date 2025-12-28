@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
+import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { CreateThemePage } from "./pages/CreateThemePage";
@@ -18,7 +19,7 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-  const isHomePage = location.pathname === "/" || location.pathname === "/register" || location.pathname === "/forgot-password";
+  const isHomePage = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password";
 
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
       <div className={`main-content ${!isHomePage ? 'with-sidebar' : ''}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 

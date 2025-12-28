@@ -798,7 +798,7 @@ export function CreateThemePage() {
             <label className="field theme-resume-field">
               <h2 className="field-label">Resume</h2>
               <input
-                className="field-input"
+                className={["field-input", hasError("theme.resume") ? "is-invalid" : ""].join(" ")}
                 value={themeResume}
                 onChange={(e) => setThemeResume(e.target.value)}
                 placeholder="Ex: Brief description of the theme"
@@ -809,7 +809,7 @@ export function CreateThemePage() {
             <label className="field theme-recommendation-field">
               <h2 className="field-label">Recommendation</h2>
               <select
-                className="field-input"
+                className={["field-input", hasError("theme.recommendation") ? "is-invalid" : ""].join(" ")}
                 value={themeRecommendation}
                 onChange={(e) => setThemeRecommendation(e.target.value)}
               >

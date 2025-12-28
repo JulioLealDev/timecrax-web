@@ -513,6 +513,8 @@ export function CreateThemePage() {
     const e: Record<string, string> = {};
 
     if (!themeName.trim()) e["theme.name"] = "O nome do tema é obrigatório.";
+    if (!themeResume.trim()) e["theme.resume"] = "O resumo do tema é obrigatório.";
+    if (!themeRecommendation.trim()) e["theme.recommendation"] = "A recomendação de idade é obrigatória.";
     if (!themeImageDataUrl) e["theme.image"] = "A imagem do tema é obrigatória.";
     if (savedCards.length < MIN_CARDS_PER_THEME) e["theme.cards"] = `São necessárias pelo menos ${MIN_CARDS_PER_THEME} cartas.`;
 

@@ -3,19 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { DeleteAccountModal } from "../components/DeleteAccountModal";
+import { API_BASE_URL } from "../services/api";
 import "./SettingsPage.css";
 
-function translateApiError(data: any, t: (key: string) => string): string {
-  if (data?.code) {
+function translateApiError(data: Record<string, unknown>, t: (key: string) => string): string {
+  if (data?.code && typeof data.code === "string") {
     const translated = t(`errors.${data.code}`);
     if (translated !== `errors.${data.code}`) {
       return translated;
     }
   }
-  return data?.error || t("errors.UNKNOWN");
+  return (data?.error as string) || t("errors.UNKNOWN");
 }
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
 
 export function SettingsPage() {
   const navigate = useNavigate();

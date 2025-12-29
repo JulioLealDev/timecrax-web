@@ -22,18 +22,22 @@ export async function apiRequest<T>(
 ): Promise<T> {
     const token = getToken();
 
-    const headers: HeadersInit = {
-        ...(options.headers ?? {}),
-    };
+    const headers: Record<string, string> = {};
+
+    // Copy existing headers
+    if (options.headers) {
+        const existingHeaders = options.headers as Record<string, string>;
+        Object.assign(headers, existingHeaders);
+    }
 
     const isFormData = options.body instanceof FormData;
 
-    if (options.body && !isFormData && !(headers as any)["Content-Type"]) {
-        (headers as any)["Content-Type"] = "application/json";
+    if (options.body && !isFormData && !headers["Content-Type"]) {
+        headers["Content-Type"] = "application/json";
     }
 
     if (token) {
-        (headers as any).Authorization = `Bearer ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
 
     const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -48,9 +52,11 @@ export async function apiRequest<T>(
     raw && contentType.includes("application/json") ? safeJsonParse(raw) : (raw ? raw : null);
 
     if (!res.ok) {
-        const code = data && typeof data === "object" ? (data as any).code : undefined;
+        const errorData = data as Record<string, unknown> | null;
+        const code = errorData?.code as string | undefined;
         const message =
-        (data && typeof data === "object" && ((data as any).message || (data as any).error)) ||
+        (errorData?.message as string) ||
+        (errorData?.error as string) ||
         (typeof data === "string" && data) ||
         `HTTP ${res.status}`;
         throw new ApiError(message, res.status, code);

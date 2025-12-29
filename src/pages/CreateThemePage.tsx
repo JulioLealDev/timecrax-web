@@ -516,8 +516,6 @@ export function CreateThemePage() {
    * 2) Create/Update card: faz upload de 8 imagens (1 + 4 + 3)
    * ========================================================== */
   async function handleCreateCard() {
-    console.log("VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
-
     const e = validateCardDraft(card);
     setErrors(e);
     if (Object.keys(e).length > 0) {

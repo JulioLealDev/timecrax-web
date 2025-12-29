@@ -1,4 +1,4 @@
-import { apiRequest } from "./api";
+import { apiRequest, API_BASE_URL } from "./api";
 
 export type AchievementDto = {
   id: string;
@@ -59,7 +59,6 @@ export type AuthResponse = {
 };
 
 const TOKEN_KEY = "auth_token";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5139";
 
 function toAbsoluteUrl(pathOrUrl?: string | null) {
   if (!pathOrUrl) return null;

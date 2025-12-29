@@ -213,6 +213,7 @@ export function ProfilePage() {
                       src={user.currentMedal.image}
                       alt={user.currentMedal.name}
                       className="profile-medal-image"
+                      loading="lazy"
                     />
                   </div>
                 )}
@@ -240,6 +241,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                         src={achievement.image}
                         alt={achievement.name}
                         className="achievement-image"
+                        loading="lazy"
                       />
                     </div>
                   ))}
@@ -279,6 +281,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                           src={imageTemplate}
                           alt="Theme frame"
                           className="completed-theme-frame"
+                          loading="lazy"
                         />
                       </div>
                     );
@@ -358,6 +361,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                       src={user.currentMedal.image}
                       alt={user.currentMedal.name}
                       className="profile-medal-image"
+                      loading="lazy"
                     />
                   </div>
                 )}
@@ -385,6 +389,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                         src={achievement.image}
                         alt={achievement.name}
                         className="achievement-image"
+                        loading="lazy"
                       />
                     </div>
                   ))}
@@ -424,6 +429,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                           src={imageTemplate}
                           alt="Theme frame"
                           className="completed-theme-frame"
+                          loading="lazy"
                         />
                       </div>
                     );

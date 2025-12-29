@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useLocation  } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./NavBar.css";
@@ -58,7 +58,9 @@ export function NavBar() {
     setShowLanguageDropdown(false);
   }
 
-  const displayName = user?.firstName?.trim() || user?.email || t("navbar.openProfile");
+  const displayName = useMemo(() => {
+    return user?.firstName?.trim() || user?.email || t("navbar.openProfile");
+  }, [user?.firstName, user?.email, t]);
 
   // Close language dropdown when clicking outside
   useEffect(() => {

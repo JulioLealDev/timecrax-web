@@ -144,7 +144,7 @@ export function HomePage() {
             </button>
 
             <div className="carousel-image-wrapper">
-                <img src={slide.imageUrl} alt={t(slide.titleKey)} />
+                <img src={slide.imageUrl} alt={t(slide.titleKey)} loading="lazy" />
             </div>
 
             <button className="carousel-arrow right" onClick={handleNext}>

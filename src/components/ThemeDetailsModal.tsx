@@ -28,7 +28,7 @@ export function ThemeDetailsModal({
       <div className="theme-modal-header">
         {themeImage && (
           <div className="theme-modal-image">
-            <img src={themeImage} alt={themeName} />
+            <img src={themeImage} alt={themeName} loading="lazy" />
           </div>
         )}
       </div>

@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import ReactMarkdown from "react-markdown";
 import "./PrivacyPolicyPage.css";
+
+const ReactMarkdown = lazy(() => import("react-markdown"));
 
 import enContent from "../content/privacy-policy/en.md?raw";
 import ptBrContent from "../content/privacy-policy/pt-br.md?raw";
@@ -45,7 +46,9 @@ export function PrivacyPolicyPage() {
   return (
     <div className="privacy-policy-page">
       <div className="privacy-policy-content">
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </Suspense>
       </div>
     </div>
   );

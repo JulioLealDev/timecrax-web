@@ -85,6 +85,7 @@ export function ThemeItem({
               src={imageTemplate}
               alt="Theme frame"
               className="theme-frame"
+              loading="lazy"
             />
           </div>
         </div>

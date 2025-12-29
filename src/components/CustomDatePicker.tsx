@@ -83,6 +83,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
       <div className="custom-datepicker-input-wrapper">
         <input
           type="text"
+          inputMode="numeric"
           className="custom-datepicker-input"
           value={displayValue}
           onClick={onClick}

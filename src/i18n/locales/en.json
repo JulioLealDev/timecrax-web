@@ -94,9 +94,28 @@
     "sendLink": "Send Reset Link",
     "sending": "Sending...",
     "backToLogin": "Back to Login",
+    "successMessage": "If an account with this email exists, you will receive a password reset link shortly. Please check your inbox and spam folder.",
     "errorFillEmail": "Please enter your email address.",
     "errorInvalidEmail": "Please enter a valid email address.",
     "errorFailed": "Failed to send reset email. Please try again."
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password below.",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "At least 8 characters",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Re-enter your new password",
+    "resetButton": "Reset Password",
+    "resetting": "Resetting...",
+    "backToLogin": "Back to Login",
+    "goToLogin": "Go to Login",
+    "requestNewLink": "Request New Link",
+    "successMessage": "Your password has been reset successfully! You can now log in with your new password.",
+    "errorNoToken": "Invalid or missing reset token. Please request a new password reset link.",
+    "errorFillPassword": "Please enter your new password.",
+    "errorPasswordLength": "Password must be at least 8 characters.",
+    "errorPasswordMatch": "Passwords do not match."
   },
   "profile": {
     "loading": "Loading profile...",
@@ -334,6 +353,10 @@
     "SAME_EMAIL": "New email must be different from current email.",
     "PASSWORD_REQUIRED": "Password is required.",
     "INVALID_PASSWORD": "Password is incorrect.",
+    "TOKEN_REQUIRED": "Reset token is required.",
+    "INVALID_TOKEN": "Invalid or expired reset token.",
+    "TOKEN_EXPIRED": "This reset link has expired. Please request a new one.",
+    "TOKEN_ALREADY_USED": "This reset link has already been used. Please request a new one.",
     "UNKNOWN": "An unexpected error occurred."
   }
 }

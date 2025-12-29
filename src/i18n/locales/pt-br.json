@@ -94,9 +94,28 @@
     "sendLink": "Enviar Link de Recuperação",
     "sending": "Enviando...",
     "backToLogin": "Voltar para Login",
+    "successMessage": "Se uma conta com este email existir, você receberá um link de redefinição de senha em breve. Por favor, verifique sua caixa de entrada e pasta de spam.",
     "errorFillEmail": "Por favor, digite seu endereço de email.",
     "errorInvalidEmail": "Por favor, digite um endereço de email válido.",
     "errorFailed": "Falha ao enviar email de recuperação. Tente novamente."
+  },
+  "resetPassword": {
+    "title": "Redefinir Senha",
+    "subtitle": "Digite sua nova senha abaixo.",
+    "newPassword": "Nova Senha",
+    "newPasswordPlaceholder": "Pelo menos 8 caracteres",
+    "confirmPassword": "Confirmar Senha",
+    "confirmPasswordPlaceholder": "Digite novamente sua nova senha",
+    "resetButton": "Redefinir Senha",
+    "resetting": "Redefinindo...",
+    "backToLogin": "Voltar para Login",
+    "goToLogin": "Ir para Login",
+    "requestNewLink": "Solicitar Novo Link",
+    "successMessage": "Sua senha foi redefinida com sucesso! Agora você pode entrar com sua nova senha.",
+    "errorNoToken": "Token de redefinição inválido ou ausente. Por favor, solicite um novo link de redefinição de senha.",
+    "errorFillPassword": "Por favor, digite sua nova senha.",
+    "errorPasswordLength": "A senha deve ter pelo menos 8 caracteres.",
+    "errorPasswordMatch": "As senhas não coincidem."
   },
   "profile": {
     "loading": "Carregando perfil...",
@@ -334,6 +353,10 @@
     "SAME_EMAIL": "O novo email deve ser diferente do email atual.",
     "PASSWORD_REQUIRED": "Senha é obrigatória.",
     "INVALID_PASSWORD": "Senha incorreta.",
+    "TOKEN_REQUIRED": "Token de redefinição é obrigatório.",
+    "INVALID_TOKEN": "Token de redefinição inválido ou expirado.",
+    "TOKEN_EXPIRED": "Este link de redefinição expirou. Por favor, solicite um novo.",
+    "TOKEN_ALREADY_USED": "Este link de redefinição já foi utilizado. Por favor, solicite um novo.",
     "UNKNOWN": "Ocorreu um erro inesperado."
   }
 }

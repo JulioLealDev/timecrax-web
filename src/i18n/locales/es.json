@@ -94,9 +94,28 @@
     "sendLink": "Enviar enlace de recuperación",
     "sending": "Enviando...",
     "backToLogin": "Volver al inicio de sesión",
+    "successMessage": "Si existe una cuenta con este correo electrónico, recibirás un enlace para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y la carpeta de spam.",
     "errorFillEmail": "Por favor, introduce tu dirección de correo electrónico.",
     "errorInvalidEmail": "Por favor, introduce una dirección de correo electrónico válida.",
     "errorFailed": "Error al enviar el correo de recuperación. Inténtalo de nuevo."
+  },
+  "resetPassword": {
+    "title": "Restablecer Contraseña",
+    "subtitle": "Introduce tu nueva contraseña a continuación.",
+    "newPassword": "Nueva Contraseña",
+    "newPasswordPlaceholder": "Al menos 8 caracteres",
+    "confirmPassword": "Confirmar Contraseña",
+    "confirmPasswordPlaceholder": "Introduce nuevamente tu nueva contraseña",
+    "resetButton": "Restablecer Contraseña",
+    "resetting": "Restableciendo...",
+    "backToLogin": "Volver al inicio de sesión",
+    "goToLogin": "Ir al inicio de sesión",
+    "requestNewLink": "Solicitar nuevo enlace",
+    "successMessage": "¡Tu contraseña ha sido restablecida con éxito! Ahora puedes iniciar sesión con tu nueva contraseña.",
+    "errorNoToken": "Token de restablecimiento inválido o faltante. Por favor, solicita un nuevo enlace de restablecimiento de contraseña.",
+    "errorFillPassword": "Por favor, introduce tu nueva contraseña.",
+    "errorPasswordLength": "La contraseña debe tener al menos 8 caracteres.",
+    "errorPasswordMatch": "Las contraseñas no coinciden."
   },
   "profile": {
     "loading": "Cargando perfil...",
@@ -332,6 +351,10 @@
     "SAME_EMAIL": "El nuevo email debe ser diferente del actual.",
     "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
     "INVALID_PASSWORD": "Contraseña incorrecta.",
+    "TOKEN_REQUIRED": "El token de restablecimiento es obligatorio.",
+    "INVALID_TOKEN": "Token de restablecimiento inválido o expirado.",
+    "TOKEN_EXPIRED": "Este enlace de restablecimiento ha expirado. Por favor, solicita uno nuevo.",
+    "TOKEN_ALREADY_USED": "Este enlace de restablecimiento ya ha sido utilizado. Por favor, solicita uno nuevo.",
     "UNKNOWN": "Ocurrió un error inesperado."
   }
 }

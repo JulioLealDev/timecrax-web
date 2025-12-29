@@ -3,6 +3,7 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { CreateThemePage } from "./pages/CreateThemePage";
 import { NavBar } from "./components/NavBar";
@@ -14,13 +15,14 @@ import { SettingsPage } from "./pages/SettingsPage";
 import { MyThemesPage } from "./pages/MyThemesPage";
 import { ThemesStoragePage } from "./pages/ThemesStoragePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { PublicOnlyRoute } from "./components/PublicOnlyRoute";
 import { RoleProtectedRoute } from "./components/RoleProtectedRoute";
 import "./App.css";
 
 
 function App() {
   const location = useLocation();
-  const isPublicPage = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password" || location.pathname === "/privacy-policy";
+  const isPublicPage = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password" || location.pathname === "/reset-password" || location.pathname === "/privacy-policy";
 
   return (
     <>
@@ -29,10 +31,14 @@ function App() {
       <div className={`main-content ${!isPublicPage ? 'with-sidebar' : ''}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+          </Route>
 
           <Route element={<ProtectedRoute />}>
             <Route path="/profile" element={<ProfilePage />} />

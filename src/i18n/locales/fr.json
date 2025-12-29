@@ -90,13 +90,32 @@
     "title": "Récupérer le mot de passe",
     "email": "Email",
     "emailPlaceholder": "tonemail@exemple.com",
-    "subtitle": "Entre ton email et nous t’enverrons les instructions pour réinitialiser ton mot de passe.",
+    "subtitle": "Entre ton email et nous t'enverrons les instructions pour réinitialiser ton mot de passe.",
     "sendLink": "Envoyer le lien de récupération",
     "sending": "Envoi...",
     "backToLogin": "Retour à la connexion",
+    "successMessage": "Si un compte avec cet email existe, tu recevras bientôt un lien de réinitialisation. Vérifie ta boîte de réception et ton dossier spam.",
     "errorFillEmail": "Veuillez saisir votre adresse email.",
     "errorInvalidEmail": "Veuillez saisir une adresse email valide.",
-    "errorFailed": "Échec de l’envoi de l’email de récupération. Réessaie."
+    "errorFailed": "Échec de l'envoi de l'email de récupération. Réessaie."
+  },
+  "resetPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "subtitle": "Entre ton nouveau mot de passe ci-dessous.",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Au moins 8 caractères",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Entre à nouveau ton nouveau mot de passe",
+    "resetButton": "Réinitialiser le mot de passe",
+    "resetting": "Réinitialisation...",
+    "backToLogin": "Retour à la connexion",
+    "goToLogin": "Aller à la connexion",
+    "requestNewLink": "Demander un nouveau lien",
+    "successMessage": "Ton mot de passe a été réinitialisé avec succès ! Tu peux maintenant te connecter avec ton nouveau mot de passe.",
+    "errorNoToken": "Jeton de réinitialisation invalide ou manquant. Demande un nouveau lien de réinitialisation.",
+    "errorFillPassword": "Veuillez saisir votre nouveau mot de passe.",
+    "errorPasswordLength": "Le mot de passe doit contenir au moins 8 caractères.",
+    "errorPasswordMatch": "Les mots de passe ne correspondent pas."
   },
   "profile": {
     "loading": "Chargement du profil...",
@@ -334,6 +353,10 @@
     "SAME_EMAIL": "Le nouvel email doit être différent de l'actuel.",
     "PASSWORD_REQUIRED": "Mot de passe requis.",
     "INVALID_PASSWORD": "Mot de passe incorrect.",
+    "TOKEN_REQUIRED": "Le jeton de réinitialisation est requis.",
+    "INVALID_TOKEN": "Jeton de réinitialisation invalide ou expiré.",
+    "TOKEN_EXPIRED": "Ce lien de réinitialisation a expiré. Demande-en un nouveau.",
+    "TOKEN_ALREADY_USED": "Ce lien de réinitialisation a déjà été utilisé. Demande-en un nouveau.",
     "UNKNOWN": "Une erreur inattendue s'est produite."
   }
 }

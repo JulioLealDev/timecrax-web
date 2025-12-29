@@ -150,16 +150,16 @@ export const authService = {
     return normalizeUser(data);
   },
 
-  async forgotPassword(email: string): Promise<{ message: string }> {
-    const data = await apiRequest<{ message: string }>("/auth/forgot-password", {
+  async forgotPassword(email: string, language: string): Promise<{ success: boolean }> {
+    const data = await apiRequest<{ success: boolean }>("/auth/forgot-password", {
       method: "POST",
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, language }),
     });
     return data;
   },
 
-  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-    const data = await apiRequest<{ message: string }>("/auth/reset-password", {
+  async resetPassword(token: string, newPassword: string): Promise<{ success: boolean }> {
+    const data = await apiRequest<{ success: boolean }>("/auth/reset-password", {
       method: "POST",
       body: JSON.stringify({ token, newPassword }),
     });

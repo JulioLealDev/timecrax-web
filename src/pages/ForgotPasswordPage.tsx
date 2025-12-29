@@ -1,19 +1,20 @@
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { authService } from "../services/auth.service";
+import { translateError } from "../utils/translateError";
 import "./ForgotPasswordPage.css";
 
 export function ForgotPasswordPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setErrorMsg(null);
-    setSuccessMsg(null);
 
     if (!email.trim()) {
       setErrorMsg(t("forgotPassword.errorFillEmail"));
@@ -29,16 +30,33 @@ export function ForgotPasswordPage() {
 
     try {
       setIsSubmitting(true);
-
-      const response = await authService.forgotPassword(email);
-
-      setSuccessMsg(response.message);
-      setEmail("");
-    } catch (err: any) {
-      setErrorMsg(err?.message ?? t("forgotPassword.errorFailed"));
+      await authService.forgotPassword(email.trim(), i18n.language);
+      setSuccess(true);
+    } catch (err) {
+      setErrorMsg(translateError(err));
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (success) {
+    return (
+      <div className="forgot-password-page">
+        <div className="forgot-password-card">
+          <div className="forgot-password-header">
+            <h1 className="forgot-password-title">{t("forgotPassword.title")}</h1>
+          </div>
+          <div className="forgot-password-success-content">
+            <p className="forgot-password-success-message">
+              {t("forgotPassword.successMessage")}
+            </p>
+            <Link to="/login" className="forgot-password-back-link">
+              {t("forgotPassword.backToLogin")}
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -67,7 +85,6 @@ export function ForgotPasswordPage() {
           </p>
 
           {errorMsg && <div className="forgot-password-error">{errorMsg}</div>}
-          {successMsg && <div className="forgot-password-success">{successMsg}</div>}
 
           <button
             className="forgot-password-button"
@@ -76,6 +93,12 @@ export function ForgotPasswordPage() {
           >
             {isSubmitting ? t("forgotPassword.sending") : t("forgotPassword.sendLink")}
           </button>
+
+          <div className="forgot-password-links">
+            <Link to="/login" className="forgot-password-back-link">
+              {t("forgotPassword.backToLogin")}
+            </Link>
+          </div>
         </form>
       </div>
     </div>

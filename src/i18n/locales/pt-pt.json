@@ -94,9 +94,28 @@
     "sendLink": "Enviar link de recuperação",
     "sending": "A enviar...",
     "backToLogin": "Voltar ao início de sessão",
+    "successMessage": "Se existir uma conta com este email, receberá um link para redefinir a palavra-passe em breve. Por favor, verifique a sua caixa de entrada e pasta de spam.",
     "errorFillEmail": "Por favor, introduza o seu endereço de email.",
     "errorInvalidEmail": "Por favor, introduza um endereço de email válido.",
     "errorFailed": "Falha ao enviar o email de recuperação. Tente novamente."
+  },
+  "resetPassword": {
+    "title": "Redefinir Palavra-passe",
+    "subtitle": "Introduza a sua nova palavra-passe abaixo.",
+    "newPassword": "Nova Palavra-passe",
+    "newPasswordPlaceholder": "Pelo menos 8 caracteres",
+    "confirmPassword": "Confirmar Palavra-passe",
+    "confirmPasswordPlaceholder": "Introduza novamente a sua nova palavra-passe",
+    "resetButton": "Redefinir Palavra-passe",
+    "resetting": "A redefinir...",
+    "backToLogin": "Voltar ao início de sessão",
+    "goToLogin": "Ir para início de sessão",
+    "requestNewLink": "Solicitar Novo Link",
+    "successMessage": "A sua palavra-passe foi redefinida com sucesso! Já pode iniciar sessão com a sua nova palavra-passe.",
+    "errorNoToken": "Token de redefinição inválido ou em falta. Por favor, solicite um novo link de redefinição de palavra-passe.",
+    "errorFillPassword": "Por favor, introduza a sua nova palavra-passe.",
+    "errorPasswordLength": "A palavra-passe deve ter pelo menos 8 caracteres.",
+    "errorPasswordMatch": "As palavras-passe não coincidem."
   },
   "profile": {
     "loading": "A carregar perfil...",
@@ -178,6 +197,10 @@
     "SAME_EMAIL": "O novo email deve ser diferente do email atual.",
     "PASSWORD_REQUIRED": "Palavra-passe é obrigatória.",
     "INVALID_PASSWORD": "Palavra-passe incorreta.",
+    "TOKEN_REQUIRED": "Token de redefinição é obrigatório.",
+    "INVALID_TOKEN": "Token de redefinição inválido ou expirado.",
+    "TOKEN_EXPIRED": "Este link de redefinição expirou. Por favor, solicite um novo.",
+    "TOKEN_ALREADY_USED": "Este link de redefinição já foi utilizado. Por favor, solicite um novo.",
     "UNKNOWN": "Ocorreu um erro inesperado."
   }
 }

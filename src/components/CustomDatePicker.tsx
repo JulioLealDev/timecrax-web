@@ -53,7 +53,7 @@ function formatDateInput(value: string): string {
 }
 
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ value, onClick, onBlur, placeholder, disabled, onManualChange }, ref) => {
+  ({ value, onClick, onBlur, placeholder: _placeholder, disabled, onManualChange }, ref) => {
     const [inputValue, setInputValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
 
@@ -146,6 +146,7 @@ export function CustomDatePicker({
   maxDate,
   minDate,
   disabled,
+  placeholder: _placeholder,
 }: CustomDatePickerProps) {
   const { i18n } = useTranslation();
 

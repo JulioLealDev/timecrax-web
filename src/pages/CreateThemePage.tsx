@@ -120,18 +120,6 @@ export function CreateThemePage() {
   const canSaveTheme = savedCards.length >= MIN_CARDS_PER_THEME;
   const isCardBuilderDisabled = savedCards.length >= MAX_SAVED_CARDS;
 
-  // Fix cards with undefined IDs
-  useEffect(() => {
-    const cardsWithUndefinedIds = savedCards.some(card => !card.id);
-    if (cardsWithUndefinedIds) {
-      console.log('Fixing cards with undefined IDs...');
-      setSavedCards(prev => prev.map(card => ({
-        ...card,
-        id: card.id || generateId()
-      })));
-    }
-  }, [savedCards]);
-
   /* ============================================================
    * 0) Load theme for edit mode
    * ========================================================== */

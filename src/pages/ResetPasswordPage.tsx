@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { authService } from "../services/auth.service";
 import { translateError } from "../utils/translateError";
 import "./ResetPasswordPage.css";
@@ -8,7 +8,6 @@ import "./ResetPasswordPage.css";
 export function ResetPasswordPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const token = searchParams.get("token") || "";
 
   const [newPassword, setNewPassword] = useState("");

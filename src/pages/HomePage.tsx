@@ -190,8 +190,8 @@ export function HomePage() {
             <p>
                 {t("home.emailDescription")}
             </p>
-            <a href="mailto:seuemail@exemplo.com" className="contact-link">
-                seuemail@exemplo.com
+            <a href="mailto:timecraxmachine@gmail.com" className="contact-link">
+                timecraxmachine@gmail.com
             </a>
             </div>
 

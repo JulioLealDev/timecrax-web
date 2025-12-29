@@ -41,17 +41,10 @@ export function ThemeItem({
   createdAt,
   resume,
   recommendation,
-  onClick,
+  onClick: _onClick,
   onEdit,
   onDelete,
 }: ThemeItemProps) {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onClick(id);
-    }
-  };
-
   return (
     <div className="theme-item-wrapper">
       {showActions && (

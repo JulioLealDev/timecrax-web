@@ -74,6 +74,7 @@
     "errorParentalConsentRequired": "Parental consent is required for users under 16.",
     "agreeGdpr": "I agree with",
     "gdprTerms": "GDPR terms",
+    "andOur": "and our",
     "gdprLoadError": "Failed to load terms. Please try again later.",
     "createAccount": "Create account",
     "creating": "Creating...",

@@ -74,6 +74,7 @@
     "errorParentalConsentRequired": "Le consentement parental est obligatoire pour les moins de 16 ans.",
     "agreeGdpr": "J'accepte les",
     "gdprTerms": "conditions RGPD",
+    "andOur": "et notre",
     "gdprLoadError": "Échec du chargement des conditions. Veuillez réessayer plus tard.",
     "createAccount": "Créer un compte",
     "creating": "Création...",

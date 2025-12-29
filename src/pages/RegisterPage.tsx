@@ -307,6 +307,15 @@ export function RegisterPage() {
                     >
                       {t("register.gdprTerms")}
                     </a>
+                    {" "}{t("register.andOur")}{" "}
+                    <a
+                      href="/privacy-policy"
+                      className="register-gdpr-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t("common.privacyPolicy")}
+                    </a>
                   </span>
                 </label>
               </div>

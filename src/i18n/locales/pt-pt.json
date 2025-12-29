@@ -74,7 +74,7 @@
     "errorParentalConsentRequired": "O consentimento dos pais é obrigatório para menores de 16 anos.",
     "agreeGdpr": "Concordo com os",
     "gdprTerms": "termos do RGPD",
-    "andOur": "e a nossa",
+    "and": "e",
     "gdprLoadError": "Falha ao carregar os termos. Tente novamente mais tarde.",
     "createAccount": "Criar conta",
     "creating": "A criar...",

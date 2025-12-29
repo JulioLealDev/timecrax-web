@@ -300,13 +300,13 @@ export function RegisterPage() {
                   />
                   <span>
                     {t("register.agreeGdpr")}{" "}
-                    <a
-                      href="#"
+                    <button
+                      type="button"
                       className="register-gdpr-link"
                       onClick={handleOpenGdprModal}
                     >
                       {t("register.gdprTerms")}
-                    </a>
+                    </button>
                     {" "}{t("register.and")}{" "}
                     <a
                       href="/privacy-policy"

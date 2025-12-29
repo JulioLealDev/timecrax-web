@@ -101,7 +101,7 @@ export function NavBar() {
             </button>
 
             <nav className="mobile-links">
-              <a href="#" onClick={(e) => { e.preventDefault(); closeMobileMenu(); handleGoHome(); }}>{t("navbar.home")}</a>
+              <button type="button" className="navbar-link-button" onClick={() => { closeMobileMenu(); handleGoHome(); }}>{t("navbar.home")}</button>
               <Link to="/#download" onClick={closeMobileMenu}>{t("navbar.download")}</Link>
               <Link to="/#features" onClick={closeMobileMenu}>{t("navbar.features")}</Link>
               <Link to="/#contact" onClick={closeMobileMenu}>{t("navbar.contact")}</Link>
@@ -157,7 +157,7 @@ export function NavBar() {
       {!hideNavbarCenter && (
         <nav className="navbar-center">
           <div className="navbar-divider" />
-          <a href="#" onClick={(e) => { e.preventDefault(); handleGoHome(); }}>{t("navbar.home")}</a>
+          <button type="button" className="navbar-link-button" onClick={handleGoHome}>{t("navbar.home")}</button>
           <span className="navbar-sep">•</span>
           <Link to="/#download">{t("navbar.download")}</Link>
           <span className="navbar-sep">•</span>

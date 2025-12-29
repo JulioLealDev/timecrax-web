@@ -82,19 +82,16 @@ export function ProfilePage() {
     try {
       setIsUploading(true);
 
-      console.log("Imagem selecionada:", file.name);
-
       // 1) envia a imagem
-      const result = await meService.uploadPicture(file);
-      console.log("Upload OK:", result);
+      await meService.uploadPicture(file);
 
       // 2) recarrega /me para atualizar user.picture
       await refreshMe();
       setPictureVersion(Date.now());
 
-    } catch (err: any) {
-      console.error("Erro no upload:", err);
-      setUploadError(err?.message ?? t("profile.errorUpload"));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : t("profile.errorUpload");
+      setUploadError(errorMessage);
     } finally {
       setIsUploading(false);
       e.target.value = "";

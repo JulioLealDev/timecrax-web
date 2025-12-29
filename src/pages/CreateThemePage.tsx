@@ -718,11 +718,9 @@ export function CreateThemePage() {
       // Conditional: PUT for edit, POST for create
       if (isEditMode && editingThemeId) {
         await themesService.updateTheme(editingThemeId, payload as any);
-        console.log("Tema atualizado:", editingThemeId);
         navigate("/my-themes");
       } else {
-        const created = await themesService.createTheme(payload as any);
-        console.log("Tema criado:", created);
+        await themesService.createTheme(payload as any);
 
         // Reset form only in CREATE mode
         nextOrderIndexRef.current = 0;

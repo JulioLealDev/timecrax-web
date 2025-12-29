@@ -14,6 +14,7 @@ export function MyThemesPage() {
   const [error, setError] = useState<string | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [themeToDelete, setThemeToDelete] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadThemes() {
@@ -22,8 +23,9 @@ export function MyThemesPage() {
         setError(null);
         const userThemes = await themesService.getUserThemes();
         setThemes(userThemes);
-      } catch (err: any) {
-        setError(err?.message ?? "Failed to load themes");
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to load themes";
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }
@@ -33,11 +35,11 @@ export function MyThemesPage() {
   }, []);
 
   function handleEdit(themeId: string) {
-    console.log("Edit theme:", themeId);
     navigate(`/create-theme?edit=${themeId}`);
   }
 
   function handleDelete(themeId: string) {
+    setDeleteError(null);
     setThemeToDelete(themeId);
     setDeleteModalOpen(true);
   }
@@ -52,8 +54,10 @@ export function MyThemesPage() {
       setThemes((prev) => prev.filter((t) => t.id !== themeToDelete));
       setDeleteModalOpen(false);
       setThemeToDelete(null);
-    } catch (err: any) {
-      alert(`Failed to delete theme: ${err?.message ?? "Unknown error"}`);
+      setDeleteError(null);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : t("myThemes.deleteError");
+      setDeleteError(errorMessage);
       setDeleteModalOpen(false);
       setThemeToDelete(null);
     }
@@ -67,6 +71,12 @@ export function MyThemesPage() {
   return (
     <div className="my-themes-page">
       <h1 className="my-themes-title">{t("myThemes.title")}</h1>
+
+      {deleteError && (
+        <div className="my-themes-error" style={{ marginBottom: "1rem" }}>
+          {deleteError}
+        </div>
+      )}
 
       <div className="my-themes-container">
         {isLoading ? (

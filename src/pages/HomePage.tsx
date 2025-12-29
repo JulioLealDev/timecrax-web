@@ -201,12 +201,12 @@ export function HomePage() {
                 {t("home.socialDescription")}
             </p>
             <div className="contact-links-row">
-                <a href="#" target="_blank" rel="noreferrer" className="contact-link">
+                <span className="contact-link contact-link-disabled">
                 Instagram
-                </a>
-                <a href="#" target="_blank" rel="noreferrer" className="contact-link">
+                </span>
+                <span className="contact-link contact-link-disabled">
                 YouTube
-                </a>
+                </span>
             </div>
             </div>
         </div>

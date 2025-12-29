@@ -10,7 +10,7 @@ export function Sidebar() {
 
   if (!user) return null;
 
-  const isStudent = user.role === "student";
+  const isStudentOrPlayer = user.role === "student" || user.role === "player";
   const isTeacher = user.role === "teacher";
 
   const isActive = (path: string) => location.pathname === path;
@@ -25,7 +25,7 @@ export function Sidebar() {
           <span className="sidebar-label">{t("sidebar.profile")}</span>
         </Link>
 
-        {isStudent && (
+        {isStudentOrPlayer && (
           <>
             <Link
               to="/themes-storage"

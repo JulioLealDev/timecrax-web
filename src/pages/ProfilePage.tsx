@@ -59,7 +59,7 @@ export function ProfilePage() {
     );
   }
 
-  const isStudent = user.role === "student";
+  const isStudentOrPlayer = user.role === "student" || user.role === "player";
   const isTeacher = user.role === "teacher";
 
   function handleChange(field: keyof EditableProfile, value: string) {
@@ -148,9 +148,9 @@ export function ProfilePage() {
     <div className="profile-page">
       <div className="profile-card">
         {/* =========================
-            STUDENT VIEW
+            STUDENT / PLAYER VIEW
            ========================= */}
-        {isStudent && (
+        {isStudentOrPlayer && (
           <>
             <div className="profile-header-new">
               <div className="profile-left">
@@ -200,10 +200,12 @@ export function ProfilePage() {
                       ✎
                     </button>
                   </div>
-                  <p className="profile-role">{t("profile.student")}</p>
-                  <p className="profile-school">
-                    {user.schoolName || t("profile.schoolNotProvided")}
-                  </p>
+                  <p className="profile-role">{t(`profile.${user.role}`)}</p>
+                  {user.role !== "player" && (
+                    <p className="profile-school">
+                      {user.schoolName || t("profile.schoolNotProvided")}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -442,6 +444,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
         firstName={form.firstName}
         lastName={form.lastName}
         schoolName={form.schoolName}
+        showSchool={user.role !== "player"}
         onFirstNameChange={(value) => handleChange("firstName", value)}
         onLastNameChange={(value) => handleChange("lastName", value)}
         onSchoolNameChange={(value) => handleChange("schoolName", value)}

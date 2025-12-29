@@ -8,6 +8,7 @@ interface EditProfileModalProps {
   firstName: string;
   lastName: string;
   schoolName: string;
+  showSchool?: boolean;
   onFirstNameChange: (value: string) => void;
   onLastNameChange: (value: string) => void;
   onSchoolNameChange: (value: string) => void;
@@ -22,6 +23,7 @@ export function EditProfileModal({
   firstName,
   lastName,
   schoolName,
+  showSchool = true,
   onFirstNameChange,
   onLastNameChange,
   onSchoolNameChange,
@@ -60,15 +62,17 @@ export function EditProfileModal({
           />
         </div>
 
-        <div className="edit-profile-row">
-          <label className="edit-profile-label">{t("editProfileModal.school")}</label>
-          <input
-            className="edit-profile-input"
-            value={schoolName}
-            onChange={(e) => onSchoolNameChange(e.target.value)}
-            disabled={isSaving}
-          />
-        </div>
+        {showSchool && (
+          <div className="edit-profile-row">
+            <label className="edit-profile-label">{t("editProfileModal.school")}</label>
+            <input
+              className="edit-profile-input"
+              value={schoolName}
+              onChange={(e) => onSchoolNameChange(e.target.value)}
+              disabled={isSaving}
+            />
+          </div>
+        )}
 
         {error && <div className="edit-profile-error">{error}</div>}
 

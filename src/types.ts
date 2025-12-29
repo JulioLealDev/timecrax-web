@@ -1,7 +1,7 @@
 export type CardDraft = {
   orderIndex: number;   // <<<<<< adicionar
   year: string;
-  era?: "AC" | "DC";
+  era?: "BC" | "AD";
   caption: string;
 
   imageFile?: File;

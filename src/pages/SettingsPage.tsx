@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { DeleteAccountModal } from "../components/DeleteAccountModal";
 import "./SettingsPage.css";
 
@@ -7,6 +8,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001
 
 export function SettingsPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Change Email State
   const [emailPassword, setEmailPassword] = useState("");
@@ -37,12 +39,12 @@ export function SettingsPage() {
     // Validation
     const errors: Record<string, string> = {};
     if (!emailPassword.trim()) {
-      errors.emailPassword = "Current password is required.";
+      errors.emailPassword = t("settings.errorCurrentPasswordRequired");
     }
     if (!newEmail.trim()) {
-      errors.newEmail = "New email is required.";
+      errors.newEmail = t("settings.errorNewEmailRequired");
     } else if (!newEmail.includes("@") || !newEmail.includes(".")) {
-      errors.newEmail = "Please enter a valid email address.";
+      errors.newEmail = t("settings.errorInvalidEmail");
     }
 
     if (Object.keys(errors).length > 0) {
@@ -53,7 +55,7 @@ export function SettingsPage() {
     setEmailLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("auth_token");
       const response = await fetch(`${API_BASE_URL}/me/email`, {
         method: "PUT",
         headers: {
@@ -68,7 +70,7 @@ export function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        setEmailErrors({ general: data.error || "Failed to change email." });
+        setEmailErrors({ general: data.error || `${t("settings.errorChangeFailed")} email.` });
         return;
       }
 
@@ -79,7 +81,7 @@ export function SettingsPage() {
       // Hide success message after 5 seconds
       setTimeout(() => setEmailSuccess(false), 5000);
     } catch (error) {
-      setEmailErrors({ general: "Network error. Please try again." });
+      setEmailErrors({ general: t("settings.errorNetwork") });
     } finally {
       setEmailLoading(false);
     }
@@ -94,17 +96,17 @@ export function SettingsPage() {
     // Validation
     const errors: Record<string, string> = {};
     if (!currentPassword.trim()) {
-      errors.currentPassword = "Current password is required.";
+      errors.currentPassword = t("settings.errorCurrentPasswordRequired");
     }
     if (!newPassword.trim()) {
-      errors.newPassword = "New password is required.";
+      errors.newPassword = t("settings.errorNewPasswordRequired");
     } else if (newPassword.length < 8) {
-      errors.newPassword = "Password must be at least 8 characters.";
+      errors.newPassword = t("settings.errorPasswordLength");
     }
     if (!confirmPassword.trim()) {
-      errors.confirmPassword = "Please confirm your new password.";
+      errors.confirmPassword = t("settings.errorConfirmPasswordRequired");
     } else if (newPassword !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match.";
+      errors.confirmPassword = t("settings.errorPasswordMatch");
     }
 
     if (Object.keys(errors).length > 0) {
@@ -115,7 +117,7 @@ export function SettingsPage() {
     setPasswordLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("auth_token");
       const response = await fetch(`${API_BASE_URL}/me/password`, {
         method: "PUT",
         headers: {
@@ -130,7 +132,7 @@ export function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        setPasswordErrors({ general: data.error || "Failed to change password." });
+        setPasswordErrors({ general: data.error || `${t("settings.errorChangeFailed")} password.` });
         return;
       }
 
@@ -142,7 +144,7 @@ export function SettingsPage() {
       // Hide success message after 5 seconds
       setTimeout(() => setPasswordSuccess(false), 5000);
     } catch (error) {
-      setPasswordErrors({ general: "Network error. Please try again." });
+      setPasswordErrors({ general: t("settings.errorNetwork") });
     } finally {
       setPasswordLoading(false);
     }
@@ -154,7 +156,7 @@ export function SettingsPage() {
     setDeleteLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("auth_token");
       const response = await fetch(`${API_BASE_URL}/me/account`, {
         method: "DELETE",
         headers: {
@@ -172,26 +174,25 @@ export function SettingsPage() {
       }
 
       // Account deleted successfully - logout and redirect
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("auth_token");
       navigate("/login");
     } catch (error) {
-      setDeleteError("Network error. Please try again.");
+      setDeleteError(t("settings.errorNetwork"));
       setDeleteLoading(false);
     }
   }
 
   return (
     <div className="settings-page">
-      <h1 className="settings-title">Settings</h1>
+      <h1 className="settings-title">{t("settings.title")}</h1>
 
       {/* Change Email Section */}
       <section className="settings-section">
-        <h2 className="settings-section-title">Change Email</h2>
+        <h2 className="settings-section-title">{t("settings.changeEmail")}</h2>
         <form className="settings-form" onSubmit={handleChangeEmail}>
           <div className="settings-field">
             <label className="settings-label" htmlFor="email-password">
-              Current Password
+              {t("settings.currentPassword")}
             </label>
             <input
               id="email-password"
@@ -199,7 +200,7 @@ export function SettingsPage() {
               className={`settings-input ${emailErrors.emailPassword ? "is-invalid" : ""}`}
               value={emailPassword}
               onChange={(e) => setEmailPassword(e.target.value)}
-              placeholder="Enter your current password"
+              placeholder={t("settings.currentPasswordPlaceholder")}
             />
             {emailErrors.emailPassword && (
               <span className="settings-error">{emailErrors.emailPassword}</span>
@@ -208,7 +209,7 @@ export function SettingsPage() {
 
           <div className="settings-field">
             <label className="settings-label" htmlFor="new-email">
-              New Email
+              {t("settings.newEmail")}
             </label>
             <input
               id="new-email"
@@ -216,7 +217,7 @@ export function SettingsPage() {
               className={`settings-input ${emailErrors.newEmail ? "is-invalid" : ""}`}
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              placeholder="Enter your new email"
+              placeholder={t("settings.newEmailPlaceholder")}
             />
             {emailErrors.newEmail && (
               <span className="settings-error">{emailErrors.newEmail}</span>
@@ -228,12 +229,12 @@ export function SettingsPage() {
             className="settings-button"
             disabled={emailLoading}
           >
-            {emailLoading ? "Updating..." : "Update Email"}
+            {emailLoading ? t("settings.updatingEmail") : t("settings.updateEmail")}
           </button>
 
           {emailSuccess && (
             <div className="settings-success">
-              Email updated successfully!
+              {t("settings.emailUpdated")}
             </div>
           )}
 
@@ -247,11 +248,11 @@ export function SettingsPage() {
 
       {/* Change Password Section */}
       <section className="settings-section">
-        <h2 className="settings-section-title">Change Password</h2>
+        <h2 className="settings-section-title">{t("settings.changePassword")}</h2>
         <form className="settings-form" onSubmit={handleChangePassword}>
           <div className="settings-field">
             <label className="settings-label" htmlFor="current-password">
-              Current Password
+              {t("settings.currentPassword")}
             </label>
             <input
               id="current-password"
@@ -259,7 +260,7 @@ export function SettingsPage() {
               className={`settings-input ${passwordErrors.currentPassword ? "is-invalid" : ""}`}
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter your current password"
+              placeholder={t("settings.currentPasswordPlaceholder")}
             />
             {passwordErrors.currentPassword && (
               <span className="settings-error">{passwordErrors.currentPassword}</span>
@@ -268,7 +269,7 @@ export function SettingsPage() {
 
           <div className="settings-field">
             <label className="settings-label" htmlFor="new-password">
-              New Password
+              {t("settings.newPassword")}
             </label>
             <input
               id="new-password"
@@ -276,7 +277,7 @@ export function SettingsPage() {
               className={`settings-input ${passwordErrors.newPassword ? "is-invalid" : ""}`}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="At least 8 characters"
+              placeholder={t("settings.newPasswordPlaceholder")}
             />
             {passwordErrors.newPassword && (
               <span className="settings-error">{passwordErrors.newPassword}</span>
@@ -285,7 +286,7 @@ export function SettingsPage() {
 
           <div className="settings-field">
             <label className="settings-label" htmlFor="confirm-password">
-              Confirm New Password
+              {t("settings.confirmNewPassword")}
             </label>
             <input
               id="confirm-password"
@@ -293,7 +294,7 @@ export function SettingsPage() {
               className={`settings-input ${passwordErrors.confirmPassword ? "is-invalid" : ""}`}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Re-enter your new password"
+              placeholder={t("settings.confirmNewPasswordPlaceholder")}
             />
             {passwordErrors.confirmPassword && (
               <span className="settings-error">{passwordErrors.confirmPassword}</span>
@@ -305,12 +306,12 @@ export function SettingsPage() {
             className="settings-button"
             disabled={passwordLoading}
           >
-            {passwordLoading ? "Updating..." : "Update Password"}
+            {passwordLoading ? t("settings.updatingPassword") : t("settings.updatePassword")}
           </button>
 
           {passwordSuccess && (
             <div className="settings-success">
-              Password updated successfully!
+              {t("settings.passwordUpdated")}
             </div>
           )}
 
@@ -324,16 +325,16 @@ export function SettingsPage() {
 
       {/* Delete Account Section */}
       <section className="settings-section danger-section">
-        <h2 className="settings-section-title danger-title">Danger Zone</h2>
+        <h2 className="settings-section-title danger-title">{t("settings.dangerZone")}</h2>
         <p className="danger-description">
-          Once you delete your account, there is no going back. Please be certain.
+          {t("settings.dangerDescription")}
         </p>
         <button
           type="button"
           className="settings-button danger-button"
           onClick={() => setDeleteModalOpen(true)}
         >
-          Delete Account
+          {t("settings.deleteAccount")}
         </button>
       </section>
 

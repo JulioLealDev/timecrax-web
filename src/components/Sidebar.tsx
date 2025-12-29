@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import "./Sidebar.css";
 
 export function Sidebar() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const location = useLocation();
 
   if (!user) return null;
@@ -20,7 +22,7 @@ export function Sidebar() {
           to="/profile"
           className={`sidebar-link ${isActive("/profile") ? "active" : ""}`}
         >
-          <span className="sidebar-label">Profile</span>
+          <span className="sidebar-label">{t("sidebar.profile")}</span>
         </Link>
 
         {isStudent && (
@@ -29,21 +31,21 @@ export function Sidebar() {
               to="/themes-storage"
               className={`sidebar-link ${isActive("/themes-storage") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Themes Storage</span>
+              <span className="sidebar-label">{t("sidebar.themesStorage")}</span>
             </Link>
 
             <Link
               to="/ranking"
               className={`sidebar-link ${isActive("/ranking") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Ranking</span>
+              <span className="sidebar-label">{t("sidebar.ranking")}</span>
             </Link>
 
             <Link
               to="/settings"
               className={`sidebar-link ${isActive("/settings") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Settings</span>
+              <span className="sidebar-label">{t("sidebar.settings")}</span>
             </Link>
           </>
         )}
@@ -54,35 +56,35 @@ export function Sidebar() {
               to="/create-theme"
               className={`sidebar-link ${isActive("/create-theme") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Create Theme</span>
+              <span className="sidebar-label">{t("sidebar.createTheme")}</span>
             </Link>
 
             <Link
               to="/my-themes"
               className={`sidebar-link ${isActive("/my-themes") ? "active" : ""}`}
             >
-              <span className="sidebar-label">My Themes</span>
+              <span className="sidebar-label">{t("sidebar.myThemes")}</span>
             </Link>
 
             <Link
               to="/themes-storage"
               className={`sidebar-link ${isActive("/themes-storage") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Themes Storage</span>
+              <span className="sidebar-label">{t("sidebar.themesStorage")}</span>
             </Link>
 
             <Link
               to="/ranking"
               className={`sidebar-link ${isActive("/ranking") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Ranking</span>
+              <span className="sidebar-label">{t("sidebar.ranking")}</span>
             </Link>
 
             <Link
               to="/settings"
               className={`sidebar-link ${isActive("/settings") ? "active" : ""}`}
             >
-              <span className="sidebar-label">Settings</span>
+              <span className="sidebar-label">{t("sidebar.settings")}</span>
             </Link>
           </>
         )}

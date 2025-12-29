@@ -1,27 +1,29 @@
 import { useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 import "./HomePage.css";
 
 export function HomePage() {
+  const { t } = useTranslation();
 
   // carousel slides: 60% image / 40% text
   const slides = [
     {
       id: 1,
       imageUrl: "/images/gameScreen.png",
-      title: "Travel through different eras",
-      text: "Explore themed timelines, organizing events correctly to prevent the time machine from collapsing."
+      titleKey: "home.slides.slide1Title",
+      textKey: "home.slides.slide1Text"
     },
     {
       id: 2,
       imageUrl: "/images/menu.png",
-      title: "Play as a team",
-      text: "Create rooms to play online. Discuss decisions, share knowledge and define the best strategy to win"
+      titleKey: "home.slides.slide2Title",
+      textKey: "home.slides.slide2Text"
     },
     {
       id: 3,
       imageUrl: "/images/timeline.png",
-      title: "Show your knowledge",
-      text: "To place the event on the timeline, you must complete different challenges about that event."
+      titleKey: "home.slides.slide3Title",
+      textKey: "home.slides.slide3Text"
     }
   ];
 
@@ -45,11 +47,13 @@ export function HomePage() {
 
         <div className="home-hero-text">
           <h1>
-            A <span className="highlight">FREE</span> educational game to play{" "}
-            <span className="highlight">ONLINE</span> with your friends and learn History in a fun way.
+            <Trans
+              i18nKey="home.heroTitle"
+              components={{ highlight: <span className="highlight" /> }}
+            />
           </h1>
           <p>
-            Travel through time, organize historical events and participate in quick challenges in cooperative matches.
+            {t("home.heroSubtitle")}
           </p>
         </div>
 
@@ -67,27 +71,26 @@ export function HomePage() {
 
       {/* SECOND SECTION — DOWNLOAD */}
       <section id="download" className="home-download-section">
-        <h2>Download</h2>
+        <h2>{t("home.downloadTitle")}</h2>
         <p className="download-subtitle">
-          TimeCrax Machine is under development. Soon you will be able to download the beta version
-          for computer and integrate the themes created on the platform.
+          {t("home.downloadSubtitle")}
         </p>
 
         <div className="download-grid">
 
           <div className="download-card disabled">
-            <h3>iPhone</h3>
-            <p>Planned for future versions</p>
+            <h3>{t("home.iphone")}</h3>
+            <p>{t("home.plannedFuture")}</p>
           </div>
 
           <div className="download-card disabled">
-            <h3>Android</h3>
-            <p>Planned for future versions</p>
+            <h3>{t("home.android")}</h3>
+            <p>{t("home.plannedFuture")}</p>
           </div>
 
           <div className="download-card disabled">
-            <h3>Windows</h3>
-            <p>Available soon</p>
+            <h3>{t("home.windows")}</h3>
+            <p>{t("home.availableSoon")}</p>
           </div>
 
         </div>
@@ -97,13 +100,13 @@ export function HomePage() {
 
         <section id="features" className="home-features-section">
 
-        <h2 className="section-title">Features</h2>
+        <h2 className="section-title">{t("home.featuresTitle")}</h2>
 
         <div className="features-content">
 
             <div className="highlight-text">
-            <h2>{slide.title}</h2>
-            <p>{slide.text}</p>
+            <h2>{t(slide.titleKey)}</h2>
+            <p>{t(slide.textKey)}</p>
 
             <div className="highlight-dots">
                 {slides.map((s, index) => (
@@ -141,7 +144,7 @@ export function HomePage() {
             </button>
 
             <div className="carousel-image-wrapper">
-                <img src={slide.imageUrl} alt={slide.title} />
+                <img src={slide.imageUrl} alt={t(slide.titleKey)} />
             </div>
 
             <button className="carousel-arrow right" onClick={handleNext}>
@@ -166,7 +169,7 @@ export function HomePage() {
             </button>
 
             </div>
-            
+
         </div>
 
       </section>
@@ -175,18 +178,17 @@ export function HomePage() {
 
         <section id="contact" className="home-contact-section">
 
-        <h2>Contact</h2>
+        <h2>{t("home.contactTitle")}</h2>
 
         <p className="contact-subtitle">
-            Want to use TimeCrax Machine in your school, test the beta version or send suggestions?
-            Get in touch and let's talk.
+            {t("home.contactSubtitle")}
         </p>
 
         <div className="contact-grid">
             <div className="contact-card">
-            <h3>Email</h3>
+            <h3>{t("home.email")}</h3>
             <p>
-                For general questions, school partnerships and game feedback:
+                {t("home.emailDescription")}
             </p>
             <a href="mailto:seuemail@exemplo.com" className="contact-link">
                 seuemail@exemplo.com
@@ -194,9 +196,9 @@ export function HomePage() {
             </div>
 
             <div className="contact-card">
-            <h3>Social Media</h3>
+            <h3>{t("home.socialMedia")}</h3>
             <p>
-                Follow news about development, tests and new themes:
+                {t("home.socialDescription")}
             </p>
             <div className="contact-links-row">
                 <a href="#" target="_blank" rel="noreferrer" className="contact-link">

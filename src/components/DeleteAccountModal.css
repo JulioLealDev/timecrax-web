@@ -1,42 +1,3 @@
-.delete-account-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-}
-
-.delete-account-modal-content {
-  background: radial-gradient(
-    circle at top,
-    #151c27 0%,
-    #020617 55%,
-    #060709 100%
-  );
-  border: 2px solid rgba(248, 113, 113, 0.5);
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 550px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
-  font-family: "Marcellus", serif;
-}
-
-.delete-account-modal-title {
-  font-family: "Cinzel", serif;
-  font-size: 1.8rem;
-  color: #ef4444;
-  margin: 0 0 1.5rem;
-  text-align: center;
-  letter-spacing: 0.05em;
-}
-
 .delete-account-warning {
   background: rgba(248, 113, 113, 0.1);
   border: 1px solid rgba(248, 113, 113, 0.3);
@@ -56,6 +17,7 @@
   color: #fca5a5;
   font-size: 1rem;
   line-height: 1.6;
+  font-family: "Marcellus", serif;
 }
 
 .warning-text strong {
@@ -94,6 +56,7 @@
   font-size: 1.05rem;
   color: rgba(249, 250, 251, 0.9);
   font-weight: 600;
+  font-family: "Marcellus", serif;
 }
 
 .delete-account-input {
@@ -130,6 +93,7 @@
   color: #fca5a5;
   font-size: 0.95rem;
   text-align: center;
+  font-family: "Marcellus", serif;
 }
 
 .delete-account-actions {
@@ -157,43 +121,35 @@
   cursor: not-allowed;
 }
 
-.cancel-btn {
+.delete-account-btn.cancel-btn {
   background: rgba(100, 116, 139, 0.3);
   color: #e2e8f0;
   border: 1px solid rgba(148, 163, 184, 0.5);
 }
 
-.cancel-btn:hover:not(:disabled) {
+.delete-account-btn.cancel-btn:hover:not(:disabled) {
   background: rgba(100, 116, 139, 0.5);
   border-color: rgba(148, 163, 184, 0.7);
 }
 
-.delete-btn {
+.delete-account-btn.delete-btn {
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   color: #fff;
   border: 1px solid rgba(248, 113, 113, 0.5);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.delete-btn:hover:not(:disabled) {
+.delete-account-btn.delete-btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
   box-shadow: 0 6px 18px rgba(239, 68, 68, 0.5);
   transform: translateY(-2px);
 }
 
-.delete-btn:active:not(:disabled) {
+.delete-account-btn.delete-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
 @media (max-width: 600px) {
-  .delete-account-modal-content {
-    padding: 1.5rem;
-  }
-
-  .delete-account-modal-title {
-    font-size: 1.5rem;
-  }
-
   .delete-account-warning {
     flex-direction: column;
     align-items: center;

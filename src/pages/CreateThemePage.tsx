@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ImageQuizCard } from "../components/ImageQuizCard";
 import { CorrelationRow } from "../components/CorrelationItem";
 import { ErrorModal } from "../components/ErrorModal";
@@ -70,6 +71,7 @@ const createEmptyCardDraft = (orderIndex: number): CardDraft => ({
  * Page
  * ========================================================== */
 export function CreateThemePage() {
+  const { t } = useTranslation();
   const MAX_SAVED_CARDS = 20;
   const MIN_CARDS_PER_THEME = 0;
   const nextOrderIndexRef = useRef(0);
@@ -279,7 +281,7 @@ export function CreateThemePage() {
     if (!file.type.startsWith("image/")) {
       setErrors((prev) => ({
         ...prev,
-        "theme.image": "O arquivo selecionado não é uma imagem válida.",
+        "theme.image": t("createTheme.errorInvalidImage"),
       }));
       e.target.value = "";
       return;
@@ -295,7 +297,7 @@ export function CreateThemePage() {
         if (img.width < 256 || img.height < 256) {
           setErrors((prev) => ({
             ...prev,
-            "theme.image": "A imagem do tema deve ter no mínimo 256x256 pixels.",
+            "theme.image": t("createTheme.errorImageMinSize"),
           }));
           return;
         }
@@ -312,7 +314,7 @@ export function CreateThemePage() {
       img.onerror = () => {
         setErrors((prev) => ({
           ...prev,
-          "theme.image": "Failed to load selected image.",
+          "theme.image": t("createTheme.errorImageLoad"),
         }));
       };
 
@@ -322,7 +324,7 @@ export function CreateThemePage() {
     reader.onerror = () => {
       setErrors((prev) => ({
         ...prev,
-        "theme.image": "Erro ao ler o arquivo de imagem.",
+        "theme.image": t("createTheme.errorImageRead"),
       }));
     };
 
@@ -415,7 +417,7 @@ export function CreateThemePage() {
    * ========================================================== */
   function handleDeleteCard(card: SavedCard) {
     if (!assetsSessionId) {
-      setErrors((prev) => ({ ...prev, "assets.delete": "Sessão de upload não está pronta." }));
+      setErrors((prev) => ({ ...prev, "assets.delete": t("createTheme.errorUploadSession") }));
       return;
     }
     setCardToDelete(card);
@@ -448,7 +450,7 @@ export function CreateThemePage() {
     } catch (err: any) {
       setErrors((prev) => ({
         ...prev,
-        "assets.delete": err?.message ?? "Erro ao deletar carta.",
+        "assets.delete": err?.message ?? t("createTheme.errorDeleteCard"),
       }));
       setCardToDelete(null);
     }
@@ -462,7 +464,7 @@ export function CreateThemePage() {
   /* ============================================================
    * Era (AC/DC): só seleciona, não permite desmarcar
    * ========================================================== */
-  function selectEra(next: "AC" | "DC") {
+  function selectEra(next: "BC" | "AD") {
     setCard((prev) => {
       if (prev.era === next) return prev; // não deixa "desmarcar"
       return { ...prev, era: next };
@@ -475,36 +477,36 @@ export function CreateThemePage() {
   function validateCardDraft(d: CardDraft) {
     const e: Record<string, string> = {};
 
-    if (!isNonEmpty(d.year)) e["card.year"] = "Year is required.";
-    if (!d.era) e["card.era"] = "Select B.C. or A.D.";
-    if (!isNonEmpty(d.caption)) e["card.caption"] = "Card text is required.";
+    if (!isNonEmpty(d.year)) e["card.year"] = t("createTheme.errorYear");
+    if (!d.era) e["card.era"] = t("createTheme.errorEra");
+    if (!isNonEmpty(d.caption)) e["card.caption"] = t("createTheme.errorCaption");
     if (!d.imageFile && !isNonEmpty(d.imageUrl) && !isNonEmpty(d.imagePreview))
-      e["card.image"] = "Card image is required.";
+      e["card.image"] = t("createTheme.errorCardImage");
 
-    if (!isNonEmpty(d.imageQuiz.question)) e["imageQuiz.question"] = "Image Quiz question is required.";
-    if (d.imageQuiz.options.length !== 4) e["imageQuiz.options"] = "Image Quiz needs 4 options.";
+    if (!isNonEmpty(d.imageQuiz.question)) e["imageQuiz.question"] = t("createTheme.errorImageQuizQuestion");
+    if (d.imageQuiz.options.length !== 4) e["imageQuiz.options"] = t("createTheme.errorImageQuizOptions");
     d.imageQuiz.options.forEach((opt, i) => {
       if (!opt.imageFile && !isNonEmpty(opt.imageUrl))
-        e[`imageQuiz.options.${i}`] = `Option ${i + 1} image is required.`;
+        e[`imageQuiz.options.${i}`] = t("createTheme.errorImageQuizOptionImage", { num: i + 1 });
     });
-    if (d.imageQuiz.correctIndex === null) e["imageQuiz.correct"] = "Select the correct image (Image Quiz).";
+    if (d.imageQuiz.correctIndex === null) e["imageQuiz.correct"] = t("createTheme.errorImageQuizCorrect");
 
-    if (!isNonEmpty(d.textQuiz.question)) e["textQuiz.question"] = "Text Quiz question is required.";
-    if (d.textQuiz.options.length !== 4) e["textQuiz.options"] = "Text Quiz needs 4 options.";
+    if (!isNonEmpty(d.textQuiz.question)) e["textQuiz.question"] = t("createTheme.errorTextQuizQuestion");
+    if (d.textQuiz.options.length !== 4) e["textQuiz.options"] = t("createTheme.errorTextQuizOptions");
     d.textQuiz.options.forEach((opt, i) => {
-      if (!isNonEmpty(opt.text)) e[`textQuiz.options.${i}`] = `Option ${i + 1} text is required.`;
+      if (!isNonEmpty(opt.text)) e[`textQuiz.options.${i}`] = t("createTheme.errorTextQuizOptionText", { num: i + 1 });
     });
-    if (d.textQuiz.correctIndex === null) e["textQuiz.correct"] = "Select the correct option (Text Quiz).";
+    if (d.textQuiz.correctIndex === null) e["textQuiz.correct"] = t("createTheme.errorTextQuizCorrect");
 
-    if (!isNonEmpty(d.trueFalseQuiz.statement)) e["tf.statement"] = "True/False statement is required.";
-    if (d.trueFalseQuiz.answer === null) e["tf.answer"] = "Select True or False.";
+    if (!isNonEmpty(d.trueFalseQuiz.statement)) e["tf.statement"] = t("createTheme.errorTrueFalseStatement");
+    if (d.trueFalseQuiz.answer === null) e["tf.answer"] = t("createTheme.errorTrueFalseAnswer");
 
-    if (!isNonEmpty(d.correlationQuiz.prompt)) e["corr.prompt"] = "Correlation Quiz text is required.";
-    if (d.correlationQuiz.items.length !== 3) e["corr.items"] = "Correlation Quiz needs 3 items.";
+    if (!isNonEmpty(d.correlationQuiz.prompt)) e["corr.prompt"] = t("createTheme.errorCorrelationPrompt");
+    if (d.correlationQuiz.items.length !== 3) e["corr.items"] = t("createTheme.errorCorrelationItems");
     d.correlationQuiz.items.forEach((it, i) => {
       if (!it.imageFile && !isNonEmpty(it.imageUrl))
-        e[`corr.items.${i}.img`] = `Image ${i + 1} (Correlation) is required.`;
-      if (!isNonEmpty(it.text)) e[`corr.items.${i}.text`] = `Text ${i + 1} (Correlation) is required.`;
+        e[`corr.items.${i}.img`] = t("createTheme.errorCorrelationImage", { num: i + 1 });
+      if (!isNonEmpty(it.text)) e[`corr.items.${i}.text`] = t("createTheme.errorCorrelationText", { num: i + 1 });
     });
 
     return e;
@@ -513,11 +515,11 @@ export function CreateThemePage() {
   function validateTheme() {
     const e: Record<string, string> = {};
 
-    if (!themeName.trim()) e["theme.name"] = "Theme name is required.";
-    if (!themeResume.trim()) e["theme.resume"] = "Theme summary is required.";
-    if (!themeRecommendation.trim()) e["theme.recommendation"] = "Age recommendation is required.";
-    if (!themeImageDataUrl) e["theme.image"] = "Theme image is required.";
-    if (savedCards.length < MIN_CARDS_PER_THEME) e["theme.cards"] = `At least ${MIN_CARDS_PER_THEME} cards are required.`;
+    if (!themeName.trim()) e["theme.name"] = t("createTheme.errorThemeName");
+    if (!themeResume.trim()) e["theme.resume"] = t("createTheme.errorResume");
+    if (!themeRecommendation.trim()) e["theme.recommendation"] = t("createTheme.errorRecommendation");
+    if (!themeImageDataUrl) e["theme.image"] = t("createTheme.errorThemeImage");
+    if (savedCards.length < MIN_CARDS_PER_THEME) e["theme.cards"] = t("createTheme.errorMinCards", { min: MIN_CARDS_PER_THEME });
 
     return e;
   }
@@ -537,7 +539,7 @@ export function CreateThemePage() {
     }
 
     if (!assetsSessionId) {
-      setErrors((prev) => ({ ...prev, "assets.session": "Sessão de upload não está pronta." }));
+      setErrors((prev) => ({ ...prev, "assets.session": t("createTheme.errorUploadSession") }));
       return;
     }
 
@@ -638,7 +640,7 @@ export function CreateThemePage() {
       setCard(createEmptyCardDraft(nextOrderIndex()));
       setErrors({});
     } catch (err: any) {
-      setErrors((prev) => ({ ...prev, "assets.upload": err?.message ?? "Erro ao enviar imagens da carta." }));
+      setErrors((prev) => ({ ...prev, "assets.upload": err?.message ?? t("createTheme.errorUploadImages") }));
     } finally {
       setIsUploadingCard(false);
     }
@@ -659,7 +661,7 @@ export function CreateThemePage() {
     }
 
     if (!assetsSessionId) {
-      setErrorModalErrors({ "assets.session": "Upload session is not ready." });
+      setErrorModalErrors({ "assets.session": t("createTheme.errorUploadSession") });
       setShowErrorModal(true);
       return;
     }
@@ -680,10 +682,8 @@ export function CreateThemePage() {
         else seen.add(c.orderIndex);
       }
       if (duplicates.length > 0) {
-        const errorMsg = `There are cards with duplicate orderIndex (${[...new Set(duplicates)].join(
-          ", "
-        )}). Recreate the cards or reload the page.`;
-        setErrorModalErrors({ "cards.duplicate": errorMsg });
+        const duplicatesStr = [...new Set(duplicates)].join(", ");
+        setErrorModalErrors({ "cards.duplicate": t("createTheme.errorDuplicateCards", { duplicates: duplicatesStr }) });
         setShowErrorModal(true);
         return;
       }
@@ -752,7 +752,7 @@ export function CreateThemePage() {
         navigate("/my-themes");
       }
     } catch (err: any) {
-      const errorMsg = err?.message ?? "Erro ao criar tema.";
+      const errorMsg = err?.message ?? t("createTheme.errorCreateTheme");
       setErrorModalErrors({ "create.theme": errorMsg });
       setShowErrorModal(true);
     } finally {
@@ -770,10 +770,10 @@ export function CreateThemePage() {
       <main className="create-theme-container">
         <h1 className="create-theme-title">
           {isLoadingTheme
-            ? "Loading..."
+            ? t("createTheme.loading")
             : isEditMode
-              ? "Edit Theme"
-              : "Create New Theme"
+              ? t("createTheme.editTitle")
+              : t("createTheme.title")
           }
         </h1>
 
@@ -788,45 +788,45 @@ export function CreateThemePage() {
           {/* TOP ROW: name + resume + theme image */}
           <div className="theme-top-row">
             <label className="field theme-name-field">
-              <h2 className="field-label">Theme's Name</h2>
+              <h2 className="field-label">{t("createTheme.themeName")}</h2>
               <input
                 className={["field-input", hasError("theme.name") ? "is-invalid" : ""].join(" ")}
                 value={themeName}
                 onChange={(e) => setThemeName(e.target.value)}
-                placeholder="Ex: French Revolution"
+                placeholder={t("createTheme.themeNamePlaceholder")}
                 maxLength={50}
               />
             </label>
 
             <label className="field theme-resume-field">
-              <h2 className="field-label">Resume</h2>
+              <h2 className="field-label">{t("createTheme.resume")}</h2>
               <input
                 className={["field-input", hasError("theme.resume") ? "is-invalid" : ""].join(" ")}
                 value={themeResume}
                 onChange={(e) => setThemeResume(e.target.value)}
-                placeholder="Ex: Brief description of the theme"
+                placeholder={t("createTheme.resumePlaceholder")}
                 maxLength={100}
               />
             </label>
 
             <label className="field theme-recommendation-field">
-              <h2 className="field-label">Recommendation</h2>
+              <h2 className="field-label">{t("createTheme.recommendation")}</h2>
               <CustomSelect
                 className={hasError("theme.recommendation") ? "is-invalid" : ""}
                 value={themeRecommendation}
                 onChange={(value) => setThemeRecommendation(value)}
                 options={[
-                  { value: "", label: "Select age group..." },
-                  { value: "1º cicle: 6 - 10 years old", label: "1º cicle: 6 - 10 years old" },
-                  { value: "2º cicle: 10 - 12 years old", label: "2º cicle: 10 - 12 years old" },
-                  { value: "3º cicle: 12 - 15 years old", label: "3º cicle: 12 - 15 years old" },
-                  { value: "4º cicle: 15 - 18 years old", label: "4º cicle: 15 - 18 years old" },
+                  { value: "", label: t("createTheme.selectAgeGroup") },
+                  //{ value: "1º cicle: 6 - 10 years old", label: t("createTheme.cycle1") },
+                  { value: "2º cicle: 10 - 12 years old", label: t("createTheme.cycle2") },
+                  { value: "3º cicle: 12 - 15 years old", label: t("createTheme.cycle3") },
+                  { value: "4º cicle: 15 - 18 years old", label: t("createTheme.cycle4") },
                 ]}
               />
             </label>
 
             <div className="theme-image-field">
-              <h2 className="field-label">Theme's Image</h2>
+              <h2 className="field-label">{t("createTheme.themeImage")}</h2>
 
               <input
                 ref={themeImageInputRef}
@@ -845,7 +845,7 @@ export function CreateThemePage() {
                 {themeImageDataUrl ? (
                   <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
                 ) : (
-                  <span className="theme-image-placeholder">UPLOAD COVER THEME</span>
+                  <span className="theme-image-placeholder">{t("createTheme.uploadCover")}</span>
                 )}
               </button>
             </div>
@@ -862,10 +862,10 @@ export function CreateThemePage() {
           >
             <div className="card-builder-header">
               <h2 className="card-builder-title">
-                Add Card
+                {t("createTheme.addCard")}
                 <span
                   className="info-icon"
-                  data-tooltip="Fill in all the fields on the event card and quizzes to create the card."
+                  data-tooltip={t("createTheme.cardInfo")}
                   aria-label="Informação"
                   role="img"
                 >
@@ -880,7 +880,7 @@ export function CreateThemePage() {
                   marginTop: "0.5rem",
                   textAlign: "center"
                 }}>
-                  Maximum of {MAX_SAVED_CARDS} cards reached. Remove a card to add a new one.
+                  {t("createTheme.maxCardsReached", { max: MAX_SAVED_CARDS })}
                 </div>
               )}
             </div>
@@ -906,7 +906,7 @@ export function CreateThemePage() {
                     {cardMainPreview ? (
                       <img className="card-user-image" src={cardMainPreview} alt="Imagem da carta" />
                     ) : (
-                      <div className="card-image-placeholder">CLICK TO UPLOAD THE EVENT IMAGE</div>
+                      <div className="card-image-placeholder">{t("createTheme.clickToUpload")}</div>
                     )}
                   </button>
 
@@ -923,7 +923,7 @@ export function CreateThemePage() {
                       const value = e.target.value.slice(0, 35);
                       setCard((prev) => ({ ...prev, caption: value }));
                     }}
-                    placeholder="Type the event name"
+                    placeholder={t("createTheme.eventNamePlaceholder")}
                     rows={2}
                   />
                 </div>
@@ -932,10 +932,10 @@ export function CreateThemePage() {
                 <div className="card-year-field">
                   <div className="year-era-row">
                     <label className="field-inline">
-                      <span className="field-label">Year:</span>
+                      <span className="field-label">{t("createTheme.year")}</span>
                       <input
                         className={["field-input", "card-year-input", hasError("card.year") ? "is-invalid" : ""].join(" ")}
-                        placeholder="Ex: 1789"
+                        placeholder={t("createTheme.yearPlaceholder")}
                         inputMode="numeric"
                         maxLength={6}
                         value={card.year}
@@ -950,19 +950,19 @@ export function CreateThemePage() {
                       <label className="era-option">
                         <input
                           type="checkbox"
-                          checked={card.era === "AC"}
-                          onChange={() => selectEra("AC")}
+                          checked={card.era === "BC"}
+                          onChange={() => selectEra("BC")}
                         />
-                        <span>A.C.</span>
+                        <span>{t("createTheme.eraBC")}</span>
                       </label>
 
                       <label className="era-option">
                         <input
                           type="checkbox"
-                          checked={card.era === "DC"}
-                          onChange={() => selectEra("DC")}
+                          checked={card.era === "AD"}
+                          onChange={() => selectEra("AD")}
                         />
-                        <span>D.C.</span>
+                        <span>{t("createTheme.eraAD")}</span>
                       </label>
                     </div>
                   </div>
@@ -974,7 +974,7 @@ export function CreateThemePage() {
                   onClick={handleCreateCard}
                   disabled={isUploadingCard || isSessionLoading}
                 >
-                  {isUploadingCard ? "Uploading..." : editingCardId ? "Update Card" : "Create Card"}
+                  {isUploadingCard ? t("createTheme.uploading") : editingCardId ? t("createTheme.updateCard") : t("createTheme.createCard")}
                 </button>
               </div>
 
@@ -986,7 +986,7 @@ export function CreateThemePage() {
                     className={["tab-btn", activeTab === "image-quiz" ? "active" : "", tabHasError("imageQuiz") ? "tab-error" : ""].join(" ")}
                     onClick={() => setActiveTab("image-quiz")}
                   >
-                    Image Quiz
+                    {t("createTheme.imageQuiz")}
                   </button>
 
                   <button
@@ -994,7 +994,7 @@ export function CreateThemePage() {
                     className={["tab-btn", activeTab === "text-quiz" ? "active" : "", tabHasError("textQuiz") ? "tab-error" : ""].join(" ")}
                     onClick={() => setActiveTab("text-quiz")}
                   >
-                    Text Quiz
+                    {t("createTheme.textQuiz")}
                   </button>
 
                   <button
@@ -1002,7 +1002,7 @@ export function CreateThemePage() {
                     className={["tab-btn", activeTab === "trueOrFalse-quiz" ? "active" : "", tabHasError("tf") ? "tab-error" : ""].join(" ")}
                     onClick={() => setActiveTab("trueOrFalse-quiz")}
                   >
-                    True or False Quiz
+                    {t("createTheme.trueFalseQuiz")}
                   </button>
 
                   <button
@@ -1010,7 +1010,7 @@ export function CreateThemePage() {
                     className={["tab-btn", activeTab === "correlation-quiz" ? "active" : "", tabHasError("corr") ? "tab-error" : ""].join(" ")}
                     onClick={() => setActiveTab("correlation-quiz")}
                   >
-                    Correlation Quiz
+                    {t("createTheme.correlationQuiz")}
                   </button>
                 </div>
 
@@ -1019,10 +1019,10 @@ export function CreateThemePage() {
                   {activeTab === "image-quiz" && (
                     <>
                       <label className="field field-inline">
-                        <span className="field-label">Question:</span>
+                        <span className="field-label">{t("createTheme.question")}</span>
                         <input
                           className={["field-input", "quiz-question-input", hasError("imageQuiz.question") ? "is-invalid" : ""].join(" ")}
-                          placeholder="Ex: Which image represent this event?"
+                          placeholder={t("createTheme.questionImagePlaceholder")}
                           value={card.imageQuiz.question}
                           onChange={(e) =>
                             setCard((prev) => ({
@@ -1060,10 +1060,10 @@ export function CreateThemePage() {
                   {activeTab === "text-quiz" && (
                     <>
                       <label className="field field-inline">
-                        <span className="field-label">Question:</span>
+                        <span className="field-label">{t("createTheme.question")}</span>
                         <input
                           className={["field-input", "quiz-question-input", hasError("textQuiz.question") ? "is-invalid" : ""].join(" ")}
-                          placeholder="Ex: Which quote is related to the event?"
+                          placeholder={t("createTheme.questionTextPlaceholder")}
                           value={card.textQuiz.question}
                           onChange={(e) =>
                             setCard((prev) => ({
@@ -1100,7 +1100,7 @@ export function CreateThemePage() {
                                   return { ...prev, textQuiz: { ...prev.textQuiz, options } };
                                 })
                               }
-                              placeholder={`Option ${index + 1}`}
+                              placeholder={`${t("createTheme.option")} ${index + 1}`}
                               rows={2}
                               maxLength={150}
                             />
@@ -1123,7 +1123,7 @@ export function CreateThemePage() {
                               trueFalseQuiz: { ...prev.trueFalseQuiz, statement: e.target.value },
                             }))
                           }
-                          placeholder="Type the affirmation..."
+                          placeholder={t("createTheme.statementPlaceholder")}
                           rows={4}
                           maxLength={200}
                         />
@@ -1141,7 +1141,7 @@ export function CreateThemePage() {
                               }))
                             }
                           />
-                          <span>True</span>
+                          <span>{t("createTheme.true")}</span>
                         </label>
 
                         <label className="tf-option">
@@ -1155,7 +1155,7 @@ export function CreateThemePage() {
                               }))
                             }
                           />
-                          <span>False</span>
+                          <span>{t("createTheme.false")}</span>
                         </label>
                       </div>
                     </>
@@ -1194,10 +1194,10 @@ export function CreateThemePage() {
           {/* Added Cards */}
           <section className="added-cards-section">
             <h2 className="added-cards-title">
-              Added Cards
+              {t("createTheme.addedCards")}
               <span
                 className="info-icon"
-                data-tooltip="Theme needs at least 12 cards to be playful."
+                data-tooltip={t("createTheme.addedCardsInfo")}
                 aria-label="Informação"
                 role="img"
               >
@@ -1287,8 +1287,8 @@ export function CreateThemePage() {
               disabled={!canSaveTheme || isCreatingTheme || isSessionLoading}
             >
               {isCreatingTheme
-                ? (isEditMode ? "Updating..." : "Saving...")
-                : (isEditMode ? "Update Theme" : "Save Theme")
+                ? (isEditMode ? t("createTheme.updating") : t("createTheme.saving"))
+                : (isEditMode ? t("createTheme.updateTheme") : t("createTheme.saveTheme"))
               }
             </button>
           </div>
@@ -1303,12 +1303,12 @@ export function CreateThemePage() {
 
       <ConfirmModal
         isOpen={showDeleteModal}
-        title="Delete Card"
-        message="Are you sure about this?"
+        title={t("createTheme.deleteCardTitle")}
+        message={t("createTheme.deleteCardMessage")}
         onConfirm={confirmDeleteCard}
         onCancel={cancelDeleteCard}
-        confirmText="DELETE"
-        cancelText="Cancel"
+        confirmText={t("createTheme.deleteCardConfirm")}
+        cancelText={t("createTheme.deleteCardCancel")}
       />
     </div>
   );

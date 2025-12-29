@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { authService } from "../services/auth.service";
 import "./ForgotPasswordPage.css";
 
 export function ForgotPasswordPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -14,14 +16,14 @@ export function ForgotPasswordPage() {
     setSuccessMsg(null);
 
     if (!email.trim()) {
-      setErrorMsg("Please enter your email address.");
+      setErrorMsg(t("forgotPassword.errorFillEmail"));
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setErrorMsg("Please enter a valid email address.");
+      setErrorMsg(t("forgotPassword.errorInvalidEmail"));
       return;
     }
 
@@ -33,7 +35,7 @@ export function ForgotPasswordPage() {
       setSuccessMsg(response.message);
       setEmail("");
     } catch (err: any) {
-      setErrorMsg(err?.message ?? "Failed to send reset email. Please try again.");
+      setErrorMsg(err?.message ?? t("forgotPassword.errorFailed"));
     } finally {
       setIsSubmitting(false);
     }
@@ -43,16 +45,16 @@ export function ForgotPasswordPage() {
     <div className="forgot-password-page">
       <div className="forgot-password-card">
         <div className="forgot-password-header">
-          <h1 className="forgot-password-title">Reset Password</h1>
+          <h1 className="forgot-password-title">{t("forgotPassword.title")}</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="forgot-password-form">
           <div className="forgot-password-row">
-            <label className="forgot-password-label">Email</label>
+            <label className="forgot-password-label">{t("forgotPassword.email")}</label>
             <input
               className="forgot-password-input"
               type="email"
-              placeholder="youremail@example.com"
+              placeholder={t("forgotPassword.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isSubmitting}
@@ -61,7 +63,7 @@ export function ForgotPasswordPage() {
           </div>
 
           <p className="forgot-password-subtitle">
-            Enter your email address and we'll send you instructions to reset your password.
+            {t("forgotPassword.subtitle")}
           </p>
 
           {errorMsg && <div className="forgot-password-error">{errorMsg}</div>}
@@ -72,7 +74,7 @@ export function ForgotPasswordPage() {
             type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Sending..." : "Send Reset Link"}
+            {isSubmitting ? t("forgotPassword.sending") : t("forgotPassword.sendLink")}
           </button>
         </form>
       </div>

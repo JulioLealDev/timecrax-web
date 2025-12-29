@@ -1,4 +1,5 @@
 import { useRef, type ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 import imageTemplate from "../assets/imageTemplate.png";
 
 type ImageQuizCardProps = {
@@ -20,6 +21,7 @@ export function ImageQuizCard({
   invalidFrame,
   invalidCheckbox
 }: ImageQuizCardProps) {
+  const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   function onPick() {
@@ -53,11 +55,11 @@ export function ImageQuizCard({
           {imageDataUrl ? (
             <img
               src={imageDataUrl}
-              alt={`Opção ${index + 1}`}
+              alt={`${t("createTheme.option")} ${index + 1}`}
               className="image-quiz-user-image"
             />
           ) : (
-            <div className="image-quiz-placeholder">CLICK TO UPLOAD IMAGE</div>
+            <div className="image-quiz-placeholder">{t("createTheme.clickToUploadImage")}</div>
           )}
         </button>
 
@@ -78,7 +80,7 @@ export function ImageQuizCard({
           onChange={() => onSelectCorrect(index)}
           className={invalidCheckbox ? "is-invalid-checkbox" : ""}
         />
-        <span>Correct</span>
+        <span>{t("createTheme.correct")}</span>
       </label>
 
     </div>

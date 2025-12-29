@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { meService } from "../services/me.service";
 import { useAuth } from "../context/AuthContext";
 import imageTemplate from "../assets/imageTemplate.png";
@@ -13,6 +14,7 @@ type EditableProfile = {
 
 export function ProfilePage() {
   const { user, refreshMe } = useAuth();
+  const { t } = useTranslation();
   const [ isEditingProfile, setIsEditingProfile] = useState(false);
   const [ profileError, setProfileError] = useState<string | null>(null);
   const [pictureVersion, setPictureVersion] = useState(() => Date.now());
@@ -51,7 +53,7 @@ export function ProfilePage() {
     return (
       <div className="profile-page">
         <div className="profile-card">
-          <p>Carregando perfil...</p>
+          <p>{t("profile.loading")}</p>
         </div>
       </div>
     );
@@ -89,10 +91,10 @@ export function ProfilePage() {
       // 2) recarrega /me para atualizar user.picture
       await refreshMe();
       setPictureVersion(Date.now());
-      
+
     } catch (err: any) {
       console.error("Erro no upload:", err);
-      setUploadError(err?.message ?? "Erro ao enviar imagem.");
+      setUploadError(err?.message ?? t("profile.errorUpload"));
     } finally {
       setIsUploading(false);
       e.target.value = "";
@@ -106,7 +108,7 @@ export function ProfilePage() {
     setProfileError(null);
 
     if (!form.firstName.trim()) {
-      setProfileError("First name is required.");
+      setProfileError(t("profile.errorFirstNameRequired"));
       return;
     }
 
@@ -125,7 +127,7 @@ export function ProfilePage() {
 
       setIsEditingProfile(false);
     } catch (err: any) {
-      setProfileError(err?.message ?? "Erro ao salvar alterações.");
+      setProfileError(err?.message ?? t("profile.errorSavingChanges"));
     } finally {
       setIsSavingProfile(false);
     }
@@ -167,7 +169,7 @@ export function ProfilePage() {
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
-                    <span className="avatar-overlay-text">Edit image</span>
+                    <span className="avatar-overlay-text">{t("profile.editImage")}</span>
                   </div>
 
                   {/* input file escondido */}
@@ -179,7 +181,7 @@ export function ProfilePage() {
                     onChange={handleImageSelected}
                   />
 
-                  {isUploading && <div className="profile-hint">Enviando imagem...</div>}
+                  {isUploading && <div className="profile-hint">{t("profile.uploadingImage")}</div>}
                   {uploadError && <div className="profile-error">{uploadError}</div>}
                 </div>
 
@@ -192,15 +194,15 @@ export function ProfilePage() {
                       type="button"
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
-                      aria-label="Edit profile information"
-                      data-tooltip="Edit profile"
+                      aria-label={t("profile.editProfile")}
+                      data-tooltip={t("profile.editProfile")}
                     >
                       ✎
                     </button>
                   </div>
-                  <p className="profile-role">Estudante</p>
+                  <p className="profile-role">{t("profile.student")}</p>
                   <p className="profile-school">
-                    {user.schoolName || "Escola não informada"}
+                    {user.schoolName || t("profile.schoolNotProvided")}
                   </p>
                 </div>
               </div>
@@ -216,7 +218,7 @@ export function ProfilePage() {
                   </div>
                 )}
                 <div className="profile-score-container">
-                  <p className="profile-score-label">Score:</p>
+                  <p className="profile-score-label">{t("profile.score")}</p>
                   <p className="profile-score-value">{user.score ?? 0}</p>
                 </div>
               </div>
@@ -225,7 +227,7 @@ export function ProfilePage() {
             {/* Achievements */}
             {user.achievements && user.achievements.length > 0 && (
               <div className="achievements-section">
-                <h2 className="achievements-title">Achievements</h2>
+                <h2 className="achievements-title">{t("profile.achievements")}</h2>
                 <div className="achievements-grid">
                   {user.achievements.map((achievement) => (
                     <div
@@ -233,7 +235,7 @@ export function ProfilePage() {
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
                       data-tooltip={`${achievement.name}
 ${achievement.description}
-${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
+${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achievement.unlockedAt).toLocaleDateString()}` : t("profile.achievementLocked")}`}
                     >
                       <img
                         src={achievement.image}
@@ -248,13 +250,12 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
 
             {/* Completed Themes */}
             <div className="completed-themes-section">
-              <h2 className="completed-themes-title">Completed Themes</h2>
+              <h2 className="completed-themes-title">{t("profile.completedThemes")}</h2>
               <div className="completed-themes-grid">
                 {(() => {
                   const completedCount = user.completedThemes?.length ?? 0;
                   const itemsPerRow = 8;
                   const minRows = 1;
-                  const minItems = itemsPerRow * minRows; // 8
 
                   // Calcula quantas rows são necessárias para que o número de items seja maior que completedCount
                   const requiredRows = Math.ceil((completedCount + 1) / itemsPerRow);
@@ -313,7 +314,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
-                    <span className="avatar-overlay-text">Edit image</span>
+                    <span className="avatar-overlay-text">{t("profile.editImage")}</span>
                   </div>
 
                   {/* input file escondido */}
@@ -325,7 +326,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                     onChange={handleImageSelected}
                   />
 
-                  {isUploading && <div className="profile-hint">Enviando imagem...</div>}
+                  {isUploading && <div className="profile-hint">{t("profile.uploadingImage")}</div>}
                   {uploadError && <div className="profile-error">{uploadError}</div>}
                 </div>
 
@@ -338,15 +339,15 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       type="button"
                       className="icon-edit"
                       onClick={() => setIsEditingProfile(true)}
-                      aria-label="Edit profile information"
-                      data-tooltip="Edit profile"
+                      aria-label={t("profile.editProfile")}
+                      data-tooltip={t("profile.editProfile")}
                     >
                       ✎
                     </button>
                   </div>
-                  <p className="profile-role">Professor</p>
+                  <p className="profile-role">{t("profile.teacher")}</p>
                   <p className="profile-school">
-                    {user.schoolName || "Escola não informada"}
+                    {user.schoolName || t("profile.schoolNotProvided")}
                   </p>
                 </div>
               </div>
@@ -362,7 +363,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                   </div>
                 )}
                 <div className="profile-score-container">
-                  <p className="profile-score-label">Score:</p>
+                  <p className="profile-score-label">{t("profile.score")}</p>
                   <p className="profile-score-value">{user.score ?? 0}</p>
                 </div>
               </div>
@@ -371,7 +372,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
             {/* Achievements */}
             {user.achievements && user.achievements.length > 0 && (
               <div className="achievements-section">
-                <h2 className="achievements-title">Achievements</h2>
+                <h2 className="achievements-title">{t("profile.achievements")}</h2>
                 <div className="achievements-grid">
                   {user.achievements.map((achievement) => (
                     <div
@@ -379,7 +380,7 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
                       className={`achievement-item ${achievement.unlockedAt ? 'unlocked' : 'locked'}`}
                       data-tooltip={`${achievement.name}
 ${achievement.description}
-${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).toLocaleDateString()}` : 'Bloqueado'}`}
+${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achievement.unlockedAt).toLocaleDateString()}` : t("profile.achievementLocked")}`}
                     >
                       <img
                         src={achievement.image}
@@ -394,13 +395,12 @@ ${achievement.unlockedAt ? `Conquistado em: ${new Date(achievement.unlockedAt).t
 
             {/* Completed Themes */}
             <div className="completed-themes-section">
-              <h2 className="completed-themes-title">Completed Themes</h2>
+              <h2 className="completed-themes-title">{t("profile.completedThemes")}</h2>
               <div className="completed-themes-grid">
                 {(() => {
                   const completedCount = user.completedThemes?.length ?? 0;
                   const itemsPerRow = 8;
                   const minRows = 1;
-                  const minItems = itemsPerRow * minRows; // 8
 
                   // Calcula quantas rows são necessárias para que o número de items seja maior que completedCount
                   const requiredRows = Math.ceil((completedCount + 1) / itemsPerRow);

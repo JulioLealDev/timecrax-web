@@ -1,4 +1,5 @@
 import { useRef, type ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 import imageTemplate from "../assets/imageTemplate.png";
 
 type CorrelationRowProps = {
@@ -7,7 +8,7 @@ type CorrelationRowProps = {
   text: string;
   onImageSelected: (index: number, file: File) => void;
   onTextChange: (value: string) => void;
-  invalidImage?: boolean; 
+  invalidImage?: boolean;
   invalidText?: boolean
 };
 
@@ -20,6 +21,7 @@ export function CorrelationRow({
   invalidImage,
   invalidText
 }: CorrelationRowProps) {
+  const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   function onPick() {
@@ -54,10 +56,10 @@ export function CorrelationRow({
             <img
               className="correlation-user-image"
               src={imageDataUrl}
-              alt={`Figura ${index + 1}`}
+              alt={`${t("createTheme.text")} ${index + 1}`}
             />
           ) : (
-            <div className="correlation-placeholder">CLICK TO UPLOAD IMAGE</div>
+            <div className="correlation-placeholder">{t("createTheme.clickToUploadImage")}</div>
           )}
         </button>
 
@@ -78,7 +80,7 @@ export function CorrelationRow({
         ].join(" ")}
         value={text}
         onChange={(e) => onTextChange(e.target.value)}
-        placeholder={`Text ${index + 1}`}
+        placeholder={`${t("createTheme.text")} ${index + 1}`}
         rows={3}
         maxLength={150}
       />

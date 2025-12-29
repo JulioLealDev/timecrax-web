@@ -62,6 +62,18 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(249, 250, 251, 0.92);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.register-label-note {
+  font-family: "Marcellus", serif;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: rgba(250, 204, 107, 0.7);
 }
 
 .register-input,
@@ -192,6 +204,53 @@
   cursor: not-allowed;
 }
 
+/* Form fields reveal animation */
+.register-form-fields {
+  display: grid;
+  gap: 0.85rem;
+  animation: fadeSlideIn 0.4s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Parental Consent Checkbox */
+.register-consent-row {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(250, 204, 107, 0.08);
+  border: 1px solid rgba(250, 204, 107, 0.25);
+}
+
+.register-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-family: "Marcellus", serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(249, 250, 251, 0.9);
+  cursor: pointer;
+}
+
+.register-consent-checkbox {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 2px;
+  accent-color: #facc6b;
+  cursor: pointer;
+}
+
 /* GDPR Checkbox */
 .register-gdpr-row {
   margin-top: 0.5rem;
@@ -225,81 +284,7 @@
   text-decoration: underline;
 }
 
-/* GDPR Modal */
-.gdpr-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(4px);
-  animation: gdprFadeIn 0.2s ease;
-}
-
-@keyframes gdprFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.gdpr-modal-content {
-  position: relative;
-  background: radial-gradient(
-    circle at top,
-    #151c27 0%,
-    #020617 55%,
-    #060709 100%
-  );
-  border: 1px solid rgba(250, 204, 107, 0.4);
-  border-radius: 14px;
-  padding: 2rem;
-  max-width: 600px;
-  width: 90vw;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-  animation: gdprSlideUp 0.3s ease;
-}
-
-@keyframes gdprSlideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.gdpr-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: #f9fafb;
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  line-height: 1;
-  transition: color 0.2s ease;
-}
-
-.gdpr-modal-close:hover {
-  color: #facc6b;
-}
-
-.gdpr-modal-title {
-  font-family: "Cinzel", serif;
-  font-size: 1.6rem;
-  color: #facc6b;
-  text-shadow: 0 0 10px rgba(250, 204, 107, 0.3);
-  margin: 0 0 1.5rem;
-  letter-spacing: 0.05em;
-}
-
+/* GDPR Modal Body */
 .gdpr-modal-body {
   font-family: "Marcellus", serif;
   font-size: 1.05rem;

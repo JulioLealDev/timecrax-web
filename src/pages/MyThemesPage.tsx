@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { themesService, type ThemeResponse } from "../services/themes.service";
 import { ThemeItem } from "../components/ThemeItem";
 import { ConfirmModal } from "../components/ConfirmModal";
@@ -7,6 +8,7 @@ import "./MyThemesPage.css";
 
 export function MyThemesPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [themes, setThemes] = useState<ThemeResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,17 +66,17 @@ export function MyThemesPage() {
 
   return (
     <div className="my-themes-page">
-      <h1 className="my-themes-title">My Themes</h1>
+      <h1 className="my-themes-title">{t("myThemes.title")}</h1>
 
       <div className="my-themes-container">
         {isLoading ? (
-          <div className="my-themes-loading">Loading themes...</div>
+          <div className="my-themes-loading">{t("myThemes.loading")}</div>
         ) : error ? (
           <div className="my-themes-error">{error}</div>
         ) : themes.length === 0 ? (
           <div className="my-themes-empty">
             <p>
-              No themes created yet. <Link to="/create-theme">Start creating your first theme!</Link>
+              {t("myThemes.noThemes")} <Link to="/create-theme">{t("myThemes.createFirst")}</Link>
             </p>
           </div>
         ) : (
@@ -82,7 +84,7 @@ export function MyThemesPage() {
             <div className="my-themes-header">
               <div
                 className="info-icon"
-                data-tooltip={`• O tema precisa ter pelo menos 12 cartas para poder ser usado no jogo\n• Temas não aptos para o jogo serão excluídos após 30 dias de inatividade`}
+                data-tooltip={t("myThemes.infoTooltip")}
               >
                 ℹ
               </div>
@@ -110,12 +112,12 @@ export function MyThemesPage() {
 
       <ConfirmModal
         isOpen={deleteModalOpen}
-        title="Deletar Tema"
-        message="Tem certeza que deseja deletar este tema? Esta ação não pode ser desfeita."
+        title={t("myThemes.deleteTitle")}
+        message={t("myThemes.deleteMessage")}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
-        confirmText="Deletar"
-        cancelText="Cancelar"
+        confirmText={t("myThemes.deleteConfirm")}
+        cancelText={t("myThemes.deleteCancel")}
       />
     </div>
   );

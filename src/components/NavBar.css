@@ -884,6 +884,12 @@
   color: #facc6b;
 }
 
+.navbar-language-menu button.active {
+  background: rgba(250, 204, 107, 0.25);
+  color: #facc6b;
+  font-weight: 600;
+}
+
 .mobile-login-link {
   display: block;
   font-family: "Cinzel", serif;

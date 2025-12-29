@@ -50,6 +50,7 @@ export type RegisterRequest = {
   email: string;
   password: string;
   schoolName?: string | null;
+  language?: string;
 };
 
 export type AuthResponse = {

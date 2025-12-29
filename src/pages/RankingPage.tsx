@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { meService, type RankingUser } from "../services/me.service";
 import { authService } from "../services/auth.service";
 import "./RankingPage.css";
 
 export function RankingPage() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<RankingUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,16 +81,16 @@ export function RankingPage() {
 
   return (
     <div className="ranking-page">
-      <h1 className="ranking-title">Ranking</h1>
+      <h1 className="ranking-title">{t("ranking.title")}</h1>
 
       <div className="ranking-card">
         <div className="ranking-container">
           {isLoading ? (
-            <div className="ranking-loading">Loading ranking...</div>
+            <div className="ranking-loading">{t("ranking.loading")}</div>
           ) : error ? (
             <div className="ranking-error">{error}</div>
           ) : users.length === 0 ? (
-            <div className="ranking-empty">No users found.</div>
+            <div className="ranking-empty">{t("ranking.noUsers")}</div>
           ) : (
             <>
               <div className="ranking-list">
@@ -119,11 +121,11 @@ export function RankingPage() {
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
                   >
-                    Previous
+                    {t("ranking.previous")}
                   </button>
 
                   <span className="pagination-info">
-                    Page {currentPage} of {totalPages}
+                    {t("ranking.pageOf", { current: currentPage, total: totalPages })}
                   </span>
 
                   <button
@@ -131,7 +133,7 @@ export function RankingPage() {
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages}
                   >
-                    Next
+                    {t("ranking.next")}
                   </button>
                 </div>
               )}

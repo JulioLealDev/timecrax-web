@@ -1,12 +1,24 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation  } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./NavBar.css";
 import logoImg from "../assets/timecrax_logo.png";
 import { useAuth } from "../context/AuthContext";
 import { withBaseUrl } from "../utils/withBaseUrl";
 
+type Lang = "pt_pt" | "pt_br" | "en" | "es" | "fr";
+
+const langLabel: Record<Lang, string> = {
+  pt_br: "PT_BR",
+  pt_pt: "PT_PT",
+  en: "EN",
+  es: "ES",
+  fr: "FR",
+};
+
 export function NavBar() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const location = useLocation();
   const hideCenterOnRoutes = ["/profile", "/create-theme"];
@@ -15,6 +27,16 @@ export function NavBar() {
   const { user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+
+  const currentLanguage: Lang = ((): Lang => {
+    const lng = (i18n.resolvedLanguage || i18n.language || "en").toLowerCase();
+
+    if (lng.startsWith("pt_pt")) return "pt_pt";
+    if (lng.startsWith("pt_br")) return "pt_br";
+    if (lng.startsWith("es")) return "es";
+    if (lng.startsWith("fr")) return "fr";
+    return "en";
+  })();
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false);
@@ -31,7 +53,12 @@ export function NavBar() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const displayName = user?.firstName?.trim() || user?.email || "Perfil";
+  function changeLanguage(lang: Lang) {
+    i18n.changeLanguage(lang);
+    setShowLanguageDropdown(false);
+  }
+
+  const displayName = user?.firstName?.trim() || user?.email || t("navbar.openProfile");
 
   // Close language dropdown when clicking outside
   useEffect(() => {
@@ -74,16 +101,16 @@ export function NavBar() {
             </button>
 
             <nav className="mobile-links">
-              <a href="#" onClick={(e) => { e.preventDefault(); closeMobileMenu(); handleGoHome(); }}>Home</a>
-              <Link to="/#download" onClick={closeMobileMenu}>Download</Link>
-              <Link to="/#features" onClick={closeMobileMenu}>Features</Link>
-              <Link to="/#contact" onClick={closeMobileMenu}>Contact</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); closeMobileMenu(); handleGoHome(); }}>{t("navbar.home")}</a>
+              <Link to="/#download" onClick={closeMobileMenu}>{t("navbar.download")}</Link>
+              <Link to="/#features" onClick={closeMobileMenu}>{t("navbar.features")}</Link>
+              <Link to="/#contact" onClick={closeMobileMenu}>{t("navbar.contact")}</Link>
             </nav>
 
             <div className="mobile-login">
               {user ? (
                 <>
-                  <p className="mobile-login-title">LOGGED IN</p>
+                  <p className="mobile-login-title">{t("navbar.loggedIn")}</p>
                   <p style={{ margin: "6px 0" }}>
                     {user.firstName ?? user.email}
                   </p>
@@ -92,12 +119,12 @@ export function NavBar() {
                     className="navbar-login-button login-button-small"
                     onClick={handleLogout}
                   >
-                    Logout
+                    {t("navbar.logout")}
                   </button>
                 </>
               ) : (
                 <Link to="/login" className="mobile-login-link" onClick={closeMobileMenu}>
-                  Login
+                  {t("navbar.login")}
                 </Link>
               )}
             </div>
@@ -130,13 +157,13 @@ export function NavBar() {
       {!hideNavbarCenter && (
         <nav className="navbar-center">
           <div className="navbar-divider" />
-          <a href="#" onClick={(e) => { e.preventDefault(); handleGoHome(); }}>Home</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); handleGoHome(); }}>{t("navbar.home")}</a>
           <span className="navbar-sep">•</span>
-          <Link to="/#download">Download</Link>
+          <Link to="/#download">{t("navbar.download")}</Link>
           <span className="navbar-sep">•</span>
-          <Link to="/#features">Features</Link>
+          <Link to="/#features">{t("navbar.features")}</Link>
           <span className="navbar-sep">•</span>
-          <Link to="/#contact">Contact</Link>
+          <Link to="/#contact">{t("navbar.contact")}</Link>
           <div className="navbar-divider" />
         </nav>
       )}
@@ -148,7 +175,7 @@ export function NavBar() {
               type="button"
               className="navbar-profile"
               onClick={() => navigate("/profile")}
-              aria-label="Abrir perfil"
+              aria-label={t("navbar.openProfile")}
             >
               <span className="navbar-profile-icon" aria-hidden="true">
                 {user?.picture ? (
@@ -180,12 +207,12 @@ export function NavBar() {
                 navigate("/");
               }}
             >
-              Logout
+              {t("navbar.logout")}
             </button>
           </div>
         ) : (
           <Link to="/login" className="navbar-login-link">
-            Login
+            {t("navbar.login")}
           </Link>
         )}
 
@@ -198,7 +225,7 @@ export function NavBar() {
               setShowLanguageDropdown((prev) => !prev);
             }}
           >
-            Language
+            {langLabel[currentLanguage]}
             <svg width="12" height="8" viewBox="0 0 12 8" className="dropdown-arrow">
               <path fill="currentColor" d="M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z" />
             </svg>
@@ -206,11 +233,40 @@ export function NavBar() {
 
           {showLanguageDropdown && (
             <div className="navbar-language-menu">
-              <button type="button" onClick={() => setShowLanguageDropdown(false)}>
+              <button
+                type="button"
+                onClick={() => changeLanguage("en")}
+                className={currentLanguage === "en" ? "active" : ""}
+              >
                 English
               </button>
-              <button type="button" onClick={() => setShowLanguageDropdown(false)}>
-                Português
+              <button
+                type="button"
+                onClick={() => changeLanguage("pt_pt")}
+                className={currentLanguage === "pt_pt" ? "active" : ""}
+              >
+                Português - PT
+              </button>
+                            <button
+                type="button"
+                onClick={() => changeLanguage("pt_br")}
+                className={currentLanguage === "pt_br" ? "active" : ""}
+              >
+                Português - BR
+              </button>
+              <button
+                type="button"
+                onClick={() => changeLanguage("es")}
+                className={currentLanguage === "es" ? "active" : ""}
+              >
+                Español
+              </button>
+              <button
+                type="button"
+                onClick={() => changeLanguage("fr")}
+                className={currentLanguage === "fr" ? "active" : ""}
+              >
+                Français
               </button>
             </div>
           )}

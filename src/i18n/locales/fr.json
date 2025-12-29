@@ -313,7 +313,8 @@
     "close": "Fermer",
     "confirm": "Confirmer",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "privacyPolicy": "Politique de Confidentialité"
   },
   "errors": {
     "INVALID_ROLE": "Rôle invalide.",

@@ -83,7 +83,7 @@
     "errorMinimumAge": "Você deve ter pelo menos {{age}} anos para se cadastrar.",
     "errorPasswordLength": "A senha deve ter pelo menos 6 caracteres.",
     "errorPasswordMatch": "As senhas não coincidem.",
-    "errorAgreeGdpr": "Você deve concordar com os termos LGPD.",
+    "errorAgreeGdpr": "Você deve concordar com os termos LGPD e Política de Privacidade.",
     "errorRegistrationFailed": "Falha no cadastro."
   },
   "forgotPassword": {

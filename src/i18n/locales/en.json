@@ -83,7 +83,7 @@
     "errorMinimumAge": "You must be at least {{age}} years old to register.",
     "errorPasswordLength": "Password must be at least 6 characters.",
     "errorPasswordMatch": "Passwords do not match.",
-    "errorAgreeGdpr": "You must agree to the GDPR terms.",
+    "errorAgreeGdpr": "You must agree to the GDPR terms and Privacy Policy.",
     "errorRegistrationFailed": "Registration failed."
   },
   "forgotPassword": {

@@ -83,7 +83,7 @@
     "errorMinimumAge": "Deve ter pelo menos {{age}} anos para se registar.",
     "errorPasswordLength": "A palavra-passe deve ter pelo menos 6 caracteres.",
     "errorPasswordMatch": "As palavras-passe não coincidem.",
-    "errorAgreeGdpr": "Deve concordar com os termos do RGPD.",
+    "errorAgreeGdpr": "Deve concordar com os termos do RGPD e Política de Privacidade.",
     "errorRegistrationFailed": "Falha no registo."
   },
   "forgotPassword": {

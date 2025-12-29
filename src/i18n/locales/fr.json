@@ -83,7 +83,7 @@
     "errorMinimumAge": "Tu dois avoir au moins {{age}} ans pour t'inscrire.",
     "errorPasswordLength": "Le mot de passe doit contenir au moins 6 caractères.",
     "errorPasswordMatch": "Les mots de passe ne correspondent pas.",
-    "errorAgreeGdpr": "Vous devez accepter les conditions RGPD.",
+    "errorAgreeGdpr": "Vous devez accepter les conditions RGPD et la Politique de Confidentialité.",
     "errorRegistrationFailed": "Échec de l’inscription."
   },
   "forgotPassword": {

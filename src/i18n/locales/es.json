@@ -83,7 +83,7 @@
     "errorMinimumAge": "Debes tener al menos {{age}} años para registrarte.",
     "errorPasswordLength": "La contraseña debe tener al menos 6 caracteres.",
     "errorPasswordMatch": "Las contraseñas no coinciden.",
-    "errorAgreeGdpr": "Debes aceptar los términos de protección de datos.",
+    "errorAgreeGdpr": "Debes aceptar los términos de protección de datos y la Política de Privacidad.",
     "errorRegistrationFailed": "Error en el registro."
   },
   "forgotPassword": {

@@ -11,8 +11,8 @@ import esContent from "../content/privacy-policy/es.md?raw";
 
 const contentByLanguage: Record<string, string> = {
   en: enContent,
-  "pt-BR": ptBrContent,
-  "pt-PT": ptPtContent,
+  pt_br: ptBrContent,
+  pt_pt: ptPtContent,
   fr: frContent,
   es: esContent,
 };
@@ -22,10 +22,10 @@ function getContentForLanguage(lang: string): string {
   if (contentByLanguage[lang]) {
     return contentByLanguage[lang];
   }
-  // Try base language (e.g., "pt" -> "pt-BR")
-  const baseLang = lang.split("-")[0];
+  // Try base language fallback (e.g., "pt" -> "pt_br")
+  const baseLang = lang.split("_")[0];
   if (baseLang === "pt") {
-    return contentByLanguage["pt-BR"];
+    return contentByLanguage.pt_br;
   }
   if (contentByLanguage[baseLang]) {
     return contentByLanguage[baseLang];

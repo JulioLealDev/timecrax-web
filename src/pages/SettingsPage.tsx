@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../context/AuthContext";
 import { DeleteAccountModal } from "../components/DeleteAccountModal";
 import "./SettingsPage.css";
 
@@ -9,6 +10,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001
 export function SettingsPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { logout } = useAuth();
 
   // Change Email State
   const [emailPassword, setEmailPassword] = useState("");
@@ -174,8 +176,8 @@ export function SettingsPage() {
       }
 
       // Account deleted successfully - logout and redirect
-      localStorage.removeItem("auth_token");
-      navigate("/login");
+      logout();
+      navigate("/");
     } catch (error) {
       setDeleteError(t("settings.errorNetwork"));
       setDeleteLoading(false);

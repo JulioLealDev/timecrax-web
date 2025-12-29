@@ -314,5 +314,24 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No"
+  },
+  "errors": {
+    "INVALID_ROLE": "Invalid role.",
+    "FIRST_NAME_TOO_SHORT": "First name must have at least 2 characters.",
+    "LAST_NAME_TOO_SHORT": "Last name must have at least 2 characters.",
+    "INVALID_EMAIL": "Invalid email address.",
+    "PASSWORD_TOO_SHORT": "Password must have at least 8 characters.",
+    "EMAIL_IN_USE": "This email is already in use.",
+    "INVALID_CREDENTIALS": "Invalid email or password.",
+    "CURRENT_PASSWORD_REQUIRED": "Current password is required.",
+    "NEW_PASSWORD_TOO_SHORT": "New password must have at least 8 characters.",
+    "USER_NOT_FOUND": "User not found.",
+    "INVALID_CURRENT_PASSWORD": "Current password is incorrect.",
+    "SAME_PASSWORD": "New password must be different from current password.",
+    "NEW_EMAIL_REQUIRED": "New email is required.",
+    "SAME_EMAIL": "New email must be different from current email.",
+    "PASSWORD_REQUIRED": "Password is required.",
+    "INVALID_PASSWORD": "Password is incorrect.",
+    "UNKNOWN": "An unexpected error occurred."
   }
 }

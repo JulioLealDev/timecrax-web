@@ -5,6 +5,16 @@ import { useAuth } from "../context/AuthContext";
 import { DeleteAccountModal } from "../components/DeleteAccountModal";
 import "./SettingsPage.css";
 
+function translateApiError(data: any, t: (key: string) => string): string {
+  if (data?.code) {
+    const translated = t(`errors.${data.code}`);
+    if (translated !== `errors.${data.code}`) {
+      return translated;
+    }
+  }
+  return data?.error || t("errors.UNKNOWN");
+}
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
 
 export function SettingsPage() {
@@ -72,7 +82,7 @@ export function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        setEmailErrors({ general: data.error || `${t("settings.errorChangeFailed")} email.` });
+        setEmailErrors({ general: translateApiError(data, t) });
         return;
       }
 
@@ -134,7 +144,7 @@ export function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        setPasswordErrors({ general: data.error || `${t("settings.errorChangeFailed")} password.` });
+        setPasswordErrors({ general: translateApiError(data, t) });
         return;
       }
 
@@ -170,7 +180,7 @@ export function SettingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        setDeleteError(data.error || "Failed to delete account.");
+        setDeleteError(translateApiError(data, t));
         setDeleteLoading(false);
         return;
       }

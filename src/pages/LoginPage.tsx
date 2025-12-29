@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
+import { translateError } from "../utils/translateError";
 import "./LoginPage.css";
 
 export function LoginPage() {
@@ -28,8 +29,8 @@ export function LoginPage() {
       setIsSubmitting(true);
       await login(email.trim(), password);
       navigate("/profile");
-    } catch (err: any) {
-      setErrorMsg(err?.message ?? t("login.errorLoginFailed"));
+    } catch (err) {
+      setErrorMsg(translateError(err));
     } finally {
       setIsSubmitting(false);
     }

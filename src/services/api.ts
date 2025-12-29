@@ -4,6 +4,18 @@ function getToken() {
   return localStorage.getItem("auth_token");
 }
 
+export class ApiError extends Error {
+  code?: string;
+  status: number;
+
+  constructor(message: string, status: number, code?: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.code = code;
+  }
+}
+
 export async function apiRequest<T>(
     path: string,
     options: RequestInit = {}
@@ -36,11 +48,12 @@ export async function apiRequest<T>(
     raw && contentType.includes("application/json") ? safeJsonParse(raw) : (raw ? raw : null);
 
     if (!res.ok) {
+        const code = data && typeof data === "object" ? (data as any).code : undefined;
         const message =
         (data && typeof data === "object" && ((data as any).message || (data as any).error)) ||
         (typeof data === "string" && data) ||
-        `Erro HTTP ${res.status} em ${path}`;
-        throw new Error(message);
+        `HTTP ${res.status}`;
+        throw new ApiError(message, res.status, code);
     }
 
     return data as T;

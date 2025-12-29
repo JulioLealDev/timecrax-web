@@ -6,6 +6,7 @@ import { CustomSelect } from "../components/CustomSelect";
 import { CustomDatePicker } from "../components/CustomDatePicker";
 import { Modal } from "../components/Modal";
 import { apiRequest } from "../services/api";
+import { translateError } from "../utils/translateError";
 import "./RegisterPage.css";
 
 type Role = "student" | "teacher" | "player";
@@ -134,8 +135,8 @@ export function RegisterPage() {
       const language = getGdprLanguage();
       await register(firstName.trim(), lastName.trim(), email.trim(), password, schoolName.trim(), role, language);
       navigate("/profile");
-    } catch (err: any) {
-      setErrorMsg(err?.message ?? t("register.errorRegistrationFailed"));
+    } catch (err) {
+      setErrorMsg(translateError(err));
     } finally {
       setIsSubmitting(false);
     }

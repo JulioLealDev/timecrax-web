@@ -158,5 +158,24 @@
     "confirm": "Confirmar",
     "yes": "Sim",
     "no": "Não"
+  },
+  "errors": {
+    "INVALID_ROLE": "Função inválida.",
+    "FIRST_NAME_TOO_SHORT": "O nome deve ter pelo menos 2 caracteres.",
+    "LAST_NAME_TOO_SHORT": "O apelido deve ter pelo menos 2 caracteres.",
+    "INVALID_EMAIL": "Endereço de email inválido.",
+    "PASSWORD_TOO_SHORT": "A palavra-passe deve ter pelo menos 8 caracteres.",
+    "EMAIL_IN_USE": "Este email já está a ser utilizado.",
+    "INVALID_CREDENTIALS": "Email ou palavra-passe inválidos.",
+    "CURRENT_PASSWORD_REQUIRED": "Palavra-passe atual é obrigatória.",
+    "NEW_PASSWORD_TOO_SHORT": "A nova palavra-passe deve ter pelo menos 8 caracteres.",
+    "USER_NOT_FOUND": "Utilizador não encontrado.",
+    "INVALID_CURRENT_PASSWORD": "Palavra-passe atual incorreta.",
+    "SAME_PASSWORD": "A nova palavra-passe deve ser diferente da atual.",
+    "NEW_EMAIL_REQUIRED": "Novo email é obrigatório.",
+    "SAME_EMAIL": "O novo email deve ser diferente do email atual.",
+    "PASSWORD_REQUIRED": "Palavra-passe é obrigatória.",
+    "INVALID_PASSWORD": "Palavra-passe incorreta.",
+    "UNKNOWN": "Ocorreu um erro inesperado."
   }
 }

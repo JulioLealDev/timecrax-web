@@ -17,12 +17,13 @@ import { ThemesStoragePage } from "./pages/ThemesStoragePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PublicOnlyRoute } from "./components/PublicOnlyRoute";
 import { RoleProtectedRoute } from "./components/RoleProtectedRoute";
+import { isPublicRoute, ROUTES } from "./constants/routes";
 import "./App.css";
 
 
 function App() {
   const location = useLocation();
-  const isPublicPage = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password" || location.pathname === "/reset-password" || location.pathname === "/privacy-policy";
+  const isPublicPage = isPublicRoute(location.pathname);
 
   return (
     <>

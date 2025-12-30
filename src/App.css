@@ -1,25 +1,28 @@
+@import "./styles/variables.css";
+
 .main-content {
   margin-left: 0;
-  min-height: calc(100vh - 60px);
-  padding: 2rem;
-  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - var(--navbar-height));
+  padding: var(--spacing-xl);
+  transition: margin-left var(--transition-normal);
 }
 
 .main-content.with-sidebar {
-  margin-left: 200px;
+  margin-left: var(--sidebar-width);
 }
 
-/* Responsive */
+/* Responsive - Tablet (768px) */
 @media (max-width: 768px) {
   .main-content.with-sidebar {
-    margin-left: 60px;
+    margin-left: var(--sidebar-width-mobile);
   }
 
   .main-content {
-    padding: 1rem;
+    padding: var(--spacing-md);
   }
 }
 
+/* Responsive - Mobile (480px) */
 @media (max-width: 480px) {
   .main-content.with-sidebar {
     margin-left: 0;

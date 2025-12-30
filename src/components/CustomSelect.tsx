@@ -7,9 +7,12 @@ type CustomSelectProps = {
   options: Array<{ value: string; label: string }>;
   disabled?: boolean;
   className?: string;
+  placeholder?: string;
 };
 
-export function CustomSelect({ value, onChange, options, disabled, className }: CustomSelectProps) {
+const DEFAULT_PLACEHOLDER = "Select...";
+
+export function CustomSelect({ value, onChange, options, disabled, className, placeholder = DEFAULT_PLACEHOLDER }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +47,7 @@ export function CustomSelect({ value, onChange, options, disabled, className }: 
         onClick={() => !disabled && setIsOpen((prev) => !prev)}
         disabled={disabled}
       >
-        <span className="custom-select-value">{selectedOption?.label || "Select..."}</span>
+        <span className="custom-select-value">{selectedOption?.label || placeholder}</span>
         <svg width="12" height="8" viewBox="0 0 12 8" className="custom-select-arrow">
           <path fill="currentColor" d="M1.41 0L6 4.58 10.59 0 12 1.42l-6 6-6-6z" />
         </svg>

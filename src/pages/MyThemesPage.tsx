@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { themesService, type ThemeResponse } from "../services/themes.service";
 import { ThemeItem } from "../components/ThemeItem";
 import { ConfirmModal } from "../components/ConfirmModal";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import "./MyThemesPage.css";
 
 export function MyThemesPage() {
@@ -80,7 +81,7 @@ export function MyThemesPage() {
 
       <div className="my-themes-container">
         {isLoading ? (
-          <div className="my-themes-loading">{t("myThemes.loading")}</div>
+          <LoadingSpinner size="large" message={t("myThemes.loading")} />
         ) : error ? (
           <div className="my-themes-error">{error}</div>
         ) : themes.length === 0 ? (

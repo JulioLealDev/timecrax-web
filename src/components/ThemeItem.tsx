@@ -56,6 +56,7 @@ export function ThemeItem({
               onEdit(id);
             }}
             data-tooltip="Editar tema"
+            aria-label={`Edit theme: ${name}`}
           >
             ✏️
           </button>
@@ -66,6 +67,7 @@ export function ThemeItem({
               onDelete(id);
             }}
             data-tooltip="Deletar tema"
+            aria-label={`Delete theme: ${name}`}
           >
             🗑️
           </button>

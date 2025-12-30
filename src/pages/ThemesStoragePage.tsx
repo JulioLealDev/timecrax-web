@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { themesService, type ThemeResponse } from "../services/themes.service";
 import { ThemeItem } from "../components/ThemeItem";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import "./ThemesStoragePage.css";
 
 export function ThemesStoragePage() {
@@ -45,7 +46,7 @@ export function ThemesStoragePage() {
 
       <div className="themes-storage-container">
         {isLoading ? (
-          <div className="themes-storage-loading">{t("themesStorage.loading")}</div>
+          <LoadingSpinner size="large" message={t("themesStorage.loading")} />
         ) : error ? (
           <div className="themes-storage-error">{error}</div>
         ) : themes.length === 0 ? (

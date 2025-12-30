@@ -1223,7 +1223,7 @@ export function CreateThemePage() {
                         <img
                           className="added-card-image"
                           src={withBaseUrl(c.imageUrl) ?? undefined}
-                          alt=""
+                          alt={`Card: ${c.caption || `Year ${c.year}`}`}
                         />
                       )}
                     </button>

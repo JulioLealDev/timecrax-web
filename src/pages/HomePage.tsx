@@ -121,7 +121,7 @@ export function HomePage() {
             </div>
 
             <div className="highlight-carousel">
-            <button className="carousel-arrow left" onClick={handlePrev}>
+            <button className="carousel-arrow left" onClick={handlePrev} aria-label="Previous slide">
             <svg
                 className="arrow-icon"
                 viewBox="0 0 40 40"
@@ -147,7 +147,7 @@ export function HomePage() {
                 <img src={slide.imageUrl} alt={t(slide.titleKey)} loading="lazy" />
             </div>
 
-            <button className="carousel-arrow right" onClick={handleNext}>
+            <button className="carousel-arrow right" onClick={handleNext} aria-label="Next slide">
             <svg
                 className="arrow-icon"
                 viewBox="0 0 40 40"

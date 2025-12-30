@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { meService, type RankingUser } from "../services/me.service";
 import { authService } from "../services/auth.service";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import "./RankingPage.css";
 
 export function RankingPage() {
@@ -86,7 +87,7 @@ export function RankingPage() {
       <div className="ranking-card">
         <div className="ranking-container">
           {isLoading ? (
-            <div className="ranking-loading">{t("ranking.loading")}</div>
+            <LoadingSpinner size="large" message={t("ranking.loading")} />
           ) : error ? (
             <div className="ranking-error">{error}</div>
           ) : users.length === 0 ? (

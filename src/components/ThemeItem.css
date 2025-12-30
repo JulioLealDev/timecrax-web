@@ -73,6 +73,22 @@
   font-weight: 500;
 }
 
+.theme-card-count {
+  font-family: "Marcellus", serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.card-count-label {
+  color: rgba(249, 250, 251, 0.8);
+}
+
+.card-count-value {
+  color: #facc6b;
+  font-weight: 500;
+}
+
 .theme-item-card {
   flex-shrink: 0;
   width: 140px;
@@ -356,6 +372,7 @@
   .theme-ready-to-play,
   .theme-creator,
   .theme-created-at,
+  .theme-card-count,
   .theme-resume,
   .theme-recommendation {
     text-align: center;
@@ -373,7 +390,8 @@
 
   .theme-ready-to-play,
   .theme-creator,
-  .theme-created-at {
+  .theme-created-at,
+  .theme-card-count {
     font-size: 0.85rem;
   }
 }

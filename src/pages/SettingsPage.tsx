@@ -3,17 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { DeleteAccountModal } from "../components/DeleteAccountModal";
-import { API_BASE_URL } from "../services/api";
+import { apiRequest, ApiError } from "../services/api";
 import "./SettingsPage.css";
 
-function translateApiError(data: Record<string, unknown>, t: (key: string) => string): string {
-  if (data?.code && typeof data.code === "string") {
-    const translated = t(`errors.${data.code}`);
-    if (translated !== `errors.${data.code}`) {
+function translateApiError(error: unknown, t: (key: string) => string): string {
+  if (error instanceof ApiError && error.code) {
+    const translated = t(`errors.${error.code}`);
+    if (translated !== `errors.${error.code}`) {
       return translated;
     }
+    return error.message;
   }
-  return (data?.error as string) || t("errors.UNKNOWN");
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return t("errors.UNKNOWN");
 }
 
 export function SettingsPage() {
@@ -66,24 +70,13 @@ export function SettingsPage() {
     setEmailLoading(true);
 
     try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/me/email`, {
+      await apiRequest("/me/email", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           currentPassword: emailPassword,
           newEmail: newEmail.trim(),
         }),
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setEmailErrors({ general: translateApiError(data, t) });
-        return;
-      }
 
       setEmailSuccess(true);
       setEmailPassword("");
@@ -92,7 +85,7 @@ export function SettingsPage() {
       // Hide success message after 5 seconds
       setTimeout(() => setEmailSuccess(false), 5000);
     } catch (error) {
-      setEmailErrors({ general: t("settings.errorNetwork") });
+      setEmailErrors({ general: translateApiError(error, t) });
     } finally {
       setEmailLoading(false);
     }
@@ -128,24 +121,13 @@ export function SettingsPage() {
     setPasswordLoading(true);
 
     try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/me/password`, {
+      await apiRequest("/me/password", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           currentPassword: currentPassword,
           newPassword: newPassword,
         }),
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setPasswordErrors({ general: translateApiError(data, t) });
-        return;
-      }
 
       setPasswordSuccess(true);
       setCurrentPassword("");
@@ -155,7 +137,7 @@ export function SettingsPage() {
       // Hide success message after 5 seconds
       setTimeout(() => setPasswordSuccess(false), 5000);
     } catch (error) {
-      setPasswordErrors({ general: t("settings.errorNetwork") });
+      setPasswordErrors({ general: translateApiError(error, t) });
     } finally {
       setPasswordLoading(false);
     }
@@ -167,28 +149,16 @@ export function SettingsPage() {
     setDeleteLoading(true);
 
     try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/me/account`, {
+      await apiRequest("/me/account", {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ password }),
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setDeleteError(translateApiError(data, t));
-        setDeleteLoading(false);
-        return;
-      }
 
       // Account deleted successfully - logout and redirect
       logout();
       navigate("/");
     } catch (error) {
-      setDeleteError(t("settings.errorNetwork"));
+      setDeleteError(translateApiError(error, t));
       setDeleteLoading(false);
     }
   }

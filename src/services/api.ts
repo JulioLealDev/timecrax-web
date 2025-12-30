@@ -1,5 +1,21 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5139";
 
+/**
+ * SECURITY NOTE: Token is currently stored in localStorage for simplicity.
+ *
+ * RISK: localStorage is vulnerable to XSS attacks - any JavaScript running on the page
+ * can access the token.
+ *
+ * RECOMMENDED MITIGATION (future):
+ * - Migrate to httpOnly cookies managed by the backend
+ * - Implement CSRF protection with the cookie approach
+ * - Use short-lived access tokens with refresh token rotation
+ *
+ * CURRENT MITIGATIONS:
+ * - Content Security Policy (CSP) headers should be configured
+ * - All user input should be sanitized to prevent XSS
+ * - Token has expiration time configured on the backend
+ */
 function getToken() {
   return localStorage.getItem("auth_token");
 }

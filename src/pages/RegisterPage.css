@@ -355,6 +355,11 @@
   margin-bottom: 0.3rem;
 }
 
+.gdpr-plain-text {
+  color: rgba(249, 250, 251, 0.85);
+  line-height: 1.8;
+}
+
 /* responsivo */
 @media (max-width: 768px) {
   .register-title {

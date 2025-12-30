@@ -16,44 +16,70 @@ const MINIMUM_AGE = 6;
 function GdprContent({ text }: { text: string }) {
   if (!text) return null;
 
-  // Split by double newlines to get sections
+  // Check if text has markdown-like formatting or line breaks
+  const hasFormatting = text.includes("\n") || text.includes("##") || text.includes("**");
+
+  if (!hasFormatting) {
+    // Plain text - just display as is
+    return <div className="gdpr-plain-text">{text}</div>;
+  }
+
+  // Parse markdown-like formatting
   const sections = text.split(/\n\n+/).filter(Boolean);
 
   return (
     <>
       {sections.map((section, index) => {
         const lines = section.split("\n").filter(Boolean);
-
-        // Check if first line looks like a title (ends with : or is short and uppercase-heavy)
         const firstLine = lines[0] || "";
-        const isTitle = firstLine.endsWith(":") ||
-          (firstLine.length < 60 && firstLine === firstLine.toUpperCase()) ||
-          /^\d+\.\s/.test(firstLine);
+
+        // Check if first line is a title (## header, ends with :, numbered, or all caps)
+        const isMarkdownHeader = firstLine.startsWith("##");
+        const isTitle = isMarkdownHeader ||
+          firstLine.endsWith(":") ||
+          /^\d+\.\s/.test(firstLine) ||
+          (firstLine.length < 60 && firstLine === firstLine.toUpperCase());
 
         if (isTitle && lines.length > 1) {
+          const title = isMarkdownHeader ? firstLine.replace(/^#+\s*/, "") : firstLine;
           return (
             <div key={index} className="gdpr-section">
-              <h3 className="gdpr-section-title">{firstLine}</h3>
+              <h3 className="gdpr-section-title">{title}</h3>
               <div className="gdpr-section-content">
                 {lines.slice(1).map((line, lineIndex) => {
-                  // Check if line is a list item (starts with - or •)
-                  if (/^[-•]\s/.test(line)) {
-                    return <li key={lineIndex}>{line.replace(/^[-•]\s/, "")}</li>;
+                  // Bold text with **
+                  const formattedLine = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                  // Check if line is a list item
+                  if (/^[-•*]\s/.test(line)) {
+                    return <li key={lineIndex} dangerouslySetInnerHTML={{ __html: formattedLine.replace(/^[-•*]\s/, "") }} />;
                   }
-                  return <p key={lineIndex}>{line}</p>;
+                  return <p key={lineIndex} dangerouslySetInnerHTML={{ __html: formattedLine }} />;
                 })}
               </div>
             </div>
           );
         }
 
-        // Regular paragraph
+        // Regular paragraph or single title
+        if (isTitle && lines.length === 1) {
+          const title = isMarkdownHeader ? firstLine.replace(/^#+\s*/, "") : firstLine;
+          return (
+            <div key={index} className="gdpr-section">
+              <h3 className="gdpr-section-title">{title}</h3>
+            </div>
+          );
+        }
+
         return (
           <div key={index} className="gdpr-section">
             <div className="gdpr-section-content">
-              {lines.map((line, lineIndex) => (
-                <p key={lineIndex}>{line}</p>
-              ))}
+              {lines.map((line, lineIndex) => {
+                const formattedLine = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                if (/^[-•*]\s/.test(line)) {
+                  return <li key={lineIndex} dangerouslySetInnerHTML={{ __html: formattedLine.replace(/^[-•*]\s/, "") }} />;
+                }
+                return <p key={lineIndex} dangerouslySetInnerHTML={{ __html: formattedLine }} />;
+              })}
             </div>
           </div>
         );

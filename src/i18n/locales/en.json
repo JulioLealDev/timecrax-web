@@ -332,7 +332,17 @@
     "title": "Themes Storage",
     "loading": "Loading themes...",
     "noThemes": "No themes available yet.",
-    "errorLoad": "Failed to load themes"
+    "errorLoad": "Failed to load themes",
+    "filter": {
+      "toggle": "Toggle filters",
+      "name": "Name",
+      "date": "Date",
+      "oldest": "Oldest",
+      "newest": "Newest",
+      "recommendation": "Age",
+      "all": "All",
+      "searchPlaceholder": "Search..."
+    }
   },
   "themeItem": {
     "readyToPlay": "Ready to Play",

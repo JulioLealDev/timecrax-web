@@ -332,7 +332,17 @@
     "title": "Banco de Temas",
     "loading": "Carregando temas...",
     "noThemes": "Nenhum tema disponível ainda.",
-    "errorLoad": "Falha ao carregar temas"
+    "errorLoad": "Falha ao carregar temas",
+    "filter": {
+      "toggle": "Alternar filtros",
+      "name": "Nome",
+      "date": "Data",
+      "oldest": "Antigos",
+      "newest": "Recentes",
+      "recommendation": "Idade",
+      "all": "Todos",
+      "searchPlaceholder": "Buscar..."
+    }
   },
   "themeItem": {
     "readyToPlay": "Pronto para Jogar",

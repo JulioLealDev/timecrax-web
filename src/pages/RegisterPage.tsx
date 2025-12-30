@@ -13,6 +13,55 @@ type Role = "student" | "teacher" | "player";
 
 const MINIMUM_AGE = 6;
 
+function GdprContent({ text }: { text: string }) {
+  if (!text) return null;
+
+  // Split by double newlines to get sections
+  const sections = text.split(/\n\n+/).filter(Boolean);
+
+  return (
+    <>
+      {sections.map((section, index) => {
+        const lines = section.split("\n").filter(Boolean);
+
+        // Check if first line looks like a title (ends with : or is short and uppercase-heavy)
+        const firstLine = lines[0] || "";
+        const isTitle = firstLine.endsWith(":") ||
+          (firstLine.length < 60 && firstLine === firstLine.toUpperCase()) ||
+          /^\d+\.\s/.test(firstLine);
+
+        if (isTitle && lines.length > 1) {
+          return (
+            <div key={index} className="gdpr-section">
+              <h3 className="gdpr-section-title">{firstLine}</h3>
+              <div className="gdpr-section-content">
+                {lines.slice(1).map((line, lineIndex) => {
+                  // Check if line is a list item (starts with - or •)
+                  if (/^[-•]\s/.test(line)) {
+                    return <li key={lineIndex}>{line.replace(/^[-•]\s/, "")}</li>;
+                  }
+                  return <p key={lineIndex}>{line}</p>;
+                })}
+              </div>
+            </div>
+          );
+        }
+
+        // Regular paragraph
+        return (
+          <div key={index} className="gdpr-section">
+            <div className="gdpr-section-content">
+              {lines.map((line, lineIndex) => (
+                <p key={lineIndex}>{line}</p>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 function calculateAge(birthDate: Date | null): number | null {
   if (!birthDate) return null;
   const today = new Date();
@@ -340,7 +389,7 @@ export function RegisterPage() {
           {gdprLoading ? (
             <p className="gdpr-modal-loading">{t("common.loading")}</p>
           ) : (
-            <p>{gdprText}</p>
+            <GdprContent text={gdprText || ""} />
           )}
         </div>
       </Modal>

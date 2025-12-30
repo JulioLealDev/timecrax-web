@@ -277,6 +277,13 @@
   color: #facc6b;
   text-decoration: none;
   transition: color 0.2s ease, text-decoration 0.2s ease;
+  /* Reset button styles to look like a link */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
 }
 
 .register-gdpr-link:hover {

@@ -32,21 +32,6 @@ const generateId = (): string => {
 };
 
 /* ============================================================
- * Era conversion helpers (API uses AC/DC, frontend uses BC/AD)
- * ========================================================== */
-const apiEraToFrontend = (era?: "AC" | "DC"): "BC" | "AD" | undefined => {
-  if (era === "AC") return "BC";
-  if (era === "DC") return "AD";
-  return undefined;
-};
-
-const frontendEraToApi = (era?: "BC" | "AD"): "AC" | "DC" | undefined => {
-  if (era === "BC") return "AC";
-  if (era === "AD") return "DC";
-  return undefined;
-};
-
-/* ============================================================
  * Draft inicial
  * ========================================================== */
 const createEmptyCardDraft = (orderIndex: number): CardDraft => ({
@@ -160,7 +145,7 @@ export function CreateThemePage() {
             id: card.id || generateId(), // Garantir ID único
             orderIndex: card.orderIndex,
             year: String(card.year),
-            era: apiEraToFrontend(card.era),
+            era: card.era,
             caption: card.caption,
             imageUrl: card.imageUrl,
             imageFile: undefined,
@@ -700,7 +685,7 @@ export function CreateThemePage() {
         cards: ordered.map((c) => ({
           orderIndex: c.orderIndex,
           year: Number(c.year),
-          era: frontendEraToApi(c.era),
+          era: c.era,
           caption: c.caption,
           imageUrl: withBaseUrl(c.imageUrl) ?? "",
 

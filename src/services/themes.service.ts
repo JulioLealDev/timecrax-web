@@ -4,7 +4,7 @@ import { apiRequest } from "./api";
 export type ThemeCardRequest = {
   orderIndex: number;
   year: number;
-  era?: "AC" | "DC"; // se seu backend tiver isso, senão remova
+  era?: "BC" | "AD";
   caption: string;
   imageUrl: string; // por enquanto, você só tem dataUrl. Ver observação abaixo.
 
@@ -61,7 +61,7 @@ export type ThemeCardResponse = {
   id?: string;
   orderIndex: number;
   year: number;
-  era?: "AC" | "DC";
+  era?: "BC" | "AD";
   caption: string;
   imageUrl: string;
   imageQuiz: {

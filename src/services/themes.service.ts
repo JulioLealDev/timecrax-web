@@ -120,8 +120,9 @@ export const themesService = {
   },
 
   async getThemesStorage(): Promise<ThemeResponse[]> {
-    return await apiRequest<ThemeResponse[]>("/themes/storage", {
+    const response = await apiRequest<{ items: ThemeResponse[] }>("/themes/storage", {
       method: "GET",
     });
+    return response.items;
   },
 };

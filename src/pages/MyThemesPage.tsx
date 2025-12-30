@@ -110,6 +110,7 @@ export function MyThemesPage() {
                   image={theme.image}
                   readyToPlay={theme.readyToPlay}
                   createdAt={theme.createdAt}
+                  cardCount={theme.cardCount}
                   showActions={true}
                   onClick={() => {}}
                   onEdit={handleEdit}

@@ -13,6 +13,7 @@ interface ThemeItemProps {
   createdAt?: string;
   resume?: string | null;
   recommendation?: string | null;
+  cardCount?: number;
   onClick: (themeId: string) => void;
   onEdit: (themeId: string) => void;
   onDelete: (themeId: string) => void;
@@ -29,6 +30,7 @@ export function ThemeItem({
   createdAt,
   resume,
   recommendation,
+  cardCount,
   onClick: _onClick,
   onEdit,
   onDelete,
@@ -126,6 +128,13 @@ export function ThemeItem({
             <div className="theme-created-at">
               <span className="created-label">{t("themeItem.createdAt")}:</span>{" "}
               <span className="created-value">{getDaysAgo(createdAt)}</span>
+            </div>
+          )}
+
+          {cardCount !== undefined && (
+            <div className="theme-card-count">
+              <span className="card-count-label">{t("themeItem.cardCount")}:</span>{" "}
+              <span className="card-count-value">{cardCount}</span>
             </div>
           )}
 

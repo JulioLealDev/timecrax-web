@@ -330,6 +330,7 @@
     "today": "Today",
     "oneDayAgo": "1 day ago",
     "daysAgo": "{{count}} days ago",
+    "cardCount": "Number of cards",
     "creator": "Creator",
     "resume": "Resume",
     "recommendation": "Recommendation"

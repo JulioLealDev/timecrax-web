@@ -53,6 +53,7 @@ export type ThemeResponse = {
   createdAt?: string;
   resume?: string | null;
   recommendation?: string | null;
+  cardCount?: number;
 };
 
 export type UserThemesResponse = ThemeResponse[];

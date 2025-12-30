@@ -330,6 +330,7 @@
     "today": "Aujourd'hui",
     "oneDayAgo": "Il y a 1 jour",
     "daysAgo": "Il y a {{count}} jours",
+    "cardCount": "Nombre de cartes",
     "creator": "Créateur",
     "resume": "Résumé",
     "recommendation": "Recommandation"

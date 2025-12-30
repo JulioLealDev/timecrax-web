@@ -9,8 +9,8 @@ import { CustomSelect } from "../components/CustomSelect";
 import type { CardDraft, SavedCard } from "../types";
 import "./CreateThemePage.css";
 import cardTemplate from "../assets/cardTemplate.png";
-import { themesService } from "../services/themes.service";
-import { themeAssetsService } from "../services/themeAssests.service";
+import { themesService, type ThemeCardResponse } from "../services/themes.service";
+import { themeAssetsService, type UploadAssetResponse } from "../services/themeAssests.service";
 import { withBaseUrl } from "../utils/withBaseUrl";
 
 /* ============================================================
@@ -141,7 +141,7 @@ export function CreateThemePage() {
           setThemeImageDataUrl(theme.image || null);
 
           // Transform cards from API to SavedCard
-          const loadedCards: SavedCard[] = theme.cards.map((card: any) => ({
+          const loadedCards: SavedCard[] = theme.cards.map((card: ThemeCardResponse) => ({
             id: card.id || generateId(), // Garantir ID único
             orderIndex: card.orderIndex,
             year: String(card.year),
@@ -153,7 +153,7 @@ export function CreateThemePage() {
 
             imageQuiz: {
               question: card.imageQuiz.question,
-              options: card.imageQuiz.options.map((opt: any) => ({
+              options: card.imageQuiz.options.map((opt) => ({
                 imageUrl: opt.imageUrl,
                 imageFile: undefined,
               })),
@@ -172,8 +172,8 @@ export function CreateThemePage() {
             },
 
             correlationQuiz: {
-              prompt: card.correlationQuiz.prompt || "Match the images to the texts correctly:",
-              items: card.correlationQuiz.items.map((item: any) => ({
+              prompt: "Match the images to the texts correctly:",
+              items: card.correlationQuiz.items.map((item) => ({
                 text: item.text,
                 imageUrl: item.imageUrl,
                 imageFile: undefined,
@@ -187,8 +187,8 @@ export function CreateThemePage() {
           const maxOrder = loadedCards.reduce((max, c) => Math.max(max, c.orderIndex), -1);
           nextOrderIndexRef.current = maxOrder + 1;
 
-        } catch (err: any) {
-          const errorMsg = err?.message ?? "Failed to load theme for editing.";
+        } catch (err: unknown) {
+          const errorMsg = err instanceof Error ? err.message : "Failed to load theme for editing.";
           setEditingThemeId(null);
           setErrorModalErrors({ "load.theme": errorMsg });
           setShowErrorModal(true);
@@ -213,8 +213,8 @@ export function CreateThemePage() {
         // Se estiver editando, passa o themeId. Caso contrário, passa undefined
         const res = await themeAssetsService.createSession(editingThemeId || undefined);
         setAssetsSessionId(res.sessionId);
-      } catch (err: any) {
-        const errorMsg = err?.message ?? "Failed to create upload session.";
+      } catch (err: unknown) {
+        const errorMsg = err instanceof Error ? err.message : "Failed to create upload session.";
         setErrorModalErrors({ "assets.session": errorMsg });
         setShowErrorModal(true);
       } finally {
@@ -435,10 +435,10 @@ export function CreateThemePage() {
 
       // Limpa o estado do card a deletar
       setCardToDelete(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setErrors((prev) => ({
         ...prev,
-        "assets.delete": err?.message ?? t("createTheme.errorDeleteCard"),
+        "assets.delete": err instanceof Error ? err.message : t("createTheme.errorDeleteCard"),
       }));
       setCardToDelete(null);
     }
@@ -535,7 +535,7 @@ export function CreateThemePage() {
       setIsUploadingCard(true);
 
       // Prepare upload tasks only for new images
-      const uploadTasks: Promise<any>[] = [];
+      const uploadTasks: Promise<UploadAssetResponse>[] = [];
       const uploadMap: { type: string; index?: number }[] = [];
 
       // Main image
@@ -625,8 +625,8 @@ export function CreateThemePage() {
 
       setCard(createEmptyCardDraft(nextOrderIndex()));
       setErrors({});
-    } catch (err: any) {
-      setErrors((prev) => ({ ...prev, "assets.upload": err?.message ?? t("createTheme.errorUploadImages") }));
+    } catch (err: unknown) {
+      setErrors((prev) => ({ ...prev, "assets.upload": err instanceof Error ? err.message : t("createTheme.errorUploadImages") }));
     } finally {
       setIsUploadingCard(false);
     }
@@ -735,8 +735,8 @@ export function CreateThemePage() {
 
         navigate("/my-themes");
       }
-    } catch (err: any) {
-      const errorMsg = err?.message ?? t("createTheme.errorCreateTheme");
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : t("createTheme.errorCreateTheme");
       setErrorModalErrors({ "create.theme": errorMsg });
       setShowErrorModal(true);
     } finally {
@@ -1021,7 +1021,7 @@ export function CreateThemePage() {
                       <div className="image-quiz-grid">
                         {card.imageQuiz.options.map((option, index) => (
                           <ImageQuizCard
-                            key={index}
+                            key={`imageQuiz-option-${index}`}
                             index={index}
                             imageDataUrl={withBaseUrl(option.imageUrl) ?? ""} // preview (dataUrl) ou URL real
                             onImageSelected={onImageQuizSelected}
@@ -1061,7 +1061,7 @@ export function CreateThemePage() {
 
                       <div className="text-quiz-list">
                         {card.textQuiz.options.map((opt, index) => (
-                          <div key={index} className="text-quiz-row">
+                          <div key={`textQuiz-option-${index}`} className="text-quiz-row">
                             <input
                               type="checkbox"
                               className={["text-quiz-check", hasError("textQuiz.correct") ? "is-invalid-checkbox" : ""].join(" ")}
@@ -1151,7 +1151,7 @@ export function CreateThemePage() {
                       <div className="correlation-list">
                         {card.correlationQuiz.items.map((item, index) => (
                           <CorrelationRow
-                            key={index}
+                            key={`correlation-item-${index}`}
                             index={index}
                             imageDataUrl={withBaseUrl(item.imageUrl ?? "")} // preview (dataUrl) ou URL real
                             text={item.text}
@@ -1196,7 +1196,7 @@ export function CreateThemePage() {
                 const isSelected = c?.id === selectedCardId;
 
                 return (
-                  <div key={i} className="added-card-wrapper">
+                  <div key={c?.id ?? `card-slot-${i}`} className="added-card-wrapper">
                     <button
                       type="button"
                       className={[

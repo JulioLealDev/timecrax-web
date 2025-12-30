@@ -17,8 +17,8 @@ export function ThemesStoragePage() {
         setError(null);
         const storageThemes = await themesService.getThemesStorage();
         setThemes(storageThemes);
-      } catch (err: any) {
-        setError(err?.message ?? t("themesStorage.errorLoad"));
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : t("themesStorage.errorLoad"));
       } finally {
         setIsLoading(false);
       }

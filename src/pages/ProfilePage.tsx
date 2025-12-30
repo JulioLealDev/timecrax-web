@@ -123,8 +123,8 @@ export function ProfilePage() {
       await refreshMe();
 
       setIsEditingProfile(false);
-    } catch (err: any) {
-      setProfileError(err?.message ?? t("profile.errorSavingChanges"));
+    } catch (err: unknown) {
+      setProfileError(err instanceof Error ? err.message : t("profile.errorSavingChanges"));
     } finally {
       setIsSavingProfile(false);
     }

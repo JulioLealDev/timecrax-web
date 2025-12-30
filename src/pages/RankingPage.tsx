@@ -43,8 +43,8 @@ export function RankingPage() {
             setCurrentPage(userPage);
           }
         }
-      } catch (err: any) {
-        setError(err?.message ?? "Failed to load ranking");
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load ranking");
       } finally {
         setIsLoading(false);
       }

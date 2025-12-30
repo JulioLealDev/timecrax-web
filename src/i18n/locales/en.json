@@ -322,6 +322,18 @@
     "noThemes": "No themes available yet.",
     "errorLoad": "Failed to load themes"
   },
+  "themeItem": {
+    "readyToPlay": "Ready to Play",
+    "yes": "YES",
+    "no": "NO",
+    "createdAt": "Created",
+    "today": "Today",
+    "oneDayAgo": "1 day ago",
+    "daysAgo": "{{count}} days ago",
+    "creator": "Creator",
+    "resume": "Resume",
+    "recommendation": "Recommendation"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Error",

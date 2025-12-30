@@ -166,6 +166,18 @@
     "title": "Campos Obrigatórios",
     "ok": "OK"
   },
+  "themeItem": {
+    "readyToPlay": "Pronto a Jogar",
+    "yes": "SIM",
+    "no": "NÃO",
+    "createdAt": "Criado",
+    "today": "Hoje",
+    "oneDayAgo": "Há 1 dia",
+    "daysAgo": "Há {{count}} dias",
+    "creator": "Criador",
+    "resume": "Resumo",
+    "recommendation": "Recomendação"
+  },
   "common": {
     "loading": "A carregar...",
     "error": "Erro",

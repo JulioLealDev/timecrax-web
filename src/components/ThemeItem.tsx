@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import imageTemplate from "../assets/imageTemplate.png";
 import "./ThemeItem.css";
 
@@ -17,19 +18,6 @@ interface ThemeItemProps {
   onDelete: (themeId: string) => void;
 }
 
-function getDaysAgo(dateString?: string): string {
-  if (!dateString) return "";
-
-  const createdDate = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - createdDate.getTime());
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "1 day ago";
-  return `${diffDays} days ago`;
-}
-
 export function ThemeItem({
   id,
   name,
@@ -45,6 +33,21 @@ export function ThemeItem({
   onEdit,
   onDelete,
 }: ThemeItemProps) {
+  const { t } = useTranslation();
+
+  function getDaysAgo(dateString?: string): string {
+    if (!dateString) return "";
+
+    const createdDate = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - createdDate.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return t("themeItem.today");
+    if (diffDays === 1) return t("themeItem.oneDayAgo");
+    return t("themeItem.daysAgo", { count: diffDays });
+  }
+
   return (
     <div className="theme-item-wrapper">
       {showActions && (
@@ -99,21 +102,21 @@ export function ThemeItem({
 
           {showReadyToPlay && (
             <div className="theme-ready-to-play">
-              <span className="ready-label">Ready to Play:</span>{" "}
-              <span className="ready-value">{readyToPlay ? "YES" : "NO"}</span>
+              <span className="ready-label">{t("themeItem.readyToPlay")}:</span>{" "}
+              <span className="ready-value">{readyToPlay ? t("themeItem.yes") : t("themeItem.no")}</span>
             </div>
           )}
 
           {createdAt && (
             <div className="theme-created-at">
-              <span className="created-label">Created at:</span>{" "}
+              <span className="created-label">{t("themeItem.createdAt")}:</span>{" "}
               <span className="created-value">{getDaysAgo(createdAt)}</span>
             </div>
           )}
 
           {creatorName && (
             <div className="theme-creator">
-              <span className="creator-label">Creator:</span>{" "}
+              <span className="creator-label">{t("themeItem.creator")}:</span>{" "}
               <span className="creator-name">{creatorName}</span>
             </div>
           )}
@@ -122,14 +125,14 @@ export function ThemeItem({
         <div className="theme-info-right">
           {resume && (
             <div className="theme-resume">
-              <span className="resume-label">Resume:</span>{" "}
+              <span className="resume-label">{t("themeItem.resume")}:</span>{" "}
               <span className="resume-value">{resume}</span>
             </div>
           )}
 
           {recommendation && (
             <div className="theme-recommendation">
-              <span className="recommendation-label">Recommendation:</span>{" "}
+              <span className="recommendation-label">{t("themeItem.recommendation")}:</span>{" "}
               <span className="recommendation-value">{recommendation}</span>
             </div>
           )}

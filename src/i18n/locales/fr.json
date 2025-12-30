@@ -322,6 +322,18 @@
     "noThemes": "Aucun thème disponible pour le moment.",
     "errorLoad": "Échec du chargement des thèmes"
   },
+  "themeItem": {
+    "readyToPlay": "Prêt à Jouer",
+    "yes": "OUI",
+    "no": "NON",
+    "createdAt": "Créé",
+    "today": "Aujourd'hui",
+    "oneDayAgo": "Il y a 1 jour",
+    "daysAgo": "Il y a {{count}} jours",
+    "creator": "Créateur",
+    "resume": "Résumé",
+    "recommendation": "Recommandation"
+  },
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",

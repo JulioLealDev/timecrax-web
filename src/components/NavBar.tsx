@@ -48,8 +48,7 @@ export function NavBar() {
     navigate("/");
   }
 
-  function handleGoHome() {
-    navigate("/");
+  function handleHomeClick() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -103,7 +102,7 @@ export function NavBar() {
             </button>
 
             <nav className="mobile-links">
-              <button type="button" className="navbar-link-button" onClick={() => { closeMobileMenu(); handleGoHome(); }}>{t("navbar.home")}</button>
+              <Link to="/" onClick={() => { closeMobileMenu(); handleHomeClick(); }}>{t("navbar.home")}</Link>
               <Link to="/#download" onClick={closeMobileMenu}>{t("navbar.download")}</Link>
               <Link to="/#features" onClick={closeMobileMenu}>{t("navbar.features")}</Link>
               <Link to="/#contact" onClick={closeMobileMenu}>{t("navbar.contact")}</Link>
@@ -134,12 +133,14 @@ export function NavBar() {
         </>
       )}
 
-      <div className="navbar-left" onClick={handleGoHome}>
-        <img src={logoImg} alt="TimeCrax Machine logo" className="navbar-logo-img" />
-        <div className="navbar-title-block">
-          <span className="navbar-title-main">TimeCrax</span>
-          <span className="navbar-title-sub">Machine</span>
-        </div>
+      <div className="navbar-left">
+        <Link to="/" onClick={handleHomeClick} className="navbar-logo-link">
+          <img src={logoImg} alt="TimeCrax Machine logo" className="navbar-logo-img" />
+          <div className="navbar-title-block">
+            <span className="navbar-title-main">TimeCrax</span>
+            <span className="navbar-title-sub">Machine</span>
+          </div>
+        </Link>
 
         <button
           type="button"
@@ -159,7 +160,7 @@ export function NavBar() {
       {!hideNavbarCenter && (
         <nav className="navbar-center">
           <div className="navbar-divider" />
-          <button type="button" className="navbar-link-button" onClick={handleGoHome}>{t("navbar.home")}</button>
+          <Link to="/" onClick={handleHomeClick}>{t("navbar.home")}</Link>
           <span className="navbar-sep">•</span>
           <Link to="/#download">{t("navbar.download")}</Link>
           <span className="navbar-sep">•</span>

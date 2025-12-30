@@ -174,8 +174,15 @@
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 0.85rem; /* antes 0.6 */
-  cursor: pointer;
+  gap: 0.85rem;
+}
+
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: inherit;
 }
 
 .navbar-logo-img {

@@ -48,6 +48,21 @@ export function ThemeItem({
     return t("themeItem.daysAgo", { count: diffDays });
   }
 
+  function getRecommendationText(value?: string | null): string {
+    if (!value) return "";
+
+    // Map stored values to translation keys
+    const recommendationMap: Record<string, string> = {
+      "1º cicle: 6 - 10 years old": "createTheme.cycle1",
+      "2º cicle: 10 - 12 years old": "createTheme.cycle2",
+      "3º cicle: 12 - 15 years old": "createTheme.cycle3",
+      "4º cicle: 15 - 18 years old": "createTheme.cycle4",
+    };
+
+    const translationKey = recommendationMap[value];
+    return translationKey ? t(translationKey) : value;
+  }
+
   return (
     <div className="theme-item-wrapper">
       {showActions && (
@@ -133,7 +148,7 @@ export function ThemeItem({
           {recommendation && (
             <div className="theme-recommendation">
               <span className="recommendation-label">{t("themeItem.recommendation")}:</span>{" "}
-              <span className="recommendation-value">{recommendation}</span>
+              <span className="recommendation-value">{getRecommendationText(recommendation)}</span>
             </div>
           )}
         </div>

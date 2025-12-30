@@ -58,8 +58,9 @@ export const meService = {
   },
 
   async getRanking(): Promise<RankingUser[]> {
-    return await apiRequest<RankingUser[]>("/me/ranking", {
+    const response = await apiRequest<{ items: RankingUser[] }>("/me/ranking", {
       method: "GET",
     });
+    return response.items;
   },
 };

@@ -228,7 +228,19 @@
     "deleteTitle": "Eliminar Tema",
     "deleteMessage": "¿Estás seguro de que deseas eliminar este tema? Esta acción no se puede deshacer.",
     "deleteConfirm": "Eliminar",
-    "deleteCancel": "Cancelar"
+    "deleteCancel": "Cancelar",
+    "filter": {
+      "toggle": "Alternar filtros",
+      "name": "Nombre",
+      "date": "Fecha",
+      "oldest": "Antiguos",
+      "newest": "Recientes",
+      "readyToPlay": "Listo",
+      "all": "Todos",
+      "yes": "Sí",
+      "no": "No",
+      "searchPlaceholder": "Buscar..."
+    }
   },
   "createTheme": {
     "title": "Crear Nuevo Tema",

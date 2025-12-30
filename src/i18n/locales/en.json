@@ -228,7 +228,19 @@
     "deleteTitle": "Delete Theme",
     "deleteMessage": "Are you sure you want to delete this theme? This action cannot be undone.",
     "deleteConfirm": "Delete",
-    "deleteCancel": "Cancel"
+    "deleteCancel": "Cancel",
+    "filter": {
+      "toggle": "Toggle filters",
+      "name": "Name",
+      "date": "Date",
+      "oldest": "Oldest",
+      "newest": "Newest",
+      "readyToPlay": "Ready",
+      "all": "All",
+      "yes": "Yes",
+      "no": "No",
+      "searchPlaceholder": "Search..."
+    }
   },
   "createTheme": {
     "title": "Create New Theme",

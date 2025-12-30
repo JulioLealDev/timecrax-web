@@ -224,11 +224,23 @@
     "loading": "Chargement des thèmes...",
     "noThemes": "Aucun thème créé pour le moment.",
     "createFirst": "Commence par créer ton premier thème !",
-    "infoTooltip": "• Le thème doit contenir au moins 12 cartes pour être jouable\n• Les thèmes non compatibles avec le jeu seront supprimés après 30 jours d’inactivité",
+    "infoTooltip": "• Le thème doit contenir au moins 12 cartes pour être jouable\n• Les thèmes non compatibles avec le jeu seront supprimés après 30 jours d'inactivité",
     "deleteTitle": "Supprimer le thème",
     "deleteMessage": "Es-tu sûr de vouloir supprimer ce thème ? Cette action est irréversible.",
     "deleteConfirm": "Supprimer",
-    "deleteCancel": "Annuler"
+    "deleteCancel": "Annuler",
+    "filter": {
+      "toggle": "Basculer les filtres",
+      "name": "Nom",
+      "date": "Date",
+      "oldest": "Anciens",
+      "newest": "Récents",
+      "readyToPlay": "Prêt",
+      "all": "Tous",
+      "yes": "Oui",
+      "no": "Non",
+      "searchPlaceholder": "Rechercher..."
+    }
   },
   "createTheme": {
     "title": "Créer un nouveau thème",

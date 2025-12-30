@@ -228,7 +228,19 @@
     "deleteTitle": "Excluir Tema",
     "deleteMessage": "Tem certeza que deseja excluir este tema? Esta ação não pode ser desfeita.",
     "deleteConfirm": "Excluir",
-    "deleteCancel": "Cancelar"
+    "deleteCancel": "Cancelar",
+    "filter": {
+      "toggle": "Alternar filtros",
+      "name": "Nome",
+      "date": "Data",
+      "oldest": "Antigos",
+      "newest": "Recentes",
+      "readyToPlay": "Pronto",
+      "all": "Todos",
+      "yes": "Sim",
+      "no": "Não",
+      "searchPlaceholder": "Buscar..."
+    }
   },
   "createTheme": {
     "title": "Criar Novo Tema",

@@ -1,6 +1,6 @@
 import { useRef, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import imageTemplate from "../assets/imageTemplate.png";
+import imageTemplate from "../assets/newImageTemplate.png";
 
 type CorrelationRowProps = {
   index: number;

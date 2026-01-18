@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import imageTemplate from "../assets/imageTemplate.png";
+import imageTemplate from "../assets/themeFrameTemplate.png";
 import "./ThemeItem.css";
 
 interface ThemeItemProps {

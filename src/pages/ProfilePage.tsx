@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { meService } from "../services/me.service";
 import { useAuth } from "../context/AuthContext";
-import imageTemplate from "../assets/imageTemplate.png";
+import themeImageFrame from "../assets/themeFrameTemplate.png"
+import profileImageFrame from "../assets/profileFrameTemplate.png"
 import { EditProfileModal } from "../components/EditProfileModal";
 import "./ProfilePage.css";
 
@@ -152,24 +153,37 @@ export function ProfilePage() {
             <div className="profile-header-new">
               <div className="profile-left">
                 <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
-                  {/* imagem */}
-                  {user.picture ? (
-                    <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
-                  ) : (
-                    <div className="avatar-fallback" aria-label="Sem foto">
-                      <span className="avatar-initials">
-                        {(user.firstName?.[0] ?? "U").toUpperCase()}
-                        {(user.lastName?.[0] ?? "").toUpperCase()}
-                      </span>
-                    </div>
-                  )}
+                  {/* camada da imagem */}
+                  <div className="avatar-image-layer">
+                    {user.picture ? (
+                      <img
+                        className="avatar-img"
+                        src={`${user.picture}?v=${pictureVersion}`}
+                        alt="Foto do perfil"
+                      />
+                    ) : (
+                      <div className="avatar-fallback" aria-label="Sem foto">
+                        <span className="avatar-initials">
+                          {(user.firstName?.[0] ?? "U").toUpperCase()}
+                          {(user.lastName?.[0] ?? "").toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* moldura */}
+                  <img
+                    src={profileImageFrame}
+                    alt=""
+                    className="avatar-frame"
+                    aria-hidden="true"
+                  />
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
                     <span className="avatar-overlay-text">{t("profile.editImage")}</span>
                   </div>
 
-                  {/* input file escondido */}
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -278,7 +292,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                           />
                         )}
                         <img
-                          src={imageTemplate}
+                          src={themeImageFrame}
                           alt="Theme frame"
                           className="completed-theme-frame"
                           loading="lazy"
@@ -302,17 +316,27 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
             <div className="profile-header-new">
               <div className="profile-left">
                 <div className="avatar-wrap" onClick={openImagePicker} role="button" tabIndex={0}>
-                  {/* imagem */}
-                  {user.picture ? (
-                    <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
-                  ) : (
-                    <div className="avatar-fallback" aria-label="Sem foto">
-                      <span className="avatar-initials">
-                        {(user.firstName?.[0] ?? "U").toUpperCase()}
-                        {(user.lastName?.[0] ?? "").toUpperCase()}
-                      </span>
-                    </div>
-                  )}
+                  {/* camada da imagem */}
+                  <div className="avatar-image-layer">
+                    {user.picture ? (
+                      <img className="avatar-img" src={`${user.picture}?v=${pictureVersion}`} alt="Foto do perfil" />
+                    ) : (
+                      <div className="avatar-fallback" aria-label="Sem foto">
+                        <span className="avatar-initials">
+                          {(user.firstName?.[0] ?? "U").toUpperCase()}
+                          {(user.lastName?.[0] ?? "").toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* moldura */}
+                  <img
+                    src={profileImageFrame}
+                    alt=""
+                    className="avatar-frame"
+                    aria-hidden="true"
+                  />
 
                   {/* overlay hover */}
                   <div className="avatar-overlay">
@@ -426,7 +450,7 @@ ${achievement.unlockedAt ? `${t("profile.achievementUnlocked")} ${new Date(achie
                           />
                         )}
                         <img
-                          src={imageTemplate}
+                          src={themeImageFrame}
                           alt="Theme frame"
                           className="completed-theme-frame"
                           loading="lazy"

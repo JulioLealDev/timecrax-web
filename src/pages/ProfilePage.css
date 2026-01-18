@@ -245,21 +245,23 @@
 
 .avatar-wrap {
   position: relative;
-  width: 128px;
-  height: 128px;
-  border-radius: 999px;
+  width: 216px;  /* proporção 9/11.5 */
+  height: 276px;
   cursor: pointer;
+}
 
-  border: 3px solid #e5d0a1;
-  box-shadow: 0 0 0 3px #3b2a1d, 0 10px 26px rgba(0, 0, 0, 0.85);
+.avatar-image-layer {
+  position: absolute;
+  inset: 25px 15px 30px 15px; /* top right bottom left - ajuste para a moldura */
+  border-radius: 4px;
   overflow: hidden;
+  z-index: 1;
 }
 
 .avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .avatar-fallback {
@@ -267,9 +269,18 @@
   height: 100%;
   display: grid;
   place-items: center;
-
   background: radial-gradient(circle at 30% 0, #facc6b 0, #b45309 55%, #4b2107 100%);
-  color: #ffffff;
+  color: #fff;
+}
+
+.avatar-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none; /* não interfere no clique */
 }
 
 .avatar-initials {
@@ -279,16 +290,18 @@
   text-transform: uppercase;
 }
 
-/* overlay aparecer no hover */
+/* overlay aparecer no hover - fica dentro da área da imagem, não sobre a moldura */
 .avatar-overlay {
   position: absolute;
-  inset: 0;
+  inset: 35px 25px 39px 25px; /* mesmo inset que avatar-image-layer */
   display: grid;
   place-items: center;
 
   background: rgba(0, 0, 0, 0.58);
   opacity: 0;
   transition: opacity 0.18s ease;
+
+  z-index: 3;
 }
 
 .avatar-wrap:hover .avatar-overlay {
@@ -309,6 +322,20 @@
 
 .avatar-file {
   display: none;
+}
+
+.profile-hint {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  font-family: "Marcellus", serif;
+  font-size: 0.85rem;
+  color: #facc6b;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .student-meta {

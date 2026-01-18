@@ -8,7 +8,8 @@ import { ConfirmModal } from "../components/ConfirmModal";
 import { CustomSelect } from "../components/CustomSelect";
 import type { CardDraft, SavedCard } from "../types";
 import "./CreateThemePage.css";
-import cardTemplate from "../assets/cardTemplate.png";
+import cardTemplate from "../assets/newCardTemplate.png";
+import themeFrameTemplate from "../assets/themeFrameTemplate.png";
 import { themesService, type ThemeCardResponse } from "../services/themes.service";
 import { themeAssetsService, type UploadAssetResponse } from "../services/themeAssests.service";
 import { withBaseUrl } from "../utils/withBaseUrl";
@@ -820,18 +821,34 @@ export function CreateThemePage() {
                 className="hidden-file"
               />
 
-              <button
-                type="button"
-                className={["theme-image-circle", hasError("theme.image") ? "is-invalid" : ""].join(" ")}
+              <div
+                className={["theme-image-wrap", hasError("theme.image") ? "is-invalid" : ""].join(" ")}
                 onClick={onPickThemeImage}
+                role="button"
+                tabIndex={0}
                 aria-label="Upload theme image"
               >
-                {themeImageDataUrl ? (
-                  <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
-                ) : (
-                  <span className="theme-image-placeholder">{t("createTheme.uploadCover")}</span>
-                )}
-              </button>
+                <div className="theme-image-layer">
+                  {themeImageDataUrl ? (
+                    <img className="theme-image-preview" src={themeImageDataUrl} alt="Theme preview" />
+                  ) : (
+                    <div className="theme-image-placeholder">
+                      <span>{t("createTheme.uploadCover")}</span>
+                    </div>
+                  )}
+                </div>
+
+                <img
+                  src={themeFrameTemplate}
+                  alt=""
+                  className="theme-image-frame"
+                  aria-hidden="true"
+                />
+
+                <div className="theme-image-overlay">
+                  <span className="theme-image-overlay-text">{t("createTheme.uploadCover")}</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -904,11 +921,11 @@ export function CreateThemePage() {
                     className={["card-caption-input", hasError("card.caption") ? "is-invalid-text" : ""].join(" ")}
                     value={card.caption}
                     onChange={(e) => {
-                      const value = e.target.value.slice(0, 35);
+                      const value = e.target.value.slice(0, 50);
                       setCard((prev) => ({ ...prev, caption: value }));
                     }}
                     placeholder={t("createTheme.eventNamePlaceholder")}
-                    rows={2}
+                    rows={4}
                   />
                 </div>
 

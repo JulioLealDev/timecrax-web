@@ -28,8 +28,10 @@ export type RankingUser = {
 };
 
 export const meService = {
-  async getMe(): Promise<MeResponse> {
-    return await apiRequest<MeResponse>("/me", { method: "GET" });
+  async getMe(language?: string): Promise<MeResponse> {
+    // Converte formato do i18n (pt_br) para formato do backend (pt-br)
+    const lang = language?.replace("_", "-") || "en";
+    return await apiRequest<MeResponse>(`/me?language=${lang}`, { method: "GET" });
   },
 
   async updateProfile(payload: UpdateProfileRequest): Promise<void> {

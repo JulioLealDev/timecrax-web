@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { authService, type UserDto } from "../services/auth.service";
+import i18n from "../i18n";
 
 type AuthContextValue = {
   user: UserDto | null;
@@ -31,7 +32,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const me = await authService.me();
+    const language = i18n.language;
+    const me = await authService.me(language);
     setUser(me);
   }
 
@@ -46,6 +48,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(false);
       }
     })();
+  }, []);
+
+  // Atualiza dados do usuário quando o idioma muda
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      if (authService.getToken()) {
+        refreshMe();
+      }
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
   }, []);
 
   async function login(email: string, password: string) {

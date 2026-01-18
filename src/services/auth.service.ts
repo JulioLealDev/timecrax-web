@@ -212,8 +212,10 @@ export const authService = {
     return normalized;
   },
 
-  async me(): Promise<UserDto> {
-    const data = await apiRequest<ApiUserResponse>("/me", { method: "GET" });
+  async me(language?: string): Promise<UserDto> {
+    // Converte formato do i18n (pt_br) para formato do backend (pt-br)
+    const lang = language?.replace("_", "-") || "en";
+    const data = await apiRequest<ApiUserResponse>(`/me?language=${lang}`, { method: "GET" });
     return normalizeUser(data);
   },
 

@@ -17,7 +17,7 @@ import { ThemesStoragePage } from "./pages/ThemesStoragePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PublicOnlyRoute } from "./components/PublicOnlyRoute";
 import { RoleProtectedRoute } from "./components/RoleProtectedRoute";
-import { isPublicRoute, ROUTES } from "./constants/routes";
+import { isPublicRoute } from "./constants/routes";
 import "./App.css";
 
 

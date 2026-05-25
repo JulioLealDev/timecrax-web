@@ -14,6 +14,7 @@ import { RankingPage } from "./pages/RankingPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { MyThemesPage } from "./pages/MyThemesPage";
 import { ThemesStoragePage } from "./pages/ThemesStoragePage";
+import { RoadmapPage } from "./pages/RoadmapPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PublicOnlyRoute } from "./components/PublicOnlyRoute";
 import { RoleProtectedRoute } from "./components/RoleProtectedRoute";
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/roadmap" element={<RoadmapPage />} />
 
           <Route element={<PublicOnlyRoute />}>
             <Route path="/login" element={<LoginPage />} />

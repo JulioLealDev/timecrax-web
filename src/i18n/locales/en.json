@@ -371,6 +371,105 @@
     "no": "No",
     "privacyPolicy": "Privacy Policy"
   },
+  "roadmap": {
+    "title": "Roadmap",
+    "schedule": "Schedule",
+    "header": {
+      "phases": "Project Phases",
+      "description": "Main Activities",
+      "risks": "Possible Risks and Mitigation"
+    },
+    "phases": {
+      "phase1": "Phase 1: Theoretical Foundation and Literature Review",
+      "phase2": "Phase 2: Development and Improvement of TimeCrax Machine",
+      "phase3": "Phase 3: Pilot Validation, Test Implementation and Data Collection",
+      "phase4": "Phase 4: Comparative Analysis and Disclosure"
+    },
+    "activities": {
+      "activity1": "Systematic review on gamification in education and educational games in History",
+      "activity2": "Analysis and identification of project weaknesses",
+      "activity3": "Mapping solutions to mitigate weaknesses",
+      "activity4": "Meetings with experts for suggestions and project guidance",
+      "activity5": "Preparation and planning for phase 2",
+      "activity6": "Activity planning and priority definition",
+      "activity7": "Practical development of activities",
+      "activity8": "Internal playability and general functionality tests",
+      "activity9": "Construction of instruments for data collection inside and outside the game",
+      "activity10": "Final adjustments to the test version",
+      "activity11": "Review and adjustments of ethical and legal issues",
+      "activity12": "Mapping suitable locations for test execution",
+      "activity13": "Pilot application of tests in real contexts and analysis of collected data",
+      "activity14": "Implementation of improvements based on results",
+      "activity15": "Application of new test rounds",
+      "activity16": "Comparative analysis of collected data",
+      "activity17": "Writing scientific articles and final report",
+      "activity18": "Submission of papers to specialized journals",
+      "activity19": "Dissemination of studies at specialized conferences",
+      "activity20": "Creation of support materials for teachers to use the game in the classroom"
+    },
+    "blacksmith": {
+      "title": "The Blacksmith",
+      "date": "Q4/2024 - Q3/2025",
+      "description": "Reheating the metal for a new mold:\n\n• Project Review and Analysis\n• Mapping new ideas and solutions\n• Seeking expert guidance\n• Project planning"
+    },
+    "laboratory": {
+      "title": "The Laboratory",
+      "date": "Q3/2026 - Q3/2027",
+      "description": "Adding magical potions:\n\n• Review of ethical and legal issues\n• Application of real tests\n• Adjustments and modifications based on results\n• New rounds of testing"
+    },
+    "castle": {
+      "title": "The Castle",
+      "date": "Q3/2027 - Q3/2028",
+      "description": "Audience with the King:\n\n• General analysis of results\n• Construction of articles and reports\n• Creation of support material for teachers\n• Dissemination of results"
+    },
+    "university": {
+      "title": "The University",
+      "date": "Q3/2025 - Q4/2026",
+      "description": "Searching for secrets in ancient scrolls:\n\n• Development of Activities\n• Internal functionality tests\n• Construction of data collection instruments\n• Final adjustment of test version"
+    },
+    "risks": {
+      "phase1": {
+        "risk1": {
+          "title": "Risk 1: Difficulty finding available experts in the city of Bragança.",
+          "mitigation": "Mitigation: Search for experts in nearby cities, or hold meetings via online platforms."
+        },
+        "risk2": {
+          "title": "Risk 2: Not finding satisfactory techniques that fit the TimeCrax Machine project.",
+          "mitigation": "Mitigation: Search for new techniques or adjust/adapt the project."
+        }
+      },
+      "phase2": {
+        "risk1": {
+          "title": "Risk 1: Development delays due to technical problems.",
+          "mitigation": "Mitigation: Adopt agile methodologies (SCRUM) and divide tasks into sprints."
+        },
+        "risk2": {
+          "title": "Risk 2: Insufficient feedback from pilot tests.",
+          "mitigation": "Mitigation: Conduct tests in multiple schools with varied profiles."
+        }
+      },
+      "phase3": {
+        "risk1": {
+          "title": "Risk 1: Unable to find local schools available to participate in the project.",
+          "mitigation": "Mitigation: Search for schools in nearby cities for test application."
+        },
+        "risk2": {
+          "title": "Risk 2: Inconsistent data due to methodological failures.",
+          "mitigation": "Mitigation: Methodology review and expert guidance."
+        }
+      },
+      "phase4": {
+        "risk1": {
+          "title": "Risk 1: Statistically inconclusive results.",
+          "mitigation": "Mitigation: Use mixed methods for data triangulation."
+        },
+        "risk2": {
+          "title": "Risk 2: Difficulty publishing in high-impact journals.",
+          "mitigation": "Mitigation: Prioritize open access journals."
+        }
+      }
+    }
+  },
   "errors": {
     "INVALID_ROLE": "Invalid role.",
     "FIRST_NAME_TOO_SHORT": "First name must have at least 2 characters.",

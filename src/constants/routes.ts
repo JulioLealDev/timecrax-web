@@ -10,6 +10,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
   PRIVACY_POLICY: "/privacy-policy",
+  ROADMAP: "/roadmap",
 
   // Protected routes
   PROFILE: "/profile",
@@ -30,6 +31,7 @@ export const PUBLIC_ROUTES = [
   ROUTES.FORGOT_PASSWORD,
   ROUTES.RESET_PASSWORD,
   ROUTES.PRIVACY_POLICY,
+  ROUTES.ROADMAP,
 ] as const;
 
 /**

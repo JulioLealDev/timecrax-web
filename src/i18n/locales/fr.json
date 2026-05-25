@@ -371,6 +371,105 @@
     "no": "Non",
     "privacyPolicy": "Politique de Confidentialité"
   },
+  "roadmap": {
+    "title": "Feuille de route",
+    "schedule": "Calendrier",
+    "header": {
+      "phases": "Phases du Projet",
+      "description": "Activités Principales",
+      "risks": "Risques Possibles et Atténuation"
+    },
+    "phases": {
+      "phase1": "Phase 1 : Fondement Théorique et Revue de la Littérature",
+      "phase2": "Phase 2 : Développement et Amélioration de TimeCrax Machine",
+      "phase3": "Phase 3 : Validation du Pilote, Mise en Œuvre des Tests et Collecte de Données",
+      "phase4": "Phase 4 : Analyse Comparative et Divulgation"
+    },
+    "activities": {
+      "activity1": "Revue systématique sur la gamification dans l'éducation et les jeux éducatifs en Histoire",
+      "activity2": "Analyse et identification des points faibles du projet",
+      "activity3": "Cartographie des solutions pour atténuer les points faibles",
+      "activity4": "Réunions avec des experts pour suggestions et orientations du projet",
+      "activity5": "Préparation et planification pour la phase 2",
+      "activity6": "Planification des activités et définition des priorités",
+      "activity7": "Développement pratique des activités",
+      "activity8": "Tests internes de jouabilité et de fonctionnalité générale",
+      "activity9": "Construction d'instruments pour la collecte de données dans et hors du jeu",
+      "activity10": "Ajustements finaux de la version de test",
+      "activity11": "Révision et ajustements des questions éthiques et légales",
+      "activity12": "Cartographie des lieux appropriés pour l'exécution des tests",
+      "activity13": "Application pilote de tests en contextes réels et analyse des données collectées",
+      "activity14": "Mise en œuvre d'améliorations basées sur les résultats",
+      "activity15": "Application de nouvelles séries de tests",
+      "activity16": "Analyse comparative des données collectées",
+      "activity17": "Rédaction d'articles scientifiques et rapport final",
+      "activity18": "Soumission de travaux à des revues spécialisées",
+      "activity19": "Diffusion des études lors de congrès spécialisés",
+      "activity20": "Création de matériels de soutien pour les enseignants utilisant le jeu en classe"
+    },
+    "blacksmith": {
+      "title": "La Forge",
+      "date": "T4/2024 - T3/2025",
+      "description": "Réchauffer le métal pour un nouveau moule :\n\n• Révision et Analyse du projet\n• Cartographie de nouvelles idées et solutions\n• Recherche d'orientations spécialisées\n• Planification du projet"
+    },
+    "laboratory": {
+      "title": "Le Laboratoire",
+      "date": "T3/2026 - T3/2027",
+      "description": "Ajout de potions magiques :\n\n• Révision des questions éthiques et légales\n• Application de tests réels\n• Ajustements et modifications basés sur les résultats\n• Nouvelles sessions de tests"
+    },
+    "castle": {
+      "title": "Le Château",
+      "date": "T3/2027 - T3/2028",
+      "description": "Audience avec le Roi :\n\n• Analyse générale des résultats\n• Construction d'articles et de rapports\n• Création de matériel de soutien pour les enseignants\n• Diffusion des résultats"
+    },
+    "university": {
+      "title": "L'Université",
+      "date": "T3/2025 - T4/2026",
+      "description": "À la recherche de secrets dans d'anciens parchemins :\n\n• Développement des Activités\n• Tests internes de fonctionnalité\n• Construction d'instruments de collecte de données\n• Ajustement final de la version de test"
+    },
+    "risks": {
+      "phase1": {
+        "risk1": {
+          "title": "Risque 1 : Difficulté à trouver des experts disponibles dans la ville de Bragança.",
+          "mitigation": "Atténuation : Rechercher des experts dans les villes voisines, ou tenir des réunions via des plateformes en ligne."
+        },
+        "risk2": {
+          "title": "Risque 2 : Ne pas trouver de techniques satisfaisantes adaptées au projet TimeCrax Machine.",
+          "mitigation": "Atténuation : Rechercher de nouvelles techniques ou ajuster/adapter le projet."
+        }
+      },
+      "phase2": {
+        "risk1": {
+          "title": "Risque 1 : Retards de développement dus à des problèmes techniques.",
+          "mitigation": "Atténuation : Adopter des méthodologies agiles (SCRUM) et diviser les tâches en sprints."
+        },
+        "risk2": {
+          "title": "Risque 2 : Retours insuffisants des tests pilotes.",
+          "mitigation": "Atténuation : Effectuer des tests dans plusieurs écoles avec des profils variés."
+        }
+      },
+      "phase3": {
+        "risk1": {
+          "title": "Risque 1 : Ne pas trouver d'écoles locales disponibles pour participer au projet.",
+          "mitigation": "Atténuation : Rechercher des écoles dans les villes voisines pour l'application des tests."
+        },
+        "risk2": {
+          "title": "Risque 2 : Données incohérentes dues à des défaillances méthodologiques.",
+          "mitigation": "Atténuation : Révision de la méthodologie et orientation d'experts."
+        }
+      },
+      "phase4": {
+        "risk1": {
+          "title": "Risque 1 : Résultats statistiquement non concluants.",
+          "mitigation": "Atténuation : Utiliser des méthodes mixtes pour la triangulation des données."
+        },
+        "risk2": {
+          "title": "Risque 2 : Difficulté à publier dans des revues à fort impact.",
+          "mitigation": "Atténuation : Privilégier les revues en accès ouvert."
+        }
+      }
+    }
+  },
   "errors": {
     "INVALID_ROLE": "Rôle invalide.",
     "FIRST_NAME_TOO_SHORT": "Le prénom doit contenir au moins 2 caractères.",

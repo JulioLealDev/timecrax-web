@@ -369,6 +369,105 @@
     "no": "No",
     "privacyPolicy": "Política de Privacidad"
   },
+  "roadmap": {
+    "title": "Hoja de ruta",
+    "schedule": "Cronograma",
+    "header": {
+      "phases": "Fases del Proyecto",
+      "description": "Principales Actividades",
+      "risks": "Posibles Riesgos y Mitigación"
+    },
+    "phases": {
+      "phase1": "Fase 1: Fundamentación Teórica y Revisión de la Literatura",
+      "phase2": "Fase 2: Desarrollo y Mejora del TimeCrax Machine",
+      "phase3": "Fase 3: Validación del Piloto, Implementación de Pruebas y Recolección de Datos",
+      "phase4": "Fase 4: Análisis Comparativo y Divulgación"
+    },
+    "activities": {
+      "activity1": "Revisión sistemática sobre gamificación en la educación y juegos educativos en Historia",
+      "activity2": "Análisis e identificación de los puntos débiles del proyecto",
+      "activity3": "Mapeo de soluciones para mitigar los puntos débiles",
+      "activity4": "Reuniones con especialistas para sugerencias y orientaciones para el proyecto",
+      "activity5": "Preparación y planificación para la fase 2",
+      "activity6": "Planificación de actividades y definición de prioridades",
+      "activity7": "Desarrollo práctico de las actividades",
+      "activity8": "Pruebas internas de jugabilidad y funcionalidad general",
+      "activity9": "Construcción de instrumentos para recolección de datos dentro y fuera del juego",
+      "activity10": "Ajustes finales de la versión de pruebas",
+      "activity11": "Revisión y ajustes de cuestiones éticas y legales",
+      "activity12": "Mapeo de lugares aptos para ejecución de las pruebas",
+      "activity13": "Aplicación piloto de pruebas en contextos reales y análisis de los datos recolectados",
+      "activity14": "Implementación de mejoras basadas en los resultados",
+      "activity15": "Aplicación de nuevas rondas de prueba",
+      "activity16": "Análisis comparativo de los datos recolectados",
+      "activity17": "Redacción de artículos científicos e informe final",
+      "activity18": "Envío de trabajos a revistas especializadas",
+      "activity19": "Diseminación de los estudios en congresos especializados",
+      "activity20": "Creación de materiales de apoyo para que los profesores utilicen el juego en el aula"
+    },
+    "blacksmith": {
+      "title": "La Forja",
+      "date": "4º/2024 - 3º/2025",
+      "description": "Recalentando el metal para un nuevo molde:\n\n• Revisión y Análisis del proyecto\n• Mapeo de nuevas ideas y soluciones\n• Búsqueda de orientación especializada\n• Planificación del proyecto"
+    },
+    "laboratory": {
+      "title": "El Laboratorio",
+      "date": "3º/2026 - 3º/2027",
+      "description": "Añadiendo pociones mágicas:\n\n• Revisión de cuestiones éticas y legales\n• Aplicación de pruebas reales\n• Ajustes y modificaciones basados en los resultados\n• Nuevas rondas de pruebas"
+    },
+    "castle": {
+      "title": "El Castillo",
+      "date": "3º/2027 - 3º/2028",
+      "description": "Audiencia con el Rey:\n\n• Análisis general de los resultados\n• Construcción de artículos e informes\n• Creación de material de apoyo para profesores\n• Divulgación de los resultados"
+    },
+    "university": {
+      "title": "La Universidad",
+      "date": "3º/2025 - 4º/2026",
+      "description": "Buscando secretos en pergaminos antiguos:\n\n• Desarrollo de las Actividades\n• Pruebas internas de funcionalidad\n• Construcción de instrumentos de recolección de datos\n• Ajuste final de la versión de pruebas"
+    },
+    "risks": {
+      "phase1": {
+        "risk1": {
+          "title": "Riesgo 1: Dificultad para encontrar especialistas disponibles en la ciudad de Bragança.",
+          "mitigation": "Mitigación: Buscar especialistas en ciudades cercanas, o realizar reuniones por plataformas online."
+        },
+        "risk2": {
+          "title": "Riesgo 2: No encontrar técnicas satisfactorias que se ajusten al proyecto TimeCrax Machine.",
+          "mitigation": "Mitigación: Buscar nuevas técnicas o ajustar/adaptar el proyecto."
+        }
+      },
+      "phase2": {
+        "risk1": {
+          "title": "Riesgo 1: Retrasos en el desarrollo por problemas técnicos.",
+          "mitigation": "Mitigación: Adoptar metodologías ágiles (SCRUM) y dividir tareas en sprints."
+        },
+        "risk2": {
+          "title": "Riesgo 2: Feedback insuficiente de las pruebas piloto.",
+          "mitigation": "Mitigación: Realizar pruebas en múltiples escuelas con perfiles variados."
+        }
+      },
+      "phase3": {
+        "risk1": {
+          "title": "Riesgo 1: No conseguir escuelas locales disponibles para participar en el proyecto.",
+          "mitigation": "Mitigación: Buscar escuelas en ciudades cercanas para aplicación de las pruebas."
+        },
+        "risk2": {
+          "title": "Riesgo 2: Datos inconsistentes debido a fallas metodológicas.",
+          "mitigation": "Mitigación: Revisión de la metodología y orientación de especialistas."
+        }
+      },
+      "phase4": {
+        "risk1": {
+          "title": "Riesgo 1: Resultados estadísticamente inconclusos.",
+          "mitigation": "Mitigación: Usar métodos mixtos para triangulación de datos."
+        },
+        "risk2": {
+          "title": "Riesgo 2: Dificultad para publicar en revistas de alto impacto.",
+          "mitigation": "Mitigación: Priorizar periódicos de acceso abierto."
+        }
+      }
+    }
+  },
   "errors": {
     "INVALID_ROLE": "Rol inválido.",
     "FIRST_NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",

@@ -1,12 +1,16 @@
+function forceHttps(url: string): string {
+  return url.startsWith("http://") ? url.replace("http://", "https://") : url;
+}
+
 export function withBaseUrl(url?: string | null): string | undefined {
   if (!url) return undefined;
-  
+
   if (url.startsWith("data:image/")) {
     return url;
   }
 
   if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url;
+    return forceHttps(url);
   }
 
   const base = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "");

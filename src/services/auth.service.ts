@@ -131,7 +131,8 @@ const TOKEN_KEY = "auth_token";
 
 function toAbsoluteUrl(pathOrUrl?: string | null) {
   if (!pathOrUrl) return null;
-  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
+  if (pathOrUrl.startsWith("http://")) return pathOrUrl.replace("http://", "https://");
+  if (pathOrUrl.startsWith("https://")) return pathOrUrl;
   return `${API_BASE_URL}${pathOrUrl}`;
 }
 

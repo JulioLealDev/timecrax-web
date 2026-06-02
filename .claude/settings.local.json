@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Select-String -Path \"D:\\\\Projetos\\\\Timecrax Projects\\\\timecrax-web\\\\node_modules\\\\i18next\\\\dist\\\\esm\\\\i18next.js\" -Pattern \"new Function|Function\\\\\\(\" | Select-Object -First 5 | ForEach-Object { \"$\\($_.LineNumber\\): $\\($_.Line.Trim\\(\\).Substring\\(0, [Math]::Min\\(150,$_.Line.Trim\\(\\).Length\\)\\)\\)\" })"
+    ]
+  }
+}

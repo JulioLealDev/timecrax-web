@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Receive the production API URL at build time
 # Usage: docker build --build-arg VITE_API_BASE_URL=https://api.example.com ...
-ARG VITE_API_BASE_URL
+ARG VITE_API_BASE_URL=https://timecrax.ipb.pt
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 COPY package*.json ./

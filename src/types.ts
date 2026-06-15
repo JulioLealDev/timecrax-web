@@ -34,6 +34,8 @@ export type CardDraft = {
     mapImageFile?: File;
     mapImageUrl?: string;
     mapImagePreview?: string;
+    mapOffset: { x: number; y: number };
+    mapScale: number; // 0 = not yet initialized
     spots: { x: number; y: number; isCorrect: boolean }[];
   };
 };

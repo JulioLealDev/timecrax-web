@@ -326,7 +326,18 @@
     "errorDeleteCard": "Erreur lors de la suppression de la carte.",
     "errorLoadTheme": "Échec du chargement du thème pour modification.",
     "errorCreateTheme": "Erreur lors de la création du thème.",
-    "errorDuplicateCards": "Des cartes ont un orderIndex dupliqué ({{duplicates}}). Recrée les cartes ou recharge la page."
+    "errorDuplicateCards": "Des cartes ont un orderIndex dupliqué ({{duplicates}}). Recrée les cartes ou recharge la page.",
+    "localizationTab": "Localisation",
+    "localizationMapUpload": "Charger la carte",
+    "localizationMapHint": "Cliquez sur la carte pour placer un point",
+    "localizationSpotsPlaced": "{{count}}/4 points placés",
+    "localizationChangeMap": "Changer la carte",
+    "localizationClearSpots": "Effacer les points",
+    "localizationSpot": "Point {{num}}",
+    "localizationCorrectHint": "Sélectionnez le point correct avec le bouton radio.",
+    "errorLocalizationMap": "L'image de la carte est requise.",
+    "errorLocalizationSpots": "Exactement 4 points sont requis sur la carte.",
+    "errorLocalizationCorrect": "Sélectionnez le point correct."
   },
   "themesStorage": {
     "title": "Banque de Thèmes",

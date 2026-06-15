@@ -326,7 +326,18 @@
     "errorDeleteCard": "Erro ao deletar carta.",
     "errorLoadTheme": "Falha ao carregar tema para edição.",
     "errorCreateTheme": "Erro ao criar tema.",
-    "errorDuplicateCards": "Existem cartas com orderIndex duplicado ({{duplicates}}). Recrie as cartas ou recarregue a página."
+    "errorDuplicateCards": "Existem cartas com orderIndex duplicado ({{duplicates}}). Recrie as cartas ou recarregue a página.",
+    "localizationTab": "Localização",
+    "localizationMapUpload": "Carregar mapa",
+    "localizationMapHint": "Clique no mapa para adicionar um ponto",
+    "localizationSpotsPlaced": "{{count}}/4 pontos colocados",
+    "localizationChangeMap": "Alterar mapa",
+    "localizationClearSpots": "Limpar pontos",
+    "localizationSpot": "Ponto {{num}}",
+    "localizationCorrectHint": "Selecione o ponto correto com o radio button.",
+    "errorLocalizationMap": "Imagem do mapa é obrigatória.",
+    "errorLocalizationSpots": "São necessários exatamente 4 pontos no mapa.",
+    "errorLocalizationCorrect": "Selecione o ponto correto."
   },
   "themesStorage": {
     "title": "Banco de Temas",

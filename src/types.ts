@@ -29,6 +29,13 @@ export type CardDraft = {
     prompt: string;
     items: { imageFile?: File; imageUrl?: string; text: string }[];
   };
+
+  localizationQuiz: {
+    mapImageFile?: File;
+    mapImageUrl?: string;
+    mapImagePreview?: string;
+    spots: { x: number; y: number; isCorrect: boolean }[];
+  };
 };
 
 export type SavedCard = CardDraft & { id: string };

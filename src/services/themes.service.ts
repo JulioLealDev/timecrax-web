@@ -28,6 +28,11 @@ export type ThemeCardRequest = {
   correlationQuiz: {
     items: { text: string; imageUrl: string }[];
   };
+
+  localizationQuiz: {
+    mapImageUrl: string;
+    spots: { x: number; y: number; isCorrect: boolean }[];
+  };
 };
 
 export type CreateThemeRequest = {
@@ -81,6 +86,11 @@ export type ThemeCardResponse = {
   };
   correlationQuiz: {
     items: { text: string; imageUrl: string }[];
+  };
+
+  localizationQuiz: {
+    mapImageUrl: string;
+    spots: { x: number; y: number; isCorrect: boolean }[];
   };
 };
 

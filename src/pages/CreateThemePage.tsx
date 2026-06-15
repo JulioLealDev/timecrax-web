@@ -20,6 +20,7 @@ import { withBaseUrl } from "../utils/withBaseUrl";
 const slotCard = (i: number) => `cards[${i}].imageUrl`;
 const slotImageQuiz = (i: number, k: number) => `cards[${i}].imageQuiz.options[${k}].imageUrl`;
 const slotCorr = (i: number, k: number) => `cards[${i}].correlationQuiz.items[${k}].imageUrl`;
+const slotLocalizationMap = (i: number) => `cards[${i}].localizationQuiz.mapImageUrl`;
 
 /* ============================================================
  * ID Generator (fallback for crypto.randomUUID)
@@ -66,6 +67,13 @@ const createEmptyCardDraft = (orderIndex: number): CardDraft => ({
     prompt: "Match the images to the texts correctly:",
     items: [{ text: "" }, { text: "" }, { text: "" }],
   },
+
+  localizationQuiz: {
+    mapImageFile: undefined,
+    mapImageUrl: undefined,
+    mapImagePreview: undefined,
+    spots: [],
+  },
 });
 
 /* ============================================================
@@ -89,7 +97,7 @@ export function CreateThemePage() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<
-    "image-quiz" | "text-quiz" | "trueOrFalse-quiz" | "correlation-quiz"
+    "image-quiz" | "text-quiz" | "trueOrFalse-quiz" | "correlation-quiz" | "localization"
   >("image-quiz");
 
   const [assetsSessionId, setAssetsSessionId] = useState<string | null>(null);
@@ -112,6 +120,7 @@ export function CreateThemePage() {
 
   const themeImageInputRef = useRef<HTMLInputElement | null>(null);
   const cardImageInputRef = useRef<HTMLInputElement | null>(null);
+  const locMapInputRef = useRef<HTMLInputElement | null>(null);
 
   // Hooks
   const [searchParams] = useSearchParams();
@@ -179,6 +188,13 @@ export function CreateThemePage() {
                 imageUrl: item.imageUrl,
                 imageFile: undefined,
               })),
+            },
+
+            localizationQuiz: {
+              mapImageUrl: card.localizationQuiz?.mapImageUrl ?? "",
+              mapImageFile: undefined,
+              mapImagePreview: undefined,
+              spots: card.localizationQuiz?.spots ?? [],
             },
           }));
 
@@ -393,6 +409,65 @@ export function CreateThemePage() {
   }
 
   /* ============================================================
+   * Localization map handlers
+   * ========================================================== */
+  function onPickLocalizationMap() {
+    locMapInputRef.current?.click();
+  }
+
+  function onLocalizationMapSelected(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCard((prev) => ({
+        ...prev,
+        localizationQuiz: {
+          ...prev.localizationQuiz,
+          mapImageFile: file,
+          mapImagePreview: String(reader.result),
+        },
+      }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  }
+
+  function handleMapClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (card.localizationQuiz.spots.length >= 4) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setCard((prev) => {
+      const spots = [...prev.localizationQuiz.spots];
+      spots.push({ x, y, isCorrect: spots.length === 0 });
+      return { ...prev, localizationQuiz: { ...prev.localizationQuiz, spots } };
+    });
+  }
+
+  function handleRemoveSpot(index: number, e: React.MouseEvent) {
+    e.stopPropagation();
+    setCard((prev) => {
+      const wasCorrect = prev.localizationQuiz.spots[index].isCorrect;
+      const spots = prev.localizationQuiz.spots.filter((_, i) => i !== index);
+      if (wasCorrect && spots.length > 0) {
+        spots[0] = { ...spots[0], isCorrect: true };
+      }
+      return { ...prev, localizationQuiz: { ...prev.localizationQuiz, spots } };
+    });
+  }
+
+  function handleSetCorrectSpot(index: number) {
+    setCard((prev) => ({
+      ...prev,
+      localizationQuiz: {
+        ...prev.localizationQuiz,
+        spots: prev.localizationQuiz.spots.map((s, i) => ({ ...s, isCorrect: i === index })),
+      },
+    }));
+  }
+
+  /* ============================================================
    * Edit a card (carregar do grid)
    * ========================================================== */
   function loadCardForEdit(saved: SavedCard) {
@@ -498,6 +573,12 @@ export function CreateThemePage() {
       if (!isNonEmpty(it.text)) e[`corr.items.${i}.text`] = t("createTheme.errorCorrelationText", { num: i + 1 });
     });
 
+    if (!d.localizationQuiz.mapImageFile && !isNonEmpty(d.localizationQuiz.mapImageUrl))
+      e["loc.mapImage"] = t("createTheme.errorLocalizationMap");
+    if (d.localizationQuiz.spots.length !== 4) e["loc.spots"] = t("createTheme.errorLocalizationSpots");
+    if (d.localizationQuiz.spots.length === 4 && !d.localizationQuiz.spots.some((s) => s.isCorrect))
+      e["loc.correct"] = t("createTheme.errorLocalizationCorrect");
+
     return e;
   }
 
@@ -569,6 +650,14 @@ export function CreateThemePage() {
         }
       }
 
+      // Localization map
+      if (card.localizationQuiz.mapImageFile) {
+        uploadTasks.push(themeAssetsService.uploadOne(assetsSessionId, card.localizationQuiz.mapImageFile, slotLocalizationMap(i)));
+        uploadMap.push({ type: "localizationMap" });
+      } else if (!card.localizationQuiz.mapImageUrl) {
+        throw new Error("Localization map image is required.");
+      }
+
       // Upload only new images
       const uploadResults = uploadTasks.length > 0 ? await Promise.all(uploadTasks) : [];
 
@@ -576,6 +665,7 @@ export function CreateThemePage() {
       let mainUrl = card.imageUrl; // default to existing
       const imageQuizUrls = card.imageQuiz.options.map(opt => opt.imageUrl); // default to existing
       const corrUrls = card.correlationQuiz.items.map(item => item.imageUrl); // default to existing
+      let localizationMapUrl = card.localizationQuiz.mapImageUrl; // default to existing
 
       // Update with newly uploaded URLs
       for (let i = 0; i < uploadResults.length; i++) {
@@ -588,6 +678,8 @@ export function CreateThemePage() {
           imageQuizUrls[mapping.index] = result.url;
         } else if (mapping.type === "correlation" && mapping.index !== undefined) {
           corrUrls[mapping.index] = result.url;
+        } else if (mapping.type === "localizationMap") {
+          localizationMapUrl = result.url;
         }
       }
 
@@ -613,6 +705,13 @@ export function CreateThemePage() {
             ...it,
             imageUrl: corrUrls[k] ?? it.imageUrl, // URL real (existing or new)
           })),
+        },
+
+        localizationQuiz: {
+          ...card.localizationQuiz,
+          mapImageUrl: localizationMapUrl,
+          mapImageFile: undefined,
+          mapImagePreview: undefined,
         },
       };
 
@@ -712,6 +811,11 @@ export function CreateThemePage() {
               text: it.text,
               imageUrl: withBaseUrl(it.imageUrl) ?? "",
             })),
+          },
+
+          localizationQuiz: {
+            mapImageUrl: withBaseUrl(c.localizationQuiz.mapImageUrl) ?? "",
+            spots: c.localizationQuiz.spots,
           },
         })),
       };
@@ -898,6 +1002,14 @@ export function CreateThemePage() {
                     className="hidden-file"
                   />
 
+                  <input
+                    ref={locMapInputRef}
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={onLocalizationMapSelected}
+                  />
+
                   <button
                     type="button"
                     className="card-image-hitbox"
@@ -1012,6 +1124,14 @@ export function CreateThemePage() {
                     onClick={() => setActiveTab("correlation-quiz")}
                   >
                     {t("createTheme.correlationQuiz")}
+                  </button>
+
+                  <button
+                    type="button"
+                    className={["tab-btn", activeTab === "localization" ? "active" : "", tabHasError("loc") ? "tab-error" : ""].join(" ")}
+                    onClick={() => setActiveTab("localization")}
+                  >
+                    {t("createTheme.localizationTab")}
                   </button>
                 </div>
 
@@ -1185,6 +1305,91 @@ export function CreateThemePage() {
                           />
                         ))}
                       </div>
+                    </>
+                  )}
+
+                  {/* Localization */}
+                  {activeTab === "localization" && (
+                    <>
+                      {!(card.localizationQuiz.mapImagePreview || card.localizationQuiz.mapImageUrl) ? (
+                        <div
+                          className={["loc-upload-area", hasError("loc.mapImage") ? "is-invalid" : ""].join(" ")}
+                          onClick={onPickLocalizationMap}
+                        >
+                          <span className="loc-upload-icon">🗺</span>
+                          <span className="loc-upload-label">{t("createTheme.localizationMapUpload")}</span>
+                        </div>
+                      ) : (
+                        <>
+                          <div
+                            className="loc-map-container"
+                            onClick={handleMapClick}
+                            title={card.localizationQuiz.spots.length < 4 ? t("createTheme.localizationMapHint") : ""}
+                          >
+                            <img
+                              src={card.localizationQuiz.mapImagePreview || withBaseUrl(card.localizationQuiz.mapImageUrl)}
+                              className="loc-map-img"
+                              draggable={false}
+                              alt="map"
+                            />
+                            {card.localizationQuiz.spots.map((spot, idx) => (
+                              <div
+                                key={idx}
+                                className={["loc-spot", spot.isCorrect ? "loc-spot-correct" : "loc-spot-wrong"].join(" ")}
+                                style={{ left: `${spot.x * 100}%`, top: `${spot.y * 100}%` }}
+                                onClick={(e) => handleRemoveSpot(idx, e)}
+                                title="Click to remove"
+                              >
+                                {idx + 1}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="loc-map-actions">
+                            <button type="button" className="loc-btn-secondary" onClick={onPickLocalizationMap}>
+                              {t("createTheme.localizationChangeMap")}
+                            </button>
+                            <span className="loc-spots-count">
+                              {t("createTheme.localizationSpotsPlaced", { count: card.localizationQuiz.spots.length })}
+                            </span>
+                            {card.localizationQuiz.spots.length > 0 && (
+                              <button
+                                type="button"
+                                className="loc-btn-secondary"
+                                onClick={() => setCard((prev) => ({ ...prev, localizationQuiz: { ...prev.localizationQuiz, spots: [] } }))}
+                              >
+                                {t("createTheme.localizationClearSpots")}
+                              </button>
+                            )}
+                          </div>
+                        </>
+                      )}
+
+                      {card.localizationQuiz.spots.length > 0 && (
+                        <div className={["loc-spots-list", hasError("loc.spots") || hasError("loc.correct") ? "is-invalid" : ""].join(" ")}>
+                          {card.localizationQuiz.spots.map((spot, idx) => (
+                            <label key={idx} className="loc-spot-row">
+                              <input
+                                type="radio"
+                                name="loc-correct-spot"
+                                checked={spot.isCorrect}
+                                onChange={() => handleSetCorrectSpot(idx)}
+                              />
+                              <span className="loc-spot-label">
+                                {t("createTheme.localizationSpot", { num: idx + 1 })}
+                                <span className="loc-spot-coords"> ({(spot.x * 100).toFixed(1)}%, {(spot.y * 100).toFixed(1)}%)</span>
+                              </span>
+                              <button
+                                type="button"
+                                className="loc-remove-spot"
+                                onClick={(e) => handleRemoveSpot(idx, e)}
+                              >
+                                ×
+                              </button>
+                            </label>
+                          ))}
+                          <span className="loc-correct-hint">{t("createTheme.localizationCorrectHint")}</span>
+                        </div>
+                      )}
                     </>
                   )}
                 </div>

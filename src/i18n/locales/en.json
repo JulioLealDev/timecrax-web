@@ -326,7 +326,18 @@
     "errorDeleteCard": "Error deleting card.",
     "errorLoadTheme": "Failed to load theme for editing.",
     "errorCreateTheme": "Error creating theme.",
-    "errorDuplicateCards": "There are cards with duplicate orderIndex ({{duplicates}}). Recreate the cards or reload the page."
+    "errorDuplicateCards": "There are cards with duplicate orderIndex ({{duplicates}}). Recreate the cards or reload the page.",
+    "localizationTab": "Localization",
+    "localizationMapUpload": "Upload map",
+    "localizationMapHint": "Click on the map to place a spot",
+    "localizationSpotsPlaced": "{{count}}/4 spots placed",
+    "localizationChangeMap": "Change map",
+    "localizationClearSpots": "Clear spots",
+    "localizationSpot": "Spot {{num}}",
+    "localizationCorrectHint": "Select the correct spot using the radio button.",
+    "errorLocalizationMap": "Map image is required.",
+    "errorLocalizationSpots": "Exactly 4 spots are required on the map.",
+    "errorLocalizationCorrect": "Select the correct spot."
   },
   "themesStorage": {
     "title": "Themes Storage",

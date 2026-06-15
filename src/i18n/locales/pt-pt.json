@@ -491,6 +491,18 @@
     "INVALID_TOKEN": "Token de redefinição inválido ou expirado.",
     "TOKEN_EXPIRED": "Este link de redefinição expirou. Por favor, solicite um novo.",
     "TOKEN_ALREADY_USED": "Este link de redefinição já foi utilizado. Por favor, solicite um novo.",
+    "TOO_MANY_REQUESTS": "Demasiadas tentativas. Aguarde alguns minutos e tente novamente.",
+    "TOO_MANY_LOGIN_ATTEMPTS": "Excedeu o número de tentativas de início de sessão. Aguarde 15 minutos para tentar novamente.",
+    "TOO_MANY_REGISTER_ATTEMPTS": "Demasiadas tentativas de registo. Aguarde 1 hora para tentar novamente.",
+    "TOO_MANY_RESET_ATTEMPTS": "Demasiadas solicitações de redefinição de palavra-passe. Aguarde 1 hora para tentar novamente.",
+    "SCHOOL_NAME_REQUIRED": "O nome da escola é obrigatório.",
+    "INVALID_FILE": "Ficheiro inválido.",
+    "INVALID_IMAGE": "Imagem inválida.",
+    "IMAGE_TOO_SMALL": "A imagem é demasiado pequena. Envie uma imagem maior.",
+    "ONLY_IMAGES_ALLOWED": "Apenas imagens são permitidas.",
+    "NOT_FOUND": "Recurso não encontrado.",
+    "FORBIDDEN": "Não tem permissão para realizar esta ação.",
+    "SERVER_ERROR": "Erro interno do servidor. Tente novamente mais tarde.",
     "UNKNOWN": "Ocorreu um erro inesperado."
   }
 }

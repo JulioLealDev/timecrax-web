@@ -489,6 +489,18 @@
     "INVALID_TOKEN": "Token de restablecimiento inválido o expirado.",
     "TOKEN_EXPIRED": "Este enlace de restablecimiento ha expirado. Por favor, solicita uno nuevo.",
     "TOKEN_ALREADY_USED": "Este enlace de restablecimiento ya ha sido utilizado. Por favor, solicita uno nuevo.",
+    "TOO_MANY_REQUESTS": "Demasiados intentos. Por favor, espera unos minutos e inténtalo de nuevo.",
+    "TOO_MANY_LOGIN_ATTEMPTS": "Has superado el número de intentos de inicio de sesión. Por favor, espera 15 minutos antes de intentarlo de nuevo.",
+    "TOO_MANY_REGISTER_ATTEMPTS": "Demasiados intentos de registro. Por favor, espera 1 hora antes de intentarlo de nuevo.",
+    "TOO_MANY_RESET_ATTEMPTS": "Demasiadas solicitudes de restablecimiento de contraseña. Por favor, espera 1 hora antes de intentarlo de nuevo.",
+    "SCHOOL_NAME_REQUIRED": "El nombre de la escuela es obligatorio.",
+    "INVALID_FILE": "Archivo inválido.",
+    "INVALID_IMAGE": "Imagen inválida.",
+    "IMAGE_TOO_SMALL": "La imagen es demasiado pequeña. Por favor, sube una imagen más grande.",
+    "ONLY_IMAGES_ALLOWED": "Solo se permiten imágenes.",
+    "NOT_FOUND": "Recurso no encontrado.",
+    "FORBIDDEN": "No tienes permiso para realizar esta acción.",
+    "SERVER_ERROR": "Error interno del servidor. Por favor, inténtalo de nuevo más tarde.",
     "UNKNOWN": "Ocurrió un error inesperado."
   }
 }

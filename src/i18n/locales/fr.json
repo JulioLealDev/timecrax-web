@@ -491,6 +491,18 @@
     "INVALID_TOKEN": "Jeton de réinitialisation invalide ou expiré.",
     "TOKEN_EXPIRED": "Ce lien de réinitialisation a expiré. Demande-en un nouveau.",
     "TOKEN_ALREADY_USED": "Ce lien de réinitialisation a déjà été utilisé. Demande-en un nouveau.",
+    "TOO_MANY_REQUESTS": "Trop de tentatives. Veuillez attendre quelques minutes et réessayer.",
+    "TOO_MANY_LOGIN_ATTEMPTS": "Vous avez dépassé le nombre de tentatives de connexion. Veuillez attendre 15 minutes avant de réessayer.",
+    "TOO_MANY_REGISTER_ATTEMPTS": "Trop de tentatives d'inscription. Veuillez attendre 1 heure avant de réessayer.",
+    "TOO_MANY_RESET_ATTEMPTS": "Trop de demandes de réinitialisation de mot de passe. Veuillez attendre 1 heure avant de réessayer.",
+    "SCHOOL_NAME_REQUIRED": "Le nom de l'école est requis.",
+    "INVALID_FILE": "Fichier invalide.",
+    "INVALID_IMAGE": "Image invalide.",
+    "IMAGE_TOO_SMALL": "L'image est trop petite. Veuillez télécharger une image plus grande.",
+    "ONLY_IMAGES_ALLOWED": "Seules les images sont autorisées.",
+    "NOT_FOUND": "Ressource introuvable.",
+    "FORBIDDEN": "Vous n'avez pas la permission d'effectuer cette action.",
+    "SERVER_ERROR": "Erreur interne du serveur. Veuillez réessayer plus tard.",
     "UNKNOWN": "Une erreur inattendue s'est produite."
   }
 }

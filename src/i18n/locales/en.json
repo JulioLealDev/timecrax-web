@@ -491,6 +491,18 @@
     "INVALID_TOKEN": "Invalid or expired reset token.",
     "TOKEN_EXPIRED": "This reset link has expired. Please request a new one.",
     "TOKEN_ALREADY_USED": "This reset link has already been used. Please request a new one.",
+    "TOO_MANY_REQUESTS": "Too many attempts. Please wait a few minutes and try again.",
+    "TOO_MANY_LOGIN_ATTEMPTS": "You have exceeded the number of login attempts. Please wait 15 minutes before trying again.",
+    "TOO_MANY_REGISTER_ATTEMPTS": "Too many registration attempts. Please wait 1 hour before trying again.",
+    "TOO_MANY_RESET_ATTEMPTS": "Too many password reset requests. Please wait 1 hour before trying again.",
+    "SCHOOL_NAME_REQUIRED": "School name is required.",
+    "INVALID_FILE": "Invalid file.",
+    "INVALID_IMAGE": "Invalid image.",
+    "IMAGE_TOO_SMALL": "The image is too small. Please upload a larger image.",
+    "ONLY_IMAGES_ALLOWED": "Only images are allowed.",
+    "NOT_FOUND": "Resource not found.",
+    "FORBIDDEN": "You do not have permission to perform this action.",
+    "SERVER_ERROR": "Internal server error. Please try again later.",
     "UNKNOWN": "An unexpected error occurred."
   }
 }

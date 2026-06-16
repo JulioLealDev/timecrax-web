@@ -315,7 +315,7 @@ export function CreateThemePage() {
 
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => container.removeEventListener("wheel", onWheel);
-  }, []); // empty deps — uses refs to avoid stale closures
+  }, [activeTab]); // re-runs when localization tab activates so ref is populated
 
   /* ============================================================
    * Utils
@@ -586,7 +586,12 @@ export function CreateThemePage() {
 
     const { x: ox, y: oy } = card.localizationQuiz.mapOffset;
     const scale = card.localizationQuiz.mapScale;
-    ctx.drawImage(img, ox, oy, img.naturalWidth * scale, img.naturalHeight * scale);
+    const tileW = img.naturalWidth * scale;
+    const tileH = img.naturalHeight * scale;
+    const normX = ((ox % tileW) + tileW) % tileW - tileW;
+    for (let x = normX; x < width; x += tileW) {
+      ctx.drawImage(img, x, oy, tileW, tileH);
+    }
 
     card.localizationQuiz.spots.forEach((spot, idx) => {
       const sx = spot.x * width;
@@ -1470,26 +1475,48 @@ export function CreateThemePage() {
                         onMouseLeave={handleMapMouseUp}
                         onClick={handleMapClick}
                       >
+                        {/* Hidden reference image for natural dimensions */}
                         <img
                           ref={mapImgRef}
                           src={WORLD_MAP_URL}
-                          className="loc-map-img"
                           crossOrigin="anonymous"
                           draggable={false}
-                          alt="World map"
+                          alt=""
                           onLoad={handleMapImageLoad}
-                          style={{
-                            position: "absolute",
-                            left: card.localizationQuiz.mapOffset.x,
-                            top: card.localizationQuiz.mapOffset.y,
-                            width: mapImgRef.current
-                              ? mapImgRef.current.naturalWidth * card.localizationQuiz.mapScale
-                              : "100%",
-                            height: "auto",
-                            pointerEvents: "none",
-                            userSelect: "none",
-                          }}
+                          style={{ display: "none" }}
                         />
+                        {/* Tiled map images for infinite horizontal scroll */}
+                        {card.localizationQuiz.mapScale > 0 && mapImgRef.current && (() => {
+                          const img = mapImgRef.current!;
+                          const scale = card.localizationQuiz.mapScale;
+                          const tileW = img.naturalWidth * scale;
+                          const tileH = img.naturalHeight * scale;
+                          const containerW = mapContainerRef.current?.clientWidth ?? 0;
+                          const rawX = card.localizationQuiz.mapOffset.x;
+                          const normX = ((rawX % tileW) + tileW) % tileW - tileW;
+                          const tiles = [];
+                          for (let x = normX, i = 0; x < containerW; x += tileW, i++) {
+                            tiles.push(
+                              <img
+                                key={i}
+                                src={WORLD_MAP_URL}
+                                crossOrigin="anonymous"
+                                draggable={false}
+                                alt=""
+                                style={{
+                                  position: "absolute",
+                                  left: x,
+                                  top: card.localizationQuiz.mapOffset.y,
+                                  width: tileW,
+                                  height: tileH,
+                                  pointerEvents: "none",
+                                  userSelect: "none",
+                                }}
+                              />
+                            );
+                          }
+                          return <>{tiles}</>;
+                        })()}
                         {card.localizationQuiz.spots.map((spot, idx) => (
                           <div
                             key={idx}

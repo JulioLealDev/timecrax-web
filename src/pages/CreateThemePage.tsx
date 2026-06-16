@@ -25,7 +25,7 @@ const slotLocalizationMap = (i: number) => `cards[${i}].localizationQuiz.mapImag
 /* ============================================================
  * Localization map constants
  * ========================================================== */
-const WORLD_MAP_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/4096px-World_map_-_low_resolution.svg.png";
+const WORLD_MAP_URL = "/images/world-map.png";
 const LOC_SCALE_MIN = 0.3;
 const LOC_SCALE_MAX = 8;
 

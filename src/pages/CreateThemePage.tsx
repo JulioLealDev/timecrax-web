@@ -137,6 +137,7 @@ export function CreateThemePage() {
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, offsetX: 0, offsetY: 0 });
   const locOffsetRef = useRef({ x: 0, y: 0 });
   const locScaleRef = useRef(0);
+  const minLocScaleRef = useRef(LOC_SCALE_MIN);
   const [locIsDragging, setLocIsDragging] = useState(false);
 
   // Hooks
@@ -292,14 +293,20 @@ export function CreateThemePage() {
 
     function onWheel(e: WheelEvent) {
       e.preventDefault();
+      const img = mapImgRef.current;
+      if (!img) return;
       const rect = container!.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
       const factor = e.deltaY < 0 ? 1.12 : 0.9;
       const oldScale = locScaleRef.current;
-      const newScale = Math.max(LOC_SCALE_MIN, Math.min(LOC_SCALE_MAX, oldScale * factor));
+      const newScale = Math.max(minLocScaleRef.current, Math.min(LOC_SCALE_MAX, oldScale * factor));
       const ratio = newScale / oldScale;
       const oldOffset = locOffsetRef.current;
+      const tileH = img.naturalHeight * newScale;
+      const containerH = container!.clientHeight;
+      const rawY = mouseY - (mouseY - oldOffset.y) * ratio;
+      const newY = Math.min(0, Math.max(containerH - tileH, rawY));
       setCard(prev => ({
         ...prev,
         localizationQuiz: {
@@ -307,7 +314,7 @@ export function CreateThemePage() {
           mapScale: newScale,
           mapOffset: {
             x: mouseX - (mouseX - oldOffset.x) * ratio,
-            y: mouseY - (mouseY - oldOffset.y) * ratio,
+            y: newY,
           },
         },
       }));
@@ -476,14 +483,18 @@ export function CreateThemePage() {
     const img = mapImgRef.current;
     const container = mapContainerRef.current;
     if (!img || !container || locScaleRef.current > 0) return;
-    const scale = container.clientWidth / img.naturalWidth;
+    const scaleW = container.clientWidth / img.naturalWidth;
+    const scaleH = container.clientHeight / img.naturalHeight;
+    const scale = Math.max(scaleW, scaleH);
+    minLocScaleRef.current = scale;
+    const offsetX = (container.clientWidth - img.naturalWidth * scale) / 2;
     const offsetY = (container.clientHeight - img.naturalHeight * scale) / 2;
     setCard(prev => ({
       ...prev,
       localizationQuiz: {
         ...prev.localizationQuiz,
         mapScale: scale,
-        mapOffset: { x: 0, y: Math.max(0, offsetY) },
+        mapOffset: { x: offsetX, y: offsetY },
       },
     }));
   }
@@ -506,13 +517,20 @@ export function CreateThemePage() {
     const dx = e.clientX - dragStartRef.current.mouseX;
     const dy = e.clientY - dragStartRef.current.mouseY;
     if (Math.abs(dx) > 3 || Math.abs(dy) > 3) movedRef.current = true;
+    const img = mapImgRef.current;
+    const container = mapContainerRef.current;
+    let newY = dragStartRef.current.offsetY + dy;
+    if (img && container) {
+      const tileH = img.naturalHeight * locScaleRef.current;
+      newY = Math.min(0, Math.max(container.clientHeight - tileH, newY));
+    }
     setCard(prev => ({
       ...prev,
       localizationQuiz: {
         ...prev.localizationQuiz,
         mapOffset: {
           x: dragStartRef.current.offsetX + dx,
-          y: dragStartRef.current.offsetY + dy,
+          y: newY,
         },
       },
     }));
@@ -560,14 +578,18 @@ export function CreateThemePage() {
     const img = mapImgRef.current;
     const container = mapContainerRef.current;
     if (!img || !container) return;
-    const scale = container.clientWidth / img.naturalWidth;
+    const scaleW = container.clientWidth / img.naturalWidth;
+    const scaleH = container.clientHeight / img.naturalHeight;
+    const scale = Math.max(scaleW, scaleH);
+    minLocScaleRef.current = scale;
+    const offsetX = (container.clientWidth - img.naturalWidth * scale) / 2;
     const offsetY = (container.clientHeight - img.naturalHeight * scale) / 2;
     setCard(prev => ({
       ...prev,
       localizationQuiz: {
         ...prev.localizationQuiz,
         mapScale: scale,
-        mapOffset: { x: 0, y: Math.max(0, offsetY) },
+        mapOffset: { x: offsetX, y: offsetY },
       },
     }));
   }

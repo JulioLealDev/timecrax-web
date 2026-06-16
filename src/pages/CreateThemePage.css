@@ -7,9 +7,10 @@
 }
 
 .create-theme-container {
-  max-width: 1500px;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 3rem 1.5rem 4rem;
+  padding: 3rem 0 4rem;
 }
 
 .create-theme-title {
@@ -1164,6 +1165,26 @@
 
   .theme-image-field {
     justify-items: start;
+  }
+
+  .card-builder-row {
+    grid-template-columns: 1fr;
+  }
+
+  .card-preview-wrap {
+    max-width: 360px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .tabs-header {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .create-theme-form {
+    padding: 1.25rem;
   }
 }
 

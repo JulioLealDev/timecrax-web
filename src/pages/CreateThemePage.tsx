@@ -1508,39 +1508,26 @@ export function CreateThemePage() {
                           onLoad={handleMapImageLoad}
                           style={{ display: "none" }}
                         />
-                        {/* Tiled map images for infinite horizontal scroll */}
+                        {/* CSS background tiling — single render pass, no inter-element seam */}
                         {card.localizationQuiz.mapScale > 0 && mapImgRef.current && (() => {
                           const img = mapImgRef.current!;
                           const scale = card.localizationQuiz.mapScale;
-                          // Round to integers so adjacent tiles share exact pixel boundaries
-                          const tileW = Math.round(img.naturalWidth * scale);
-                          const tileH = Math.round(img.naturalHeight * scale);
-                          const containerW = mapContainerRef.current?.clientWidth ?? 0;
-                          const rawX = card.localizationQuiz.mapOffset.x;
-                          const normX = Math.round(((rawX % tileW) + tileW) % tileW) - tileW;
-                          const topY = Math.round(card.localizationQuiz.mapOffset.y);
-                          const tiles = [];
-                          for (let x = normX, i = 0; x < containerW; x += tileW, i++) {
-                            tiles.push(
-                              <img
-                                key={i}
-                                src={WORLD_MAP_URL}
-                                crossOrigin="anonymous"
-                                draggable={false}
-                                alt=""
-                                style={{
-                                  position: "absolute",
-                                  left: x,
-                                  top: topY,
-                                  width: tileW,
-                                  height: tileH,
-                                  pointerEvents: "none",
-                                  userSelect: "none",
-                                }}
-                              />
-                            );
-                          }
-                          return <>{tiles}</>;
+                          const tileW = img.naturalWidth * scale;
+                          const tileH = img.naturalHeight * scale;
+                          return (
+                            <div
+                              style={{
+                                position: "absolute",
+                                inset: 0,
+                                backgroundImage: `url(${WORLD_MAP_URL})`,
+                                backgroundRepeat: "repeat-x",
+                                backgroundSize: `${tileW}px ${tileH}px`,
+                                backgroundPosition: `${card.localizationQuiz.mapOffset.x}px ${card.localizationQuiz.mapOffset.y}px`,
+                                pointerEvents: "none",
+                                userSelect: "none",
+                              }}
+                            />
+                          );
                         })()}
                         {card.localizationQuiz.spots.map((spot, idx) => (
                           <div

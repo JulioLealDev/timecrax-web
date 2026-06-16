@@ -608,11 +608,12 @@ export function CreateThemePage() {
 
     const { x: ox, y: oy } = card.localizationQuiz.mapOffset;
     const scale = card.localizationQuiz.mapScale;
-    const tileW = img.naturalWidth * scale;
-    const tileH = img.naturalHeight * scale;
-    const normX = ((ox % tileW) + tileW) % tileW - tileW;
+    const tileW = Math.round(img.naturalWidth * scale);
+    const tileH = Math.round(img.naturalHeight * scale);
+    const topY = Math.round(oy);
+    const normX = Math.round(((ox % tileW) + tileW) % tileW) - tileW;
     for (let x = normX; x < width; x += tileW) {
-      ctx.drawImage(img, x, oy, tileW, tileH);
+      ctx.drawImage(img, Math.round(x), topY, tileW, tileH);
     }
 
     card.localizationQuiz.spots.forEach((spot, idx) => {
@@ -1511,11 +1512,13 @@ export function CreateThemePage() {
                         {card.localizationQuiz.mapScale > 0 && mapImgRef.current && (() => {
                           const img = mapImgRef.current!;
                           const scale = card.localizationQuiz.mapScale;
-                          const tileW = img.naturalWidth * scale;
-                          const tileH = img.naturalHeight * scale;
+                          // Round to integers so adjacent tiles share exact pixel boundaries
+                          const tileW = Math.round(img.naturalWidth * scale);
+                          const tileH = Math.round(img.naturalHeight * scale);
                           const containerW = mapContainerRef.current?.clientWidth ?? 0;
                           const rawX = card.localizationQuiz.mapOffset.x;
-                          const normX = ((rawX % tileW) + tileW) % tileW - tileW;
+                          const normX = Math.round(((rawX % tileW) + tileW) % tileW) - tileW;
+                          const topY = Math.round(card.localizationQuiz.mapOffset.y);
                           const tiles = [];
                           for (let x = normX, i = 0; x < containerW; x += tileW, i++) {
                             tiles.push(
@@ -1528,7 +1531,7 @@ export function CreateThemePage() {
                                 style={{
                                   position: "absolute",
                                   left: x,
-                                  top: card.localizationQuiz.mapOffset.y,
+                                  top: topY,
                                   width: tileW,
                                   height: tileH,
                                   pointerEvents: "none",

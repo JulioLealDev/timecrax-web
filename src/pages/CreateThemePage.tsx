@@ -326,7 +326,8 @@ export function CreateThemePage() {
   }, [activeTab]); // re-runs when localization tab activates so ref is populated
 
   /* ============================================================
-   * Redraw map canvas (single surface — no inter-tile seam)
+   * Redraw map canvas via createPattern — browser handles repeat
+   * internally, so there is no inter-tile seam at any scale
    * ========================================================== */
   useEffect(() => {
     const canvas = mapCanvasRef.current;
@@ -344,17 +345,23 @@ export function CreateThemePage() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const scale = card.localizationQuiz.mapScale;
-    const tileW = Math.round(img.naturalWidth * scale);
-    const tileH = Math.round(img.naturalHeight * scale);
+    const pattern = ctx.createPattern(img, "repeat");
+    if (!pattern) return;
+
     const { x: rawX, y: rawY } = card.localizationQuiz.mapOffset;
-    const topY = Math.round(rawY);
-    const normX = Math.round(((rawX % tileW) + tileW) % tileW) - tileW;
+    const scale = card.localizationQuiz.mapScale;
 
     ctx.clearRect(0, 0, w, h);
-    for (let i = 0; normX + i * tileW < w; i++) {
-      ctx.drawImage(img, normX + i * tileW, topY, tileW, tileH);
-    }
+    ctx.save();
+    // Translate to map origin, scale up — pattern tiling happens in
+    // this transformed space so the browser never sees a seam
+    ctx.translate(rawX, rawY);
+    ctx.scale(scale, scale);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.fillStyle = pattern;
+    ctx.fillRect(-rawX / scale, -rawY / scale, w / scale, h / scale);
+    ctx.restore();
   }, [card.localizationQuiz.mapOffset, card.localizationQuiz.mapScale, activeTab]);
 
   /* ============================================================
@@ -641,13 +648,16 @@ export function CreateThemePage() {
 
     const { x: ox, y: oy } = card.localizationQuiz.mapOffset;
     const scale = card.localizationQuiz.mapScale;
-    const tileW = Math.round(img.naturalWidth * scale);
-    const tileH = Math.round(img.naturalHeight * scale);
-    const topY = Math.round(oy);
-    const normX = Math.round(((ox % tileW) + tileW) % tileW) - tileW;
-    for (let x = normX; x < width; x += tileW) {
-      ctx.drawImage(img, Math.round(x), topY, tileW, tileH);
-    }
+    const pattern = ctx.createPattern(img, "repeat");
+    if (!pattern) return;
+    ctx.save();
+    ctx.translate(ox, oy);
+    ctx.scale(scale, scale);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.fillStyle = pattern;
+    ctx.fillRect(-ox / scale, -oy / scale, width / scale, height / scale);
+    ctx.restore();
 
     card.localizationQuiz.spots.forEach((spot, idx) => {
       const sx = spot.x * width;

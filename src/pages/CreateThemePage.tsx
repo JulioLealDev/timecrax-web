@@ -132,6 +132,7 @@ export function CreateThemePage() {
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapImgRef = useRef<HTMLImageElement>(null);
+  const mapCanvasRef = useRef<HTMLCanvasElement>(null);
   const isDraggingRef = useRef(false);
   const movedRef = useRef(false);
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, offsetX: 0, offsetY: 0 });
@@ -323,6 +324,38 @@ export function CreateThemePage() {
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => container.removeEventListener("wheel", onWheel);
   }, [activeTab]); // re-runs when localization tab activates so ref is populated
+
+  /* ============================================================
+   * Redraw map canvas (single surface — no inter-tile seam)
+   * ========================================================== */
+  useEffect(() => {
+    const canvas = mapCanvasRef.current;
+    const img = mapImgRef.current;
+    const container = mapContainerRef.current;
+    if (!canvas || !img || !container || card.localizationQuiz.mapScale === 0) return;
+
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const scale = card.localizationQuiz.mapScale;
+    const tileW = Math.round(img.naturalWidth * scale);
+    const tileH = Math.round(img.naturalHeight * scale);
+    const { x: rawX, y: rawY } = card.localizationQuiz.mapOffset;
+    const topY = Math.round(rawY);
+    const normX = Math.round(((rawX % tileW) + tileW) % tileW) - tileW;
+
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; normX + i * tileW < w; i++) {
+      ctx.drawImage(img, normX + i * tileW, topY, tileW, tileH);
+    }
+  }, [card.localizationQuiz.mapOffset, card.localizationQuiz.mapScale, activeTab]);
 
   /* ============================================================
    * Utils
@@ -1508,27 +1541,16 @@ export function CreateThemePage() {
                           onLoad={handleMapImageLoad}
                           style={{ display: "none" }}
                         />
-                        {/* CSS background tiling — single render pass, no inter-element seam */}
-                        {card.localizationQuiz.mapScale > 0 && mapImgRef.current && (() => {
-                          const img = mapImgRef.current!;
-                          const scale = card.localizationQuiz.mapScale;
-                          const tileW = img.naturalWidth * scale;
-                          const tileH = img.naturalHeight * scale;
-                          return (
-                            <div
-                              style={{
-                                position: "absolute",
-                                inset: 0,
-                                backgroundImage: `url(${WORLD_MAP_URL})`,
-                                backgroundRepeat: "repeat-x",
-                                backgroundSize: `${tileW}px ${tileH}px`,
-                                backgroundPosition: `${card.localizationQuiz.mapOffset.x}px ${card.localizationQuiz.mapOffset.y}px`,
-                                pointerEvents: "none",
-                                userSelect: "none",
-                              }}
-                            />
-                          );
-                        })()}
+                        {/* Canvas — single raster surface, zero inter-tile seam */}
+                        <canvas
+                          ref={mapCanvasRef}
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            pointerEvents: "none",
+                            userSelect: "none",
+                          }}
+                        />
                         {card.localizationQuiz.spots.map((spot, idx) => (
                           <div
                             key={idx}

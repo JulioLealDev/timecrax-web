@@ -1218,36 +1218,42 @@
   user-select: none;
 }
 
-.loc-spot {
+.loc-spot-pin {
   position: absolute;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: bold;
-  cursor: pointer;
-  transform: translate(-50%, -50%);
+  width: 40px;
+  /* ponta do pin fica exatamente no pixel clicado */
+  transform: translate(-50%, -100%);
   z-index: 10;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-  transition: transform 0.15s;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.15s;
 }
 
-.loc-spot:hover {
-  transform: translate(-50%, -50%) scale(1.25);
+.loc-spot-pin:hover {
+  transform: translate(-50%, -100%) scale(1.12);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7));
 }
 
-.loc-spot-correct {
-  background: #22c55e;
+.loc-spot-pin-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.loc-spot-pin-num {
+  position: absolute;
+  /* centro do círculo colorido: ~50% horizontal, ~36% vertical */
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
   color: #fff;
-}
-
-.loc-spot-wrong {
-  background: #ef4444;
-  color: #fff;
+  font-family: "Cinzel", serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .loc-controls {

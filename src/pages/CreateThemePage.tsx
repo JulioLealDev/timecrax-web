@@ -1565,13 +1565,19 @@ export function CreateThemePage() {
                         {card.localizationQuiz.spots.map((spot, idx) => (
                           <div
                             key={idx}
-                            className={["loc-spot", spot.isCorrect ? "loc-spot-correct" : "loc-spot-wrong"].join(" ")}
+                            className="loc-spot-pin"
                             style={{ left: `${spot.x * 100}%`, top: `${spot.y * 100}%` }}
                             onMouseDown={(e) => e.stopPropagation()}
                             onClick={(e) => handleRemoveSpot(idx, e)}
                             title={t("createTheme.localizationRemoveSpot")}
                           >
-                            {idx + 1}
+                            <img
+                              src={spot.isCorrect ? "/images/rightSpot.png" : "/images/wrongSpot.png"}
+                              className="loc-spot-pin-img"
+                              draggable={false}
+                              alt=""
+                            />
+                            <span className="loc-spot-pin-num">{idx + 1}</span>
                           </div>
                         ))}
                       </div>
